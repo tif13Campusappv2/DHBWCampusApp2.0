@@ -14,27 +14,18 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
+        android:layout_width="251dp"
         android:layout_height="wrap_content"
         android:src="@drawable/dhbwlogo"
         android:contentDescription="@string/image_description_logo"
         android:adjustViewBounds="true"
-        android:layout_weight="5"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_organisation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:layout_weight="1"
-        android:textColor="#000" />
+        android:layout_weight="1.11" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_type"
+        android:text="@string/menulabel"
         android:layout_weight="1"
         android:autoText="false"
         android:textColor="#000000" />
