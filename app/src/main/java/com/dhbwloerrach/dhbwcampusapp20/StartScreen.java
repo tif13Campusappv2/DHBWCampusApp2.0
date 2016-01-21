@@ -40,6 +40,10 @@ public class StartScreen extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Start new Activity
+        // Intent intent = new Intent(CurrentActivity.this,NewActivity.class);
+        // startActivity(intent);
     }
 
     @Override
