@@ -11,4 +11,12 @@
 
 
     <string name="image_description_logo">Logo der DHBW-Lörrach</string>
+
+
+
+    //Dashboard Strings
+    <string name="news_header">News</string>
+    <string name="Mensa_header">Mensa</string>
+
+    //News Strings
 </resources>
