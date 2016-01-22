@@ -15,7 +15,8 @@
 
     //Dashboard Strings
     <string name="news_header">News</string>
-    <string name="Mensa_header">Mensa</string>
+    <string name="mensa_header">Mensa</string>
+    <string name="guthaben_header">Guthaben</string>
 
     //News Strings
 
