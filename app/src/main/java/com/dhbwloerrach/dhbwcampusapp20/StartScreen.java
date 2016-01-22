@@ -3,8 +3,6 @@ package com.dhbwloerrach.dhbwcampusapp20;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,7 +24,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.overridePendingTransition(R.anim.left_to_right,R.anim.left_to_right);
+        //this.overridePendingTransition(R.anim.left_in,R.anim.left_in);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -64,6 +62,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         int id= v.getId();
         if(id==R.id.dash_Mensa) {
             startActivity(new Intent(StartScreen.this,Mensa.class));
+            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
         }
     }
 
@@ -103,7 +102,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
 
         } else if (id == R.id.nav_mensa) {
             startActivity(new Intent(StartScreen.this, Mensa.class));
-            this.overridePendingTransition(R.anim.right_to_left, R.anim.right_to_left);
+            this.overridePendingTransition(R.anim.right_in,R.anim.scale_out);
         } else if (id == R.id.nav_news) {
 
         }else{
