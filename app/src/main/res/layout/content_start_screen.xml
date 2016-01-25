@@ -144,15 +144,43 @@
                 <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:orientation="horizontal">
-                <TextView
-                    style="@style/innerbox"
-                    android:text="12x Farlkjlijadliajsdliajsdliajsdliajdliasjdliajsdlijadilajdlijaslidjalidjalisjdliajsdlaisjdlaisjdbkopien"/>
-                <TextView
-                    style="@style/innerbox"
-                    android:text="30x S/W-Kopien"/>
-                <TextView
-                    style="@style/innerbox"
-                    android:text="2x Essen"/>
+                    <LinearLayout
+                        style="@style/guthabenAnzahlLayout">
+                        <TextView
+                            style="@style/innerbox"
+                            android:text="12x"
+                            />
+                        <ImageView
+                            style="@style/guthabenIcons"
+                            android:src="@drawable/farbkopie"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/guthabenAnzahlLayout">
+                        <TextView
+                            style="@style/innerbox"
+                            android:text="12x"
+                            />
+                        <ImageView
+                            style="@style/guthabenIcons"
+                            android:src="@drawable/swkopie"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/guthabenAnzahlLayout">
+                        <TextView
+                            style="@style/innerbox"
+                            android:text="2x"
+                            />
+                        <ImageView
+                            style="@style/guthabenIcons"
+                            android:src="@drawable/mensa"
+                            />
+
+                    </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
             <View
