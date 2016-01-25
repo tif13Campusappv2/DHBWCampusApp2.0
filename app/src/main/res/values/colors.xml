@@ -5,4 +5,11 @@
     <color name="dhbwRed">#e2001a</color>
     <color name="lightgrey">#d6d9db</color>
     <color name="darkgrey">#5c6971</color>
+
+
+    <!--gradient colors-->
+    <color name="white">#fff</color>
+    <color name="shadow">@color/darkgrey</color>
+
+
 </resources>
