@@ -140,7 +140,8 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:background="@color/white">
                 <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:orientation="horizontal">
