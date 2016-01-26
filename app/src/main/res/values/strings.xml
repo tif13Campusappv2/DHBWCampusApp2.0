@@ -24,4 +24,7 @@
     // Debugging
     <string name="unkown_action">Unkown click action for this element</string>
     <string name="title_activity_mensa">Mensa</string>
+    <string name="title_activity_news">News</string>
+    <string name="title_activity_lageplan">Lageplan</string>
+    <string name="title_activity_guthaben">Guthaben</string>
 </resources>

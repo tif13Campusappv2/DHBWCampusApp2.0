@@ -1,7 +1,6 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,35 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //this.overridePendingTransition(R.anim.left_in,R.anim.left_in);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Hallo Welt", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
 
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         LoadClickHandler();
     }
 
@@ -60,9 +40,12 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     public void onClick(View v)
     {
         int id= v.getId();
-        if(id==R.id.dash_Mensa) {
-
-        }
+        if(id==R.id.dash_Mensa)
+            Goto(Pages.Mensa);
+        else if(id==R.id.dash_Guthaben)
+            Goto(Pages.Guthaben);
+        else if(id==R.id.dash_News)
+            Goto(Pages.News);
     }
 
     @Override
@@ -93,17 +76,15 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_bibliothek) {
 
-        } else if (id == R.id.nav_geld) {
-
+        if (id == R.id.nav_geld) {
+            Goto(Pages.Guthaben);
         } else if (id == R.id.nav_lageplan) {
-
+            Goto(Pages.Lageplan);
         } else if (id == R.id.nav_mensa) {
-            startActivity(new Intent(StartScreen.this, Mensa.class));
-            this.overridePendingTransition(R.anim.right_in,R.anim.scale_out);
+            Goto(Pages.Mensa);
         } else if (id == R.id.nav_news) {
-
+            Goto(Pages.News);
         }else{
             (Toast.makeText(this,R.string.unkown_action,Toast.LENGTH_LONG)).show();
         }
@@ -116,30 +97,23 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onStart() {
         super.onStart();
-        client.connect();
-        Action viewAction = Action.newAction(Action.TYPE_VIEW,"StartScreen Page",Uri.parse("http://host/path"),Uri.parse("android-app://com.dhbwloerrach.dhbwcampusapp20/http/host/path"));
-        AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(Action.TYPE_VIEW,"StartScreen Page", Uri.parse("http://host/path"),Uri.parse("android-app://com.dhbwloerrach.dhbwcampusapp20/http/host/path"));
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 
 
     public  void LoadClickHandler()
     {
         findViewById(R.id.dash_Mensa).setOnClickListener(this);
+        findViewById(R.id.dash_News).setOnClickListener(this);
+        findViewById(R.id.dash_Guthaben).setOnClickListener(this);
+        // Actionbar open
         ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, (Toolbar) findViewById(R.id.toolbar), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, (Toolbar) findViewById(R.id.toolbar), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
     }
@@ -149,6 +123,21 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         if(page== Pages.Mensa)
         {
             startActivity(new Intent(StartScreen.this,Mensa.class));
+            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+        }
+        else if(page == Pages.Guthaben)
+        {
+            startActivity(new Intent(StartScreen.this,Guthaben.class));
+            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+        }
+        else if(page == Pages.Lageplan)
+        {
+            startActivity(new Intent(StartScreen.this,Lageplan.class));
+            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+        }
+        else if(page == Pages.News)
+        {
+            startActivity(new Intent(StartScreen.this,News.class));
             this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
         }
     }

@@ -35,6 +35,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhbwloerrach.dhbwcampusapp20.StartScreen" />
         </activity>
+        <activity
+            android:name=".News"
+            android:label="@string/title_activity_news"
+            android:parentActivityName=".StartScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dhbwloerrach.dhbwcampusapp20.StartScreen" />
+        </activity>
+        <activity
+            android:name=".Lageplan"
+            android:label="@string/title_activity_lageplan"
+            android:parentActivityName=".StartScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dhbwloerrach.dhbwcampusapp20.StartScreen" />
+        </activity>
+        <activity
+            android:name=".Guthaben"
+            android:label="@string/title_activity_guthaben"
+            android:parentActivityName=".StartScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dhbwloerrach.dhbwcampusapp20.StartScreen" />
+        </activity>
     </application>
 
 </manifest>
