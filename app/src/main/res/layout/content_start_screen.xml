@@ -24,12 +24,8 @@
         android:orientation="vertical"
         android:layout_marginBottom="8dp">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_header"
-            android:textSize="@dimen/h1"
-            android:textColor="@color/dhbwRed"
-            android:layout_margin="6dp"/>
+            style="@style/Headerline"
+            android:text="@string/news_header"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,22 +42,17 @@
             android:background="@drawable/panelbox"
             android:orientation="vertical"
             android:layout_marginBottom="8dp">
-
+            <TextView
+                style="@style/Headerline"
+                android:text="@string/mensa_header"
+               />
             <TableLayout
                 android:id="@+id/dash_Mensa"
                 android:layout_margin="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="1">
-                <TableRow>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mensa_header"
-                        android:textSize="@dimen/h1"
-                        android:textColor="@color/dhbwRed"
-                        android:layout_margin="6dp"/>
-                </TableRow>
+
                 <TableRow>
                     <TextView
                         android:padding="3dp"
@@ -120,12 +111,8 @@
             android:orientation="vertical"
             android:layout_marginBottom="8dp">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/guthaben_header"
-                android:textSize="@dimen/h1"
-                android:textColor="@color/dhbwRed"
-                android:layout_margin="6dp"/>
+                style="@style/Headerline"
+                android:text="@string/guthaben_header"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
