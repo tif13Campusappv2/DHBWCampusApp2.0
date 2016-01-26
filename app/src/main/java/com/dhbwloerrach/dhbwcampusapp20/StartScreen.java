@@ -61,8 +61,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     {
         int id= v.getId();
         if(id==R.id.dash_Mensa) {
-            startActivity(new Intent(StartScreen.this,Mensa.class));
-            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+
         }
     }
 
@@ -117,20 +116,8 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "StartScreen Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.dhbwloerrach.dhbwcampusapp20/http/host/path")
-        );
+        Action viewAction = Action.newAction(Action.TYPE_VIEW,"StartScreen Page",Uri.parse("http://host/path"),Uri.parse("android-app://com.dhbwloerrach.dhbwcampusapp20/http/host/path"));
         AppIndex.AppIndexApi.start(client, viewAction);
     }
 
@@ -140,16 +127,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "StartScreen Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.dhbwloerrach.dhbwcampusapp20/http/host/path")
-        );
+        Action viewAction = Action.newAction(Action.TYPE_VIEW,"StartScreen Page", Uri.parse("http://host/path"),Uri.parse("android-app://com.dhbwloerrach.dhbwcampusapp20/http/host/path"));
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
@@ -164,5 +142,14 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                 this, drawer, (Toolbar) findViewById(R.id.toolbar), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    public void Goto(Pages page)
+    {
+        if(page== Pages.Mensa)
+        {
+            startActivity(new Intent(StartScreen.this,Mensa.class));
+            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+        }
     }
 }

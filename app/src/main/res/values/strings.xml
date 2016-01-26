@@ -19,7 +19,7 @@
     <string name="guthaben_header">Guthaben</string>
 
     //News Strings
-
+    <string name="feed_limiter">+++</string>
 
     // Debugging
     <string name="unkown_action">Unkown click action for this element</string>
