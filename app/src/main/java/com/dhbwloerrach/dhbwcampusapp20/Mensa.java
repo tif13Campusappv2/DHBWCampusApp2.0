@@ -32,7 +32,7 @@ public class Mensa extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.overridePendingTransition(R.anim.scale_in, R.anim.right_out);
+        Goto(Pages.StartScreen);
     }
 
 
@@ -41,10 +41,18 @@ public class Mensa extends AppCompatActivity {
 
         if (item.getItemId() == android.R.id.home) {
             finish();
-            this.overridePendingTransition(R.anim.scale_in, R.anim.right_out);
+            Goto(Pages.StartScreen);
             return true;
         }
         return false;
+    }
+
+    public void Goto(Pages page)
+    {
+        if(page== Pages.StartScreen)
+        {
+            this.overridePendingTransition(R.anim.scale_in, R.anim.right_out);
+        }
     }
 
 }

@@ -53,7 +53,6 @@
                 android:text="@string/mensa_header"
                />
             <TableLayout
-                android:id="@+id/dash_Mensa"
                 android:layout_margin="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
