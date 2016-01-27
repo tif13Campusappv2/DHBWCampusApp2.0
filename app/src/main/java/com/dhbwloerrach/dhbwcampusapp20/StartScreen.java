@@ -2,6 +2,7 @@ package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,8 +23,10 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
 
-
+        MensaUpdater.Initialize();
         LoadClickHandler();
+
+
     }
 
     @Override
@@ -46,6 +49,8 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
             Goto(Pages.Guthaben);
         else if(id==R.id.dash_News)
             Goto(Pages.News);
+        else if(id==R.id.fab)
+            MensaUpdater.LoadMensaData(this);
     }
 
     @Override
@@ -110,6 +115,8 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         findViewById(R.id.dash_Mensa).setOnClickListener(this);
         findViewById(R.id.dash_News).setOnClickListener(this);
         findViewById(R.id.dash_Guthaben).setOnClickListener(this);
+        findViewById(R.id.fab).setOnClickListener(this);
+
         // Actionbar open
         ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
