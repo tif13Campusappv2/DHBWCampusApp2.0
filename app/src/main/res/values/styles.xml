@@ -55,4 +55,60 @@
         <item name="android:layout_marginLeft">4dp</item>
     </style>
 
+
+    <!--
+    ##################################
+    #  Mensa
+    ##################################
+    -->
+    <style name="mensa_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:stretchColumns">0</item>
+        <item name="android:background">@drawable/panelbox</item>
+    </style>
+
+    <!-- Menues -->
+    <style name="mensa_menue_price">
+        <item name="android:gravity">end</item>
+    </style>
+    <style name="mensa_menue_row">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:padding">3dp</item>
+    </style>
+    <style name="mensa_menue_name">
+        <item name="android:layout_span">1</item>
+    </style>
+    <style name="mensa_menue_additonals">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_width">25dp</item>
+        <item name="android:contentDescription">@string/mensa_menue_additonals_des</item>
+    </style>
+
+    <!-- Kennzeichnung -->
+    <style name="mensa_ken_row">
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:padding">3dp</item>
+
+    </style>
+
+    <style name="mensa_ken_no">
+        <item name="android:layout_column">0</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+    <style name="mensa_ken_des">
+        <item name="android:layout_column">1</item>
+        <item name="android:layout_span">1</item>
+    </style>
+
+
+
+
+
+
 </resources>

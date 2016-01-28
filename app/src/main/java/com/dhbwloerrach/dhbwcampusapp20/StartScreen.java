@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Updated.Refreshable {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +146,22 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         {
             startActivity(new Intent(StartScreen.this,News.class));
             this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+        }
+    }
+
+    public void Refresh(Updated areas)
+    {
+        if(areas.IsUpdated(Updated.Mensa))
+        {
+            MensaPlan loadedPlan= MensaUpdater.GetLastMensaPlan();
+        }
+        if(areas.IsUpdated(Updated.News))
+        {
+
+        }
+        if(areas.IsUpdated(Updated.Guthaben))
+        {
+
         }
     }
 }

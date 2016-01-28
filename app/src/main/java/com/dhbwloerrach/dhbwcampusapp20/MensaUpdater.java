@@ -1,21 +1,16 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.Toast;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -23,10 +18,12 @@ public class MensaUpdater {
     private static MensaUpdater updater;
     private MensaXMLExtractor extractor;
     private String lastMessage;
+    private MensaPlan lastLoadedPlan;
     private final String APIURI = "http://www.swfr.de/index.php?id=1400&type=98&tx_swfrspeiseplan_pi1[apiKey]=c3841e89a2c8c301b890723ecdb786ad&tx_swfrspeiseplan_pi1[ort]=677";
 
-    public MensaUpdater() {
-        extractor= new MensaXMLExtractor();
+    public static MensaPlan GetLastMensaPlan()
+    {
+        return updater.GetLastMensaData();
     }
 
     public static void Initialize() {
@@ -37,9 +34,13 @@ public class MensaUpdater {
         updater.GetMensaData(context);
     }
 
-    public static String GetResponse()
+    public MensaUpdater() {
+        extractor= new MensaXMLExtractor();
+    }
+
+    private MensaPlan GetLastMensaData()
     {
-        return updater.lastMessage;
+        return this.lastLoadedPlan;
     }
 
     private void GetMensaData(final Activity context) {
@@ -59,7 +60,9 @@ public class MensaUpdater {
                     }
 
                     lastMessage = sb.toString();
-                    extractor.Extract(lastMessage);
+                    lastLoadedPlan= extractor.Extract(lastMessage, context);
+                    ((Updated.Refreshable)context).Refresh(new Updated(true, false, false));
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     context.runOnUiThread(new Runnable() {
@@ -74,15 +77,11 @@ public class MensaUpdater {
         }.start();
     }
 
-
     private class MensaXMLExtractor{
 
-        public MensaXMLExtractor()
-        {
+        public MensaXMLExtractor(){}
 
-        }
-
-        public void Extract(String rowData)
+        public MensaPlan Extract(String rowData,final Activity context)
         {
             rowData= rowData.replaceAll("\r\n","").replaceAll("\t", "").replaceAll(">\\s+<","><");
             Document serverResponse;
@@ -132,19 +131,19 @@ public class MensaUpdater {
                     }
                     plan.InsertDay(i,new MensaPlan.Day(currentDay.getAttribute("datum"),menues));
                 }
-
-
-                String bla= plan.toString();
-
-
-
+                return plan;
             }
             catch (Exception e)
             {
                 e.printStackTrace();
+                context.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(context, R.string.extractionError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return null;
             }
 
         }
-
     }
 }

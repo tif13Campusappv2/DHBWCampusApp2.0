@@ -19,7 +19,7 @@ import android.view.View;
 import java.lang.reflect.Field;
 import java.net.URI;
 
-public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener {
+public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable {
 
 
     private ViewPager mViewPager;
@@ -139,6 +139,18 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         public CharSequence getPageTitle(int position)
         {
             return "Section " + (position + 1);
+        }
+    }
+
+    public void Refresh(Updated areas)
+    {
+        if(areas.IsUpdated(Updated.Mensa))
+        {
+            MensaPlan loadedPlan= MensaUpdater.GetLastMensaPlan();
+        }
+        if(areas.IsUpdated(Updated.Guthaben))
+        {
+
         }
     }
 
