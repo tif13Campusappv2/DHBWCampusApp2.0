@@ -131,6 +131,7 @@ public class MensaUpdater {
                     }
                     plan.InsertDay(i,new MensaPlan.Day(currentDay.getAttribute("datum"),menues));
                 }
+                plan.SortDays();
                 return plan;
             }
             catch (Exception e)

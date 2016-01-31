@@ -15,9 +15,7 @@ public class Updated
 
     public boolean IsUpdated(int area)
     {
-        if(area<values.length && area>=0)
-            return values[area];
-        return false;
+            return area<values.length && area>=0 && values[area];
     }
 
     public interface Refreshable {
