@@ -160,6 +160,50 @@
             >
             <TextView
                 style="@style/mensa_ken_no"
+                android:text="@string/mensa_ken_msc_No"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_ken_msc"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_ken_schwe_No"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_ken_schwe"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_ken_alk_No"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_ken_alk"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_ken_gsch_No"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_ken_gsch"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
                 android:text="@string/mensa_ken_farb_No"/>
             <TextView
                 style="@style/mensa_ken_des"
@@ -230,6 +274,17 @@
             <TextView
                 style="@style/mensa_ken_des"
                 android:text="@string/mensa_ken_gesch"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_ken_rind_No"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_ken_rind"
                 />
         </TableRow>
     </TableLayout>

@@ -64,19 +64,41 @@
 
     // Kennzeichnungen
     <string name="mensa_ken_headline">Kennzeichnungen</string>
+
+    <string name="mensa_ken_msc">aus nachhaltiger Fischerei</string>
+    <string name="mensa_ken_msc_No">(MSC)</string>
+
+    <string name="mensa_ken_schwe">mit Schwein</string>
+    <string name="mensa_ken_schwe_No">(1)</string>
+
+    <string name="mensa_ken_alk">mit Alkohol</string>
+    <string name="mensa_ken_alk_No">(2)</string>
+
+    <string name="mensa_ken_gsch">mit Geschmacksverstärker</string>
+    <string name="mensa_ken_gsch_No">(3)</string>
+
     <string name="mensa_ken_farb">mit Farbstoff</string>
     <string name="mensa_ken_farb_No">(4)</string>
+
     <string name="mensa_ken_ant">mit Antioxidationsmittel</string>
     <string name="mensa_ken_ant_No">(5)</string>
+
     <string name="mensa_ken_kon">mit Konservierungsstoff</string>
     <string name="mensa_ken_kon_No">(6)</string>
+
     <string name="mensa_ken_schw">geschwefelt</string>
     <string name="mensa_ken_schw_No">(7)</string>
+
     <string name="mensa_ken_phos">mit Phosphat</string>
     <string name="mensa_ken_phos_No">(8)</string>
+
     <string name="mensa_ken_sues">mit Süßungsmittel</string>
     <string name="mensa_ken_sues_No">(9)</string>
+
     <string name="mensa_ken_gesch">geschwärzt</string>
     <string name="mensa_ken_gesch_No">(10)</string>
+
+    <string name="mensa_ken_rind">mit Rindfleisch</string>
+    <string name="mensa_ken_rind_No">(15)</string>
 
 </resources>
