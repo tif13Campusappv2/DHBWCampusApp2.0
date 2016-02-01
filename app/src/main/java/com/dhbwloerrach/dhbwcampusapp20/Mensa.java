@@ -1,3 +1,12 @@
+/* ToDo Mensa:
+    - Überschriften bei Laden der Daten anpassen
+    - Preiseinstellungen für verschiedene Personengruppen importieren (momentan hardcoded auf Studenten)
+    - Datenbankanbindung
+    - Evtl. andere Symbole für Vegan/Vegetarisch
+    - Evtl. Zeilenumbrüche aus API importieren
+    - Aufruf zum Aktualisieren an andere Stelle packen
+ */
+
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
