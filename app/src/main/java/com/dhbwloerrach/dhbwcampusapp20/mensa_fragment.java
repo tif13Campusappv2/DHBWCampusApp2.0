@@ -7,60 +7,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link mensa_fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link mensa_fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class mensa_fragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Boolean IsActive;
+    private MensaPlan.Day day;
 
     public mensa_fragment() {
-        // Required empty public constructor
+        IsActive=false;
     }
 
-    public static mensa_fragment newInstance(String param1, String param2) {
+    public static mensa_fragment newInstance() {
         mensa_fragment fragment = new mensa_fragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mensa_fragment, container, false);
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -75,12 +39,95 @@ public class mensa_fragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_mensa_fragment, container, false);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        try {
+            IsActive=true;
+            ShowData();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        IsActive=false;
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    public void UpdateData(MensaPlan.Day day)
+    {
+        this.day=day;
+        ShowData();
+    }
+
+    private void ShowData()
+    {
+        if(!this.IsActive || day==null)
+            return;
+        try {
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_1_price)).setText(day.Menues[MensaPlan.Menues.Menue1].prices[MensaPlan.Prices.Studenten]);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_1_name)).setText(day.Menues[MensaPlan.Menues.Menue1].Name);
+            ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_1_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Menue1].zusatz));
+
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_2_price)).setText(day.Menues[MensaPlan.Menues.Menue2].prices[MensaPlan.Prices.Studenten]);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_2_name)).setText(day.Menues[MensaPlan.Menues.Menue2].Name);
+            ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_2_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Menue2].zusatz));
+
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_3_price)).setText(day.Menues[MensaPlan.Menues.Menue3].prices[MensaPlan.Prices.Studenten]);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_3_name)).setText(day.Menues[MensaPlan.Menues.Menue3].Name);
+            ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_3_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Menue3].zusatz));
+
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_buffet_price)).setText(day.Menues[MensaPlan.Menues.Buffet].prices[MensaPlan.Prices.Studenten]);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_buffet_name)).setText(day.Menues[MensaPlan.Menues.Buffet].Name);
+            ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_buffet_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Buffet].zusatz));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private int GetImageRessource(String zusatz)
+    {
+        switch (zusatz)
+        {
+            case "vegetarisch":
+                return R.drawable.veg;
+            case "vegan":
+                return  R.drawable.vegan;
+            default:
+                return R.drawable.leer;
+        }
+    }
+
+
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+       // MensaPlan.Day
     }
 }

@@ -34,6 +34,10 @@ public class MensaPlan
                     Days[j]=tmp2[i];
     }
 
+    public Day GetDay(int position)
+    {
+        return position>=0 && position<Days.length ? Days[position]:null;
+    }
 
     public static class Day
     {
@@ -43,12 +47,26 @@ public class MensaPlan
         public Day(String date, Menue menues[])
         {
             Menues=menues;
-            Date = Timestamp.valueOf(date);
+            try {
+                Date = new Date(Integer.parseInt(date.substring(6))-1900,Integer.parseInt(date.substring(3,5))-1,Integer.parseInt(date.substring(0,2)));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 
         public String GetFormatedDate()
         {
-            return  weekdays[Date.getDay()] + " " + Date.getDate() + "." + Date.getMonth() + "." + Date.getYear();
+            return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." ; //+ (Date.getYear()+1900);
+        }
+
+        private String AddLeadingZeros(int value, int length)
+        {
+            String val=""+value;
+            while (val.length()<length)
+                val="0" + val;
+            return val;
         }
 
         public long GetTimeStamp()

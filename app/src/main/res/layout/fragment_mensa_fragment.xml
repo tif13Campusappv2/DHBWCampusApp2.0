@@ -7,20 +7,22 @@
     android:scrollbars="none"
     tools:context="com.dhbwloerrach.dhbwcampusapp20.mensa_fragment">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp"
-    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        >
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/mensa_menue_1_container"
         style="@style/mensa_container"
         >
-        <TableRow>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
-                style="@style/Headerline"
+                style="@style/mensa_menue_headline"
                 android:text="@string/mensa_menue_1_headline"
                 />
             <TextView
@@ -28,8 +30,10 @@
                 style="@style/mensa_menue_price"
                 android:text="@string/mensa_menue_price_dummy"
                 />
-        </TableRow>
-        <TableRow style="@style/mensa_menue_row">
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
                 android:id="@+id/mensa_menue_1_name"
                 style="@style/mensa_menue_name"
@@ -37,17 +41,20 @@
             <ImageView
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_1_additionals"
-                android:src="@drawable/vegan"
+                android:src="@drawable/leer"
                 />
-        </TableRow>
-    </TableLayout>
-    <TableLayout
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/mensa_menue_2_container"
         style="@style/mensa_container"
         >
-        <TableRow>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
-                style="@style/Headerline"
+                style="@style/mensa_menue_headline"
                 android:text="@string/mensa_menue_2_headline"
                 />
             <TextView
@@ -55,8 +62,10 @@
                 style="@style/mensa_menue_price"
                 android:text="@string/mensa_menue_price_dummy"
                 />
-        </TableRow>
-        <TableRow style="@style/mensa_menue_row">
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
                 android:id="@+id/mensa_menue_2_name"
                 style="@style/mensa_menue_name"
@@ -64,16 +73,20 @@
             <ImageView
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_2_additionals"
-                android:src="@drawable/veg"
+                android:src="@drawable/leer"
                 />
-        </TableRow>
-    </TableLayout>
-    <TableLayout
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/mensa_menue_3_container"
-        style="@style/mensa_container">
-        <TableRow>
+        style="@style/mensa_container"
+        >
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
-                style="@style/Headerline"
+                style="@style/mensa_menue_headline"
                 android:text="@string/mensa_menue_3_headline"
                 />
             <TextView
@@ -81,8 +94,10 @@
                 style="@style/mensa_menue_price"
                 android:text="@string/mensa_menue_price_dummy"
                 />
-        </TableRow>
-        <TableRow style="@style/mensa_menue_row">
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
                 android:id="@+id/mensa_menue_3_name"
                 style="@style/mensa_menue_name"
@@ -90,16 +105,20 @@
             <ImageView
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_3_additionals"
-                android:src="@drawable/veg"
+                android:src="@drawable/leer"
                 />
-        </TableRow>
-    </TableLayout>
-    <TableLayout
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/mensa_menue_buffet_container"
-        style="@style/mensa_container">
-        <TableRow>
+        style="@style/mensa_container"
+        >
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
-                style="@style/Headerline"
+                style="@style/mensa_menue_headline"
                 android:text="@string/mensa_menue_buffet_headline"
                 />
             <TextView
@@ -107,8 +126,10 @@
                 style="@style/mensa_menue_price"
                 android:text="@string/mensa_menue_price_dummy"
                 />
-        </TableRow>
-        <TableRow style="@style/mensa_menue_row">
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
             <TextView
                 android:id="@+id/mensa_menue_buffet_name"
                 style="@style/mensa_menue_name"
@@ -116,10 +137,10 @@
             <ImageView
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_buffet_additionals"
-                android:src="@drawable/veg"
+                android:src="@drawable/leer"
                 />
-        </TableRow>
-    </TableLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <TableLayout
         android:id="@+id/mensa_ken_container"

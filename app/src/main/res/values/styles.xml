@@ -66,26 +66,44 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:padding">5dp</item>
-        <item name="android:stretchColumns">0</item>
         <item name="android:background">@drawable/panelbox</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="mensa_innercontainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">10</item>
     </style>
 
     <!-- Menues -->
-    <style name="mensa_menue_price">
-        <item name="android:gravity">end</item>
+    <style name="mensa_menue_headline">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/h1</item>
+        <item name="android:textColor">@color/dhbwRed</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:layout_weight">7</item>
     </style>
-    <style name="mensa_menue_row">
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:padding">3dp</item>
+    <style name="mensa_menue_price">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:layout_weight">3</item>
     </style>
     <style name="mensa_menue_name">
-        <item name="android:layout_span">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">9</item>
     </style>
     <style name="mensa_menue_additonals">
-        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_gravity">end|bottom</item>
         <item name="android:layout_height">25dp</item>
-        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:contentDescription">@string/mensa_menue_additonals_des</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
     <!-- Kennzeichnung -->

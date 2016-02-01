@@ -4,13 +4,22 @@ public class Updated
 {
 
     public static final int Mensa=0, News=1, Guthaben=2;
+    private MensaPlan mensa;
     private boolean values[]={false,false,false};
 
-    public Updated(boolean mensa, boolean news, boolean guthaben)
+    public Updated()
     {
-        values[Updated.Mensa]=mensa;
-        values[Updated.News]=news;
-        values[Updated.Guthaben]=guthaben;
+    }
+
+    public void InsertMensaPlan(MensaPlan mensaplan)
+    {
+        mensa=mensaplan;
+        values[Updated.Mensa]=true;
+    }
+
+    public MensaPlan GetMensaPlan()
+    {
+        return values[Updated.Mensa] ? mensa:null;
     }
 
     public boolean IsUpdated(int area)

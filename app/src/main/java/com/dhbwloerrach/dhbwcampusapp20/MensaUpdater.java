@@ -27,7 +27,8 @@ public class MensaUpdater {
     }
 
     public static void Initialize() {
-        updater = new MensaUpdater();
+        if(updater==null)
+            updater = new MensaUpdater();
     }
 
     public static void LoadMensaData(Activity context) {
@@ -61,7 +62,13 @@ public class MensaUpdater {
 
                     lastMessage = sb.toString();
                     lastLoadedPlan= extractor.Extract(lastMessage, context);
-                    ((Updated.Refreshable)context).Refresh(new Updated(true, false, false));
+                    final Updated updater=new Updated();
+                    updater.InsertMensaPlan(lastLoadedPlan);
+                    context.runOnUiThread(new Runnable() {
+                        public void run() {
+                            ((Updated.Refreshable) context).Refresh(updater);
+                        }
+                    });
 
                 } catch (Exception e) {
                     e.printStackTrace();
