@@ -64,7 +64,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhbwloerrach.dhbwcampusapp20.StartScreen" />
         </activity>
-        <activity android:name=".SplashScreen">
+        <activity android:theme="@style/AppTheme.NoActionBar" android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
