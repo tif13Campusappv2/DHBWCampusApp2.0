@@ -39,6 +39,13 @@ public class MensaPlan
         return position>=0 && position<Days.length ? Days[position]:null;
     }
 
+    public int GetCountDays()
+    {
+        return Days.length;
+    }
+
+
+
     public static class Day
     {
         private Date Date;
@@ -61,6 +68,11 @@ public class MensaPlan
             return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." ; //+ (Date.getYear()+1900);
         }
 
+        public String GetUnformatedDate()
+        {
+            return AddLeadingZeros(Date.getDate(),2) + "." + AddLeadingZeros(Date.getMonth()+1,2) + "." + AddLeadingZeros(Date.getYear()+1900,4);
+        }
+
         private String AddLeadingZeros(int value, int length)
         {
             String val=""+value;
@@ -75,11 +87,12 @@ public class MensaPlan
         }
     }
 
-    public static class Prices
+    public static abstract class Prices
     {
         final static int Schueler=0, Studenten=1, Mitarbeiter=2, Gaeste=3;
     }
-    public static class Menues
+
+    public static abstract class Menues
     {
         final static int Menue1=0, Menue2=1, Menue3=2, Buffet=3;
     }
