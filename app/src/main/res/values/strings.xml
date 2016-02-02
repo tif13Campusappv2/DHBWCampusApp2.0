@@ -37,7 +37,7 @@
     <string name="extractionError">Fehlerhafte Daten</string>
 
     //##################################
-    //#  Allgemein
+    //# Allgemein
     //##################################
 
     // Wochentage
@@ -50,7 +50,7 @@
     <string name="sunday">Sonntag</string>
 
     //##################################
-    //#  Mensa
+    //# Mensa
     //##################################
 
     // Menues
