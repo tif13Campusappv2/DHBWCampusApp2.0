@@ -80,7 +80,7 @@ public class MensaUpdater {
 
         public MensaPlan Extract(String rowData,final Activity context)
         {
-            rowData= rowData.replaceAll("\r\n","").replaceAll("\t", "").replaceAll(">\\s+<","><");
+            rowData= rowData.replaceAll("\r\n","").replaceAll("\t", "").replaceAll(">\\s+<","><").replaceAll("<br>","\r\n");
             Document serverResponse;
             try
             {
@@ -108,7 +108,7 @@ public class MensaUpdater {
                         prices[MensaPlan.Prices.Gaeste]=priceNode.getElementsByTagName("gaeste").item(0).getTextContent();
 
                         MensaPlan.Menue newMenue= new MensaPlan.Menue(currentMenu.getAttribute("zusatz"),
-                                currentMenu.getElementsByTagName("name").item(0).getTextContent(),
+                                currentMenu.getElementsByTagName("nameMitUmbruch").item(0).getTextContent(),
                                 prices);
                         switch (currentMenu.getAttribute("art"))
                         {

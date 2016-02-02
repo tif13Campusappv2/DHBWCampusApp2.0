@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Iris and Palm good image -->
     <color name="colorPrimary">@color/dhbwRed</color>
     <color name="colorPrimaryDark">#8b0011</color>
     <color name="dhbwRed">#e2001a</color>
