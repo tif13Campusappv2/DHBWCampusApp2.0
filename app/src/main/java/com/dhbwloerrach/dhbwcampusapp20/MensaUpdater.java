@@ -18,13 +18,7 @@ public class MensaUpdater {
     private static MensaUpdater updater;
     private MensaXMLExtractor extractor;
     private String lastMessage;
-    private MensaPlan lastLoadedPlan;
     private final String APIURI = "http://www.swfr.de/index.php?id=1400&type=98&tx_swfrspeiseplan_pi1[apiKey]=c3841e89a2c8c301b890723ecdb786ad&tx_swfrspeiseplan_pi1[ort]=677";
-
-    public static MensaPlan GetLastMensaPlan()
-    {
-        return updater.GetLastMensaData();
-    }
 
     public static void Initialize() {
         if(updater==null)
@@ -39,10 +33,6 @@ public class MensaUpdater {
         extractor= new MensaXMLExtractor();
     }
 
-    private MensaPlan GetLastMensaData()
-    {
-        return this.lastLoadedPlan;
-    }
 
     private void GetMensaData(final Activity context) {
         new Thread()
@@ -61,7 +51,7 @@ public class MensaUpdater {
                     }
 
                     lastMessage = sb.toString();
-                    lastLoadedPlan= extractor.Extract(lastMessage, context);
+                    MensaPlan lastLoadedPlan= extractor.Extract(lastMessage, context);
                     final Updated updater=new Updated();
                     updater.InsertMensaPlan(lastLoadedPlan);
                     context.runOnUiThread(new Runnable() {

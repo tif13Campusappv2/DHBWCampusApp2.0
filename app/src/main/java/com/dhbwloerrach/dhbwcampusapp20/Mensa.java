@@ -139,6 +139,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
                 TabHeaders[i]=mensaplan.GetDay(i).GetFormatedDate();
                 ((mensa_fragment)items[i]).UpdateData(mensaplan.GetDay(i));
             }
+            this.notifyDataSetChanged();
         }
 
         @Override
