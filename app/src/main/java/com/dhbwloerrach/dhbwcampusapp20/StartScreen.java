@@ -153,7 +153,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     {
         if(areas.IsUpdated(Updated.Mensa))
         {
-            MensaPlan loadedPlan= MensaUpdater.GetLastMensaPlan();
+            MensaPlan loadedPlan= areas.GetMensaPlan();
         }
         if(areas.IsUpdated(Updated.News))
         {
