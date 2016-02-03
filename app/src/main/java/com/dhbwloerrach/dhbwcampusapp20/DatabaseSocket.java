@@ -41,6 +41,24 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DELETE * FROM " + TABLE_NAME +";";
     }
 
+    public static abstract class DataBaseUserRole implements BaseColumns
+    {
+        public static final String TABLE_NAME = "UserRole";
+        public static final String _ID = "_ID";
+        public static final String COLUMN_ROLE = "ROLE";
+
+        private static final String SQL_CREATE_ENTRIES =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
+                        _ID + " INTEGER PRIMARY KEY," +
+                        COLUMN_ROLE + " INTEGER);";
+
+        private static final String SQL_DELETE_ENTRIES =
+                "DROP TABLE IF EXISTS " + TABLE_NAME +";";
+
+        private static final String SQL_DELETE_CONTENT =
+                "DELETE * FROM " + TABLE_NAME +";";
+    }
+
     // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CAMPUSAPP";
@@ -56,6 +74,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(DatabaseMensa.SQL_CREATE_ENTRIES);
+        db.execSQL(DataBaseUserRole.SQL_CREATE_ENTRIES);
         //ToDo: db.execSQL(NewsFeed.SQL_CREATE_ENTRIES);
         //ToDo: db.execSQL(Credit.SQL_CREATE_ENTRIES);
 
@@ -65,6 +84,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
         db.execSQL(DatabaseMensa.SQL_DELETE_ENTRIES);
+        db.execSQL(DataBaseUserRole.SQL_DELETE_ENTRIES);
         //ToDo: db.execSQL(NewsFeed.SQL_DELETE_ENTRIES);
         //ToDo: db.execSQL(Credit.SQL_DELETE_ENTRIES);
         onCreate(db);
@@ -127,6 +147,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
             else // Table empty
             {
                 cursor.close();
+                db.close();
                 return null;
             }
 
@@ -152,9 +173,30 @@ public class DatabaseSocket extends SQLiteOpenHelper
             else // Table empty
             {
                 cursor.close();
+                db.close();
                 return null;
             }
 
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            db.close();
+            return null;
+        }
+        db.close();
+        return plan;
+    }
+
+    public void SaveUserRole(int role)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.execSQL(DataBaseUserRole.SQL_DELETE_CONTENT);
+            ContentValues values = new ContentValues();
+            values.put(DataBaseUserRole._ID, 0);
+            values.put(DataBaseUserRole.COLUMN_ROLE, role);
+            db.insert(DatabaseMensa.TABLE_NAME, null, values);
         }
         catch (Exception e)
         {
@@ -163,17 +205,34 @@ public class DatabaseSocket extends SQLiteOpenHelper
         finally {
             db.close();
         }
-        return null;
+    }
+
+    public int GetUserRole() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int role;
+        try {
+            Cursor cursor = db.query(DataBaseUserRole.TABLE_NAME, new String[]{DataBaseUserRole.COLUMN_ROLE}, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                role=cursor.getInt(0);
+                cursor.close();
+            } else // Table empty
+            {
+                cursor.close();
+                db.close();
+                return 0;
+            }
+        }
+        catch (Exception e)
+        {
+            db.close();
+            e.printStackTrace();
+            return 0;
+        }
+        db.close();
+        return role;
     }
 
 /*
-    public void SaveValues(int[] places)
-    {
-        if(GetContactsCount()==0)
-            InsertValues(places);
-        else
-            UpdateValues(places);
-    }
 
     public int[] GetValues()
     {
