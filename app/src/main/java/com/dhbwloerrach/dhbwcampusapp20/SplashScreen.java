@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.view.Window;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -18,12 +19,15 @@ public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_splash_screen);
 
         ImageView animImage = (ImageView) findViewById(R.id.SplashView);
         animImage.setBackgroundResource(R.drawable.splash_anim);
         splashAnim = (AnimationDrawable) animImage.getBackground();
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -49,5 +53,6 @@ public class SplashScreen extends AppCompatActivity {
                 }
             }).start();
         }
+        
     }
 }
