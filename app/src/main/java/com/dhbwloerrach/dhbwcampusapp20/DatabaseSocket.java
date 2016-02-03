@@ -11,7 +11,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
     public static abstract class DatabaseMensa implements BaseColumns
     {
         public static final String TABLE_NAME = "MensaPlan";
-        public static final String COLUMN_ID = "COLUMN_ID";
+        public static final String _ID = "_ID";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_ADDITIONALS = "additionals";
         public static final String COLUMN_NAME = "name";
@@ -24,7 +24,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
 
         private static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-                        COLUMN_ID + " INTEGER PRIMARY KEY," +
+                        _ID + " INTEGER PRIMARY KEY," +
                         COLUMN_DATE + " TEXT, " +
                         COLUMN_NAME + " TEXT, " +
                         COLUMN_ADDITIONALS + " TEXT, " +
@@ -82,14 +82,14 @@ public class DatabaseSocket extends SQLiteOpenHelper
 
     public void SaveMensaData(MensaPlan plan)
     {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         try {
             db.execSQL(DatabaseMensa.SQL_DELETE_CONTENT);
             int rowcounter = 0;
             for (int i = 0; i < plan.GetCountDays(); i++)
                 for (int j = 0; j < plan.GetDay(i).Menues.length; j++) {
                     ContentValues values = new ContentValues();
-                    values.put(DatabaseMensa.COLUMN_ID, rowcounter++);
+                    values.put(DatabaseMensa._ID, rowcounter++);
                     values.put(DatabaseMensa.COLUMN_DATE, plan.GetDay(i).GetUnformatedDate());
                     values.put(DatabaseMensa.COLUMN_ADDITIONALS, plan.GetDay(i).Menues[j].zusatz);
                     values.put(DatabaseMensa.COLUMN_NAME, plan.GetDay(i).Menues[j].Name);
