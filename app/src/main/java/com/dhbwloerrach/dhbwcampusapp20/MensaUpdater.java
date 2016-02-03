@@ -1,7 +1,5 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import android.app.Activity;
-import android.widget.Toast;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,70 +13,40 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MensaUpdater {
-    private static MensaUpdater updater;
     private MensaXMLExtractor extractor;
-    private String lastMessage;
-    private final String APIURI = "http://www.swfr.de/index.php?id=1400&type=98&tx_swfrspeiseplan_pi1[apiKey]=c3841e89a2c8c301b890723ecdb786ad&tx_swfrspeiseplan_pi1[ort]=677";
-
-    public static void Initialize() {
-        if(updater==null)
-            updater = new MensaUpdater();
-    }
-
-    public static void LoadMensaData(Activity context) {
-        updater.GetMensaData(context);
-    }
+    private static final String APIURI = "http://www.swfr.de/index.php?id=1400&type=98&tx_swfrspeiseplan_pi1[apiKey]=c3841e89a2c8c301b890723ecdb786ad&tx_swfrspeiseplan_pi1[ort]=677";
 
     public MensaUpdater() {
         extractor= new MensaXMLExtractor();
     }
 
 
-    private void GetMensaData(final Activity context) {
-        new Thread()
-        {
-            public void run()
-            {
-                try {
-                    URL requestUrl = new URL(APIURI);
-                    URLConnection con = requestUrl.openConnection();
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    int cp;
+    public MensaPlan LoadMensaData() {
 
-                    while ((cp = in.read()) != -1) {
-                        sb.append((char) cp);
-                    }
+        try {
+            URL requestUrl = new URL(APIURI);
+            URLConnection con = requestUrl.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            int cp;
 
-                    lastMessage = sb.toString();
-                    MensaPlan lastLoadedPlan= extractor.Extract(lastMessage, context);
-                    final Updated updater=new Updated();
-                    updater.InsertMensaPlan(lastLoadedPlan);
-                    context.runOnUiThread(new Runnable() {
-                        public void run() {
-                            ((Updated.Refreshable) context).Refresh(updater);
-                        }
-                    });
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    context.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(context, R.string.networkconnectionError, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
+            while ((cp = in.read()) != -1) {
+                sb.append((char) cp);
             }
+            return extractor.Extract(sb.toString());
 
-        }.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorReporting.NewError(ErrorReporting.Errors.NETWORK);
+            return null;
+        }
     }
 
     private class MensaXMLExtractor{
 
         public MensaXMLExtractor(){}
 
-        public MensaPlan Extract(String rowData,final Activity context)
+        public MensaPlan Extract(String rowData)
         {
             rowData= rowData.replaceAll("\r\n","").replaceAll("\t", "").replaceAll(">\\s+<","><").replaceAll("<br>","\r\n");
             Document serverResponse;
@@ -134,11 +102,7 @@ public class MensaUpdater {
             catch (Exception e)
             {
                 e.printStackTrace();
-                context.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(context, R.string.extractionError, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                ErrorReporting.NewError(ErrorReporting.Errors.XML);
                 return null;
             }
 

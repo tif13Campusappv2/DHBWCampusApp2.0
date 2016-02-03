@@ -41,7 +41,7 @@
             <ImageView
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_1_additionals"
-                android:src="@drawable/leer"
+                android:src="@drawable/veg"
                 />
         </LinearLayout>
     </LinearLayout>

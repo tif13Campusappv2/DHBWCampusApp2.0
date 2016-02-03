@@ -101,4 +101,13 @@
     <string name="mensa_ken_rind">mit Rindfleisch</string>
     <string name="mensa_ken_rind_No">(15)</string>
 
+
+    //##################################
+    //# Error reporting
+    //##################################
+
+    <string name="ErrorR_Network">Netzwerkfehler</string>
+    <string name="ErrorR_XML">Abgerufene Daten sind Fehlerhaft</string>
+    <string name="ErrorR_OFFLINE">Keine Internetverbindung</string>
+
 </resources>

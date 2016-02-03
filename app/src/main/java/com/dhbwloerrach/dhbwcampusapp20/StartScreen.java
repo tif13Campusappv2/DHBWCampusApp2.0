@@ -21,9 +21,6 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-
-        MensaUpdater.Initialize();
         LoadClickHandler();
 
 
@@ -50,7 +47,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         else if(id==R.id.dash_News)
             Goto(Pages.News);
         else if(id==R.id.fab)
-            MensaUpdater.LoadMensaData(this);
+            ContentManager.UpdateMensaData(this);
     }
 
     @Override
@@ -102,6 +99,8 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onStart() {
         super.onStart();
+        ErrorReporting.NewContext(this);
+        ContentManager.UpdateActivity(this);
     }
 
     @Override

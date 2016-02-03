@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/panelbox"
             android:orientation="vertical"
+            android:padding="4dp"
             android:layout_marginBottom="8dp">
             <TextView
                 android:layout_width="match_parent"
@@ -47,6 +48,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/panelbox"
             android:orientation="vertical"
+            android:padding="4dp"
             android:layout_marginBottom="8dp">
             <TextView
                 style="@style/Headerline"
@@ -113,6 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/panelbox"
+            android:padding="4dp"
             android:orientation="vertical"
             android:layout_marginBottom="8dp">
             <TextView

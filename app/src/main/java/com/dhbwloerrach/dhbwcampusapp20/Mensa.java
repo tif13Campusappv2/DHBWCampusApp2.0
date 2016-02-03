@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable {
 
@@ -51,14 +52,20 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             e.printStackTrace();
         }
         InitializeTabView();
-        MensaUpdater.Initialize();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        ErrorReporting.NewContext(this);
+        ContentManager.UpdateActivity(this);
     }
 
     @Override
     protected void onResume()
     {
         super.onResume();
-        MensaUpdater.LoadMensaData(this);
     }
 
     @Override
@@ -176,14 +183,18 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
     public void Refresh(final Updated updater)
     {
-        if(updater.IsUpdated(Updated.Mensa))
-        {
-            mAppSectionsPagerAdapter.Update(updater.GetMensaPlan());
-        }
-        if(updater.IsUpdated(Updated.Guthaben))
-        {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                if(updater.IsUpdated(Updated.Mensa))
+                {
+                    mAppSectionsPagerAdapter.Update(updater.GetMensaPlan());
+                }
+                if(updater.IsUpdated(Updated.Guthaben))
+                {
 
-        }
+                }
+            }
+        });
     }
 
 }

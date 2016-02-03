@@ -22,6 +22,9 @@ public class SplashScreen extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        ErrorReporting.Initialize(this);
+        ContentManager.Initialize(this);
+        ContentManager.UpdateMensaData(this);
 
         ImageView animImage = (ImageView) findViewById(R.id.SplashView);
         animImage.setBackgroundResource(R.drawable.splash_anim);

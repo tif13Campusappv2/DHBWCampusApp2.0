@@ -38,7 +38,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DROP TABLE IF EXISTS " + TABLE_NAME +";";
 
         private static final String SQL_DELETE_CONTENT =
-                "DELETE * FROM " + TABLE_NAME +";";
+                "DELETE FROM " + TABLE_NAME +";";
     }
 
     public static abstract class DataBaseUserRole implements BaseColumns
@@ -56,7 +56,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DROP TABLE IF EXISTS " + TABLE_NAME +";";
 
         private static final String SQL_DELETE_CONTENT =
-                "DELETE * FROM " + TABLE_NAME +";";
+                "DELETE FROM " + TABLE_NAME +";";
     }
 
     // If you change the database schema, you must increment the database version.
@@ -151,7 +151,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 return null;
             }
 
-            cursor = db.query(DatabaseMensa.TABLE_NAME,new String[] {DatabaseMensa.COLUMN_DATE, DatabaseMensa.COLUMN_ADDITIONALS,DatabaseMensa.COLUMN_NAME, DatabaseMensa.COLUMN_KIND, DatabaseMensa.COLUMN_PRICE_PL,DatabaseMensa.COLUMN_PRICE_ST,DatabaseMensa.COLUMN_PRICE_EM,DatabaseMensa.COLUMN_PRICE_GU},null,null,DatabaseMensa.COLUMN_DATE,null,null);
+            cursor = db.query(DatabaseMensa.TABLE_NAME,new String[] {DatabaseMensa.COLUMN_DATE, DatabaseMensa.COLUMN_ADDITIONALS,DatabaseMensa.COLUMN_NAME, DatabaseMensa.COLUMN_KIND, DatabaseMensa.COLUMN_PRICE_PL,DatabaseMensa.COLUMN_PRICE_ST,DatabaseMensa.COLUMN_PRICE_EM,DatabaseMensa.COLUMN_PRICE_GU},null,null,null,null,null);
             if(cursor.moveToFirst()) {
                 do {
                     for(int i=0;i<plan.GetCountDays();i++)
@@ -219,80 +219,17 @@ public class DatabaseSocket extends SQLiteOpenHelper
             {
                 cursor.close();
                 db.close();
-                return 0;
+                return -1;
             }
         }
         catch (Exception e)
         {
             db.close();
             e.printStackTrace();
-            return 0;
+            return -1;
         }
         db.close();
         return role;
     }
 
-/*
-
-    public int[] GetValues()
-    {
-
-        if(GetContactsCount()==0)
-        {
-            return new int[] {11,4,10};
-        }
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(
-                DatabaseTableDefinitions.TABLE_NAME,
-                new String[] { DatabaseTableDefinitions.COLUMN_NAME_PLACE1, DatabaseTableDefinitions.COLUMN_NAME_PLACE2, DatabaseTableDefinitions.COLUMN_NAME_PLACE3},
-                DatabaseTableDefinitions._ID + "=?",new String[] { String.valueOf(0) },
-                null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        int[] selectedChocolates={Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2))};
-        cursor.close();
-        return selectedChocolates;
-    }
-
-    private void InsertValues(int[] places)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseTableDefinitions._ID,0);
-        values.put(DatabaseTableDefinitions.COLUMN_NAME_PLACE1,places[0]);
-        values.put(DatabaseTableDefinitions.COLUMN_NAME_PLACE2,places[1]);
-        values.put(DatabaseTableDefinitions.COLUMN_NAME_PLACE3,places[2]);
-
-        // Inserting Row
-        db.insert(DatabaseTableDefinitions.TABLE_NAME, null, values);
-        db.close(); // Closing database connection
-    }
-
-    private int UpdateValues(int[] places)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseTableDefinitions.COLUMN_NAME_PLACE1,places[0]);
-        values.put(DatabaseTableDefinitions.COLUMN_NAME_PLACE2,places[1]);
-        values.put(DatabaseTableDefinitions.COLUMN_NAME_PLACE3,places[2]);
-
-        // updating row
-        return db.update(DatabaseTableDefinitions.TABLE_NAME, values, DatabaseTableDefinitions._ID + " = ?",
-                new String[] { String.valueOf(0)});
-    }
-
-    private int GetContactsCount()
-    {
-        String countQuery = "SELECT  * FROM " + DatabaseTableDefinitions.TABLE_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        int count=cursor.getCount();
-        cursor.close();
-        return count;
-    }
-    */
 }
