@@ -187,6 +187,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             public void run() {
                 if(updater.IsUpdated(Updated.Mensa))
                 {
+                    mViewPager.setCurrentItem(updater.GetMensaPlan().GetBestFittingDay(),true);
                     mAppSectionsPagerAdapter.Update(updater.GetMensaPlan());
                 }
                 if(updater.IsUpdated(Updated.Guthaben))
