@@ -1,5 +1,7 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
@@ -22,9 +24,17 @@ public class SplashScreen extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        ErrorReporting.Initialize(this);
-        ContentManager.Initialize(this);
-        ContentManager.UpdateMensaData(this);
+        final Activity context=this;
+        (new Thread()
+        {
+            public void run()
+            {
+                ErrorReporting.Initialize(context);
+                ContentManager.Initialize(context);
+                ContentManager.UpdateMensaData(context);
+            }
+        }).start();
+
 
         ImageView animImage = (ImageView) findViewById(R.id.SplashView);
         animImage.setBackgroundResource(R.drawable.splash_anim);

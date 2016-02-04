@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Updated.Refreshable {
@@ -148,19 +149,39 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         }
     }
 
-    public void Refresh(Updated areas)
+    public void Refresh(final Updated areas)
     {
-        if(areas.IsUpdated(Updated.Mensa))
-        {
-            MensaPlan loadedPlan= areas.GetMensaPlan();
-        }
-        if(areas.IsUpdated(Updated.News))
-        {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                if(areas.IsUpdated(Updated.Mensa))
+                {
+                    LoadMensaData(areas.GetMensaPlan(),areas.GetRole());
+                }
+                if(areas.IsUpdated(Updated.News))
+                {
 
-        }
-        if(areas.IsUpdated(Updated.Guthaben))
-        {
+                }
+                if(areas.IsUpdated(Updated.Guthaben))
+                {
 
-        }
+                }
+            }
+        });
+    }
+
+    private void LoadMensaData(MensaPlan mensaPlan,int role)
+    {
+        MensaPlan.Day day= mensaPlan.GetDay(mensaPlan.GetBestFittingDay());
+        ((TextView) findViewById(R.id.startscreen_mensa_menue1_name)).setText(day.Menues[MensaPlan.Menues.Menue1].Name);
+        ((TextView) findViewById(R.id.startscreen_mensa_menue1_price)).setText(day.Menues[MensaPlan.Menues.Menue1].prices[role]);
+
+        ((TextView) findViewById(R.id.startscreen_mensa_menue2_name)).setText(day.Menues[MensaPlan.Menues.Menue2].Name);
+        ((TextView) findViewById(R.id.startscreen_mensa_menue2_price)).setText(day.Menues[MensaPlan.Menues.Menue2].prices[role]);
+
+        ((TextView) findViewById(R.id.startscreen_mensa_menue3_name)).setText(day.Menues[MensaPlan.Menues.Menue3].Name);
+        ((TextView) findViewById(R.id.startscreen_mensa_menue3_price)).setText(day.Menues[MensaPlan.Menues.Menue3].prices[role]);
+
+        ((TextView) findViewById(R.id.startscreen_mensa_buffet_name)).setText(day.Menues[MensaPlan.Menues.Buffet].Name);
+        ((TextView) findViewById(R.id.startscreen_mensa_buffet_price)).setText(day.Menues[MensaPlan.Menues.Buffet].prices[role]);
     }
 }

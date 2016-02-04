@@ -42,74 +42,84 @@
                 android:layout_margin="6dp"/>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/dash_Mensa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/panelbox"
-            android:orientation="vertical"
-            android:padding="4dp"
-            android:layout_marginBottom="8dp">
+            style="@style/startscreen_mensa_container">
+            <LinearLayout
+                style="@style/startscreen_mensa_innercontainer"
+                >
             <TextView
                 style="@style/Headerline"
                 android:text="@string/mensa_header"
                />
-            <TableLayout
-                android:layout_margin="6dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="1">
-                <TableRow>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="1. Gericht"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="Bürgaaa"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:gravity="right"
-                        android:text="3,60€"/>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="2. Gericht"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="Anderer Bullshit"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:gravity="right"
-                        android:text="3,40€"/>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="3. Gericht"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="Hasenfutter mit Dressing"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:gravity="right"
-                        android:text="- 0,20€"/>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="Beilagen"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:text="Hier könnten Sie stehen"/>
-                    <TextView
-                        android:padding="3dp"
-                        android:gravity="right"
-                        android:text="free, bitches"/>
-                </TableRow>
-            </TableLayout>
+                </LinearLayout>
+            <LinearLayout
+                style="@style/startscreen_mensa_innercontainer"
+                >
+                <TextView
+                    style="@style/startscreen_mensa_des"
+                    android:text="@string/mensa_menue_1_headline"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_menue1_name"
+                    style="@style/startscreen_mensa_name"
+                    android:text="@string/mensa_menue_name_dummy"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_menue1_price"
+                    style="@style/startscreen_mensa_price"
+                    android:text="@string/mensa_menue_price_dummy"/>
+            </LinearLayout>
+            <View style="@style/hline" />
+            <LinearLayout
+                style="@style/startscreen_mensa_innercontainer"
+                >
+                <TextView
+                    style="@style/startscreen_mensa_des"
+                    android:text="@string/mensa_menue_2_headline"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_menue2_name"
+                    style="@style/startscreen_mensa_name"
+                    android:text="@string/mensa_menue_name_dummy"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_menue2_price"
+                    style="@style/startscreen_mensa_price"
+                    android:text="@string/mensa_menue_price_dummy"/>
+            </LinearLayout>
+            <View style="@style/hline" />
+            <LinearLayout
+                style="@style/startscreen_mensa_innercontainer"
+                >
+                <TextView
+                    style="@style/startscreen_mensa_des"
+                    android:text="@string/mensa_menue_3_headline"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_menue3_name"
+                    style="@style/startscreen_mensa_name"
+                    android:text="@string/mensa_menue_name_dummy"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_menue3_price"
+                    style="@style/startscreen_mensa_price"
+                    android:text="@string/mensa_menue_price_dummy"/>
+            </LinearLayout>
+            <View style="@style/hline" />
+            <LinearLayout
+                style="@style/startscreen_mensa_innercontainer"
+                >
+                <TextView
+                    style="@style/startscreen_mensa_des"
+                    android:text="@string/mensa_menue_buffet_headline"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_buffet_name"
+                    style="@style/startscreen_mensa_name"
+                    android:text="@string/mensa_menue_name_dummy"/>
+                <TextView
+                    android:id="@+id/startscreen_mensa_buffet_price"
+                    style="@style/startscreen_mensa_price"
+                    android:text="@string/mensa_menue_price_dummy"/>
+            </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/dash_Guthaben"
             android:layout_width="match_parent"

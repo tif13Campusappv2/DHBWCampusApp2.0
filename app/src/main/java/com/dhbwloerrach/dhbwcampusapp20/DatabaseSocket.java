@@ -219,14 +219,14 @@ public class DatabaseSocket extends SQLiteOpenHelper
             {
                 cursor.close();
                 db.close();
-                return -1;
+                return 0;
             }
         }
         catch (Exception e)
         {
             db.close();
             e.printStackTrace();
-            return -1;
+            return 0;
         }
         db.close();
         return role;

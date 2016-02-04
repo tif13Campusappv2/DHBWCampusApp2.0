@@ -2,6 +2,7 @@ package com.dhbwloerrach.dhbwcampusapp20;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MensaPlan
@@ -44,7 +45,22 @@ public class MensaPlan
         return Days.length;
     }
 
-
+    public int GetBestFittingDay()
+    {
+        SortDays();
+        Calendar now = Calendar.getInstance();
+        Date today= new Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH) ,now.get(Calendar.DAY_OF_MONTH));
+        long timestamp=today.getTime();
+        int pos=-1;
+        for(int i=0;i<Days.length;i++)
+            if(Days[i].GetTimeStamp()>=timestamp) {
+                pos = i;
+                break;
+            }
+        if(pos==-1)
+            pos=Days.length-1;
+        return pos;
+    }
 
     public static class Day
     {
