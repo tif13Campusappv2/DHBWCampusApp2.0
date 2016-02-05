@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#fafafa"
     tools:context="com.dhbwloerrach.dhbwcampusapp20.SplashScreen">
 
 
@@ -14,17 +15,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Campus App Version: 2.0.1"
+        android:text="DHBW-Lörrach Campus-App"
         android:id="@+id/SplashText"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="95dp"
         android:textColor="@color/dhbwRed" />
 
-    <ImageView
+    <!--ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:id="@+id/SplashView"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"/-->
+
+    <VideoView
+        android:id="@+id/splash_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        />
+
+
 </RelativeLayout>
