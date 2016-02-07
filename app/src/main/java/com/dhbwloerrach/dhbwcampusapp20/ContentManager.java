@@ -1,6 +1,9 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.ContactsContract;
 
 public class ContentManager {
@@ -25,18 +28,24 @@ public class ContentManager {
         }
     }
 
-    public static void UpdateMensaData(Activity context)
+    public static void UpdateFormRemote(Activity context)
     {
+        if(manager==null)
+            Initialize(context);
         manager._UpdateMensaData(context);
     }
 
     public static void UpdateUserRole(Activity context, int role)
     {
+        if(manager==null)
+            Initialize(context);
         manager._UpdateUserRole(context, role);
     }
 
     public static void UpdateActivity(Activity context)
     {
+        if(manager==null)
+            Initialize(context);
         manager._UpdateActivity(context);
     }
 
@@ -79,23 +88,37 @@ public class ContentManager {
         }.start();
     }
 
+    private boolean _IsOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
     private void _UpdateMensaData(final Activity context)
     {
         new Thread()
         {
             public void run()
             {
-                MensaPlan newplan= mensaUpdater.LoadMensaData();
-                if(newplan!=null) {
-                    mensaPlan=newplan;
-                    DatabaseSocket dbSocket = new DatabaseSocket(context);
-                    dbSocket.SaveMensaData(mensaPlan);
-                    if(context instanceof Updated.Refreshable)
-                    {
-                        Updated update= new Updated();
-                        update.InsertMensaPlan(mensaPlan);
-                        ((Updated.Refreshable) context).Refresh(update);
+                if(_IsOnline(context)) {
+                    MensaPlan newplan = mensaUpdater.LoadMensaData();
+                    if (newplan != null) {
+                        mensaPlan = newplan;
+                        DatabaseSocket dbSocket = new DatabaseSocket(context);
+                        dbSocket.SaveMensaData(mensaPlan);
+                        if (context instanceof Updated.Refreshable) {
+                            Updated update = new Updated();
+                            update.InsertMensaPlan(mensaPlan);
+                            ((Updated.Refreshable) context).Refresh(update);
+                        }
                     }
+                }
+                else
+                {
+                    ErrorReporting.NewError(ErrorReporting.Errors.OFFLINE);
                 }
             }
         }.start();

@@ -14,6 +14,8 @@ public class ErrorReporting {
 
     public static void NewContext(Activity context)
     {
+        if(errorReporting==null)
+            Initialize(context);
         errorReporting._NewContext(context);
     }
 
@@ -27,12 +29,12 @@ public class ErrorReporting {
         this.context=context;
     }
 
-    public void _NewContext(Activity context)
+    private void _NewContext(Activity context)
     {
         this.context=context;
     }
 
-    public void _NewError(final int Error)
+    private void _NewError(final int Error)
     {
         if(context!=null)
         context.runOnUiThread(new Runnable() {

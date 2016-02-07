@@ -49,6 +49,9 @@
     <string name="saturday">Samstag</string>
     <string name="sunday">Sonntag</string>
 
+    // Basic dict
+    <string name="refresh">aktualisieren</string>
+
     //##################################
     //# Mensa
     //##################################
@@ -107,7 +110,7 @@
     //##################################
 
     <string name="ErrorR_Network">Netzwerkfehler</string>
-    <string name="ErrorR_XML">Abgerufene Daten sind Fehlerhaft</string>
+    <string name="ErrorR_XML">Fehlerhafte Daten</string>
     <string name="ErrorR_OFFLINE">Keine Internetverbindung</string>
 
 </resources>

@@ -50,9 +50,14 @@
                 style="@style/startscreen_mensa_innercontainer"
                 >
             <TextView
-                style="@style/Headerline"
+                style="@style/startscreen_mensa_headline"
                 android:text="@string/mensa_header"
                />
+                <TextView
+                    android:id="@+id/startscreen_mensa_date"
+                    android:text=""
+                    style="@style/startscreen_mensa_date"
+                    />
                 </LinearLayout>
             <LinearLayout
                 style="@style/startscreen_mensa_innercontainer"

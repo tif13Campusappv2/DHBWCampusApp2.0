@@ -33,7 +33,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            this.finishAffinity();
         }
     }
 
@@ -47,8 +47,6 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
             Goto(Pages.Guthaben);
         else if(id==R.id.dash_News)
             Goto(Pages.News);
-        else if(id==R.id.fab)
-            ContentManager.UpdateMensaData(this);
     }
 
     @Override
@@ -64,11 +62,11 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
+        if(id==R.id.startscreen_actionbar_refresh) {
+            ContentManager.UpdateFormRemote(this);
+            ContentManager.UpdateActivity(this);
             return true;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -115,7 +113,6 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         findViewById(R.id.dash_Mensa).setOnClickListener(this);
         findViewById(R.id.dash_News).setOnClickListener(this);
         findViewById(R.id.dash_Guthaben).setOnClickListener(this);
-        findViewById(R.id.fab).setOnClickListener(this);
 
         // Actionbar open
         ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
@@ -153,7 +150,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                if(areas.IsUpdated(Updated.Mensa))
+                if(areas.IsUpdated(Updated.Mensa) && areas.IsUpdated(Updated.Role))
                 {
                     LoadMensaData(areas.GetMensaPlan(),areas.GetRole());
                 }
@@ -172,6 +169,10 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     private void LoadMensaData(MensaPlan mensaPlan,int role)
     {
         MensaPlan.Day day= mensaPlan.GetDay(mensaPlan.GetBestFittingDay());
+        ((TextView) findViewById(R.id.startscreen_mensa_date)).setText(day.GetFormatedDate());
+
+
+
         ((TextView) findViewById(R.id.startscreen_mensa_menue1_name)).setText(day.Menues[MensaPlan.Menues.Menue1].Name);
         ((TextView) findViewById(R.id.startscreen_mensa_menue1_price)).setText(day.Menues[MensaPlan.Menues.Menue1].prices[role]);
 

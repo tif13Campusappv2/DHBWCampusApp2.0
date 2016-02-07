@@ -2,4 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/startscreen_actionbar_refresh"
+        android:orderInCategory="100"
+        android:title="@string/refresh"
+        android:icon="@drawable/refresh"
+        app:showAsAction="ifRoom"/>
 </menu>
