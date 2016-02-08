@@ -5,6 +5,7 @@ public class Updated
 
     public static final int Mensa=0, News=1, Guthaben=2, Role=3;
     private MensaPlan mensa;
+    private NewsContainer news;
     private int role;
     private boolean values[]={false,false,false, false};
 
@@ -24,6 +25,20 @@ public class Updated
     {
         return values[Updated.Mensa] ? mensa:null;
     }
+
+    public void InsertNewsContainer(NewsContainer newsContainer)
+    {
+        if(newsContainer!=null) {
+            news= newsContainer;
+            values[Updated.News] = true;
+        }
+    }
+
+    public NewsContainer GetNews()
+    {
+        return values[Updated.News] ? news:null;
+    }
+
 
     public void InsertRole(int role)
     {

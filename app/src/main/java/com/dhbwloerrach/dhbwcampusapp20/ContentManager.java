@@ -4,18 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.provider.ContactsContract;
 
 public class ContentManager {
     private static ContentManager manager;
 
     private MensaUpdater mensaUpdater;
+    private NewsUpdater newsUpdater;
     private MensaPlan mensaPlan;
+    private NewsContainer newsContainer;
     private int role;
     private boolean loaded;
 
     public ContentManager() {
         mensaUpdater= new MensaUpdater();
+        newsUpdater= new NewsUpdater();
         role=-1;
         loaded=false;
     }
@@ -28,11 +30,12 @@ public class ContentManager {
         }
     }
 
-    public static void UpdateFormRemote(Activity context)
+    public static void UpdateFromRemote(Activity context)
     {
         if(manager==null)
             Initialize(context);
         manager._UpdateMensaData(context);
+        manager._UpdateNewsData(context);
     }
 
     public static void UpdateUserRole(Activity context, int role)
@@ -60,6 +63,8 @@ public class ContentManager {
                     mensaPlan = dbSocket.GetMensaData();
                 if(role==-1)
                     role= dbSocket.GetUserRole();
+                if(newsContainer==null)
+                    newsContainer= dbSocket.GetNews();
                 loaded=true;
             }
         }.start();
@@ -81,6 +86,7 @@ public class ContentManager {
                         Updated update = new Updated();
                         update.InsertMensaPlan(mensaPlan);
                         update.InsertRole(role);
+                        update.InsertNewsContainer(newsContainer);
                         ((Updated.Refreshable) context).Refresh(update);
                     }
                 }
@@ -112,6 +118,34 @@ public class ContentManager {
                         if (context instanceof Updated.Refreshable) {
                             Updated update = new Updated();
                             update.InsertMensaPlan(mensaPlan);
+                            update.InsertRole(role);
+                            ((Updated.Refreshable) context).Refresh(update);
+                        }
+                    }
+                }
+                else
+                {
+                    ErrorReporting.NewError(ErrorReporting.Errors.OFFLINE);
+                }
+            }
+        }.start();
+    }
+
+    private void _UpdateNewsData(final Activity context)
+    {
+        new Thread()
+        {
+            public void run()
+            {
+                if(_IsOnline(context)) {
+                    NewsContainer newNews = newsUpdater.LoadNewsData();
+                    if (newNews != null) {
+                        newsContainer = newNews;
+                        DatabaseSocket dbSocket = new DatabaseSocket(context);
+                        dbSocket.SaveNews(newsContainer);
+                        if (context instanceof Updated.Refreshable) {
+                            Updated update = new Updated();
+                            update.InsertNewsContainer(newsContainer);
                             ((Updated.Refreshable) context).Refresh(update);
                         }
                     }
@@ -141,5 +175,3 @@ public class ContentManager {
         }.start();
     }
 }
-
-

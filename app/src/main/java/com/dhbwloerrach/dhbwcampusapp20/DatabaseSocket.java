@@ -41,7 +41,36 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DELETE FROM " + TABLE_NAME +";";
     }
 
-    public static abstract class DataBaseUserRole implements BaseColumns
+    public static abstract class DatabaseNews implements BaseColumns
+    {
+        public static final String TABLE_NAME = "News";
+        public static final String _ID = "_ID";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_DESCRIPTION = "description";
+        public static final String COLUMN_CONTENT = "kind";
+        public static final String COLUMN_CATEGORIES = "categories";
+        public static final String COLUMN_LINK = "link";
+
+
+        private static final String SQL_CREATE_ENTRIES =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
+                        _ID + " INTEGER PRIMARY KEY," +
+                        COLUMN_DATE + " INTEGER, " +
+                        COLUMN_TITLE + " TEXT, " +
+                        COLUMN_DESCRIPTION + " TEXT, " +
+                        COLUMN_CONTENT + " INTEGER, " +
+                        COLUMN_CATEGORIES + " TEXT, " +
+                        COLUMN_LINK + " TEXT);";
+
+        private static final String SQL_DELETE_ENTRIES =
+                "DROP TABLE IF EXISTS " + TABLE_NAME +";";
+
+        private static final String SQL_DELETE_CONTENT =
+                "DELETE FROM " + TABLE_NAME +";";
+    }
+
+    public static abstract class DatabaseUserRole implements BaseColumns
     {
         public static final String TABLE_NAME = "UserRole";
         public static final String _ID = "_ID";
@@ -66,16 +95,14 @@ public class DatabaseSocket extends SQLiteOpenHelper
     public DatabaseSocket(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        //SQLiteDatabase db = this.getWritableDatabase();
-        //onCreate(db);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(DatabaseMensa.SQL_CREATE_ENTRIES);
-        db.execSQL(DataBaseUserRole.SQL_CREATE_ENTRIES);
-        //ToDo: db.execSQL(NewsFeed.SQL_CREATE_ENTRIES);
+        db.execSQL(DatabaseUserRole.SQL_CREATE_ENTRIES);
+        db.execSQL(DatabaseNews.SQL_CREATE_ENTRIES);
         //ToDo: db.execSQL(Credit.SQL_CREATE_ENTRIES);
 
     }
@@ -84,8 +111,8 @@ public class DatabaseSocket extends SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
         db.execSQL(DatabaseMensa.SQL_DELETE_ENTRIES);
-        db.execSQL(DataBaseUserRole.SQL_DELETE_ENTRIES);
-        //ToDo: db.execSQL(NewsFeed.SQL_DELETE_ENTRIES);
+        db.execSQL(DatabaseUserRole.SQL_DELETE_ENTRIES);
+        db.execSQL(DatabaseNews.SQL_DELETE_ENTRIES);
         //ToDo: db.execSQL(Credit.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
@@ -95,10 +122,6 @@ public class DatabaseSocket extends SQLiteOpenHelper
     {
         onUpgrade(db, oldVersion, newVersion);
     }
-
-    /**
-     * All CRUD(Create, Read, Update, Delete) Operations
-     */
 
     public void SaveMensaData(MensaPlan plan)
     {
@@ -185,17 +208,82 @@ public class DatabaseSocket extends SQLiteOpenHelper
             return null;
         }
         db.close();
+        plan.SortDays();
         return plan;
+    }
+
+    public void SaveNews(NewsContainer newsContainer)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.execSQL(DatabaseNews.SQL_DELETE_CONTENT);
+            for (int i = 0; i < newsContainer.GetCountNews(); i++) {
+                ContentValues values = new ContentValues();
+                values.put(DatabaseNews._ID, i);
+                values.put(DatabaseNews.COLUMN_DATE, newsContainer.GetNewsItem(i).GetTimeStamp());
+                values.put(DatabaseNews.COLUMN_TITLE, newsContainer.GetNewsItem(i).Title);
+                values.put(DatabaseNews.COLUMN_CONTENT, newsContainer.GetNewsItem(i).Content);
+                values.put(DatabaseNews.COLUMN_DESCRIPTION, newsContainer.GetNewsItem(i).Description);
+                values.put(DatabaseNews.COLUMN_LINK, newsContainer.GetNewsItem(i).Link);
+                values.put(DatabaseNews.COLUMN_CATEGORIES, newsContainer.GetNewsItem(i).GetSerializedCategories());
+                db.insert(DatabaseNews.TABLE_NAME, null, values);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+    }
+
+    public NewsContainer GetNews()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        NewsContainer news;
+        try {
+            Cursor cursor = db.query(DatabaseNews.TABLE_NAME,new String[] {DatabaseNews.COLUMN_LINK,DatabaseNews.COLUMN_CATEGORIES,DatabaseNews.COLUMN_CONTENT,DatabaseNews.COLUMN_DESCRIPTION,DatabaseNews.COLUMN_DATE,DatabaseNews.COLUMN_TITLE},null,null,null,null,null);
+            if(cursor.moveToFirst()) {
+                news=new NewsContainer(cursor.getCount());
+                int counter=0;
+                do {
+                    NewsContainer.NewsItem item= new NewsContainer.NewsItem(cursor.getLong(4),cursor.getString(5),cursor.getString(0),cursor.getString(3),cursor.getString(2));
+                    String tmp[]=cursor.getString(1).split("\\|");
+                    for(int i=0;i<tmp.length;i++)
+                    {
+                        item.SetCategory(Integer.parseInt(tmp[i]));
+                    }
+                    news.IncertNews(item,counter++);
+                }while(cursor.moveToNext());  //cursor.isLast()
+                cursor.close();
+            }
+            else // Table empty
+            {
+                cursor.close();
+                db.close();
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            db.close();
+            return null;
+        }
+        db.close();
+        news.SortNews();
+        return news;
     }
 
     public void SaveUserRole(int role)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            db.execSQL(DataBaseUserRole.SQL_DELETE_CONTENT);
+            db.execSQL(DatabaseUserRole.SQL_DELETE_CONTENT);
             ContentValues values = new ContentValues();
-            values.put(DataBaseUserRole._ID, 0);
-            values.put(DataBaseUserRole.COLUMN_ROLE, role);
+            values.put(DatabaseUserRole._ID, 0);
+            values.put(DatabaseUserRole.COLUMN_ROLE, role);
             db.insert(DatabaseMensa.TABLE_NAME, null, values);
         }
         catch (Exception e)
@@ -211,7 +299,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         int role;
         try {
-            Cursor cursor = db.query(DataBaseUserRole.TABLE_NAME, new String[]{DataBaseUserRole.COLUMN_ROLE}, null, null, null, null, null);
+            Cursor cursor = db.query(DatabaseUserRole.TABLE_NAME, new String[]{DatabaseUserRole.COLUMN_ROLE}, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 role=cursor.getInt(0);
                 cursor.close();

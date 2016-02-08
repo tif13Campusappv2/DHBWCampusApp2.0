@@ -33,9 +33,10 @@
                 android:textColor="@color/dhbwRed"
                 android:layout_margin="6dp"/>
             <TextView
+                android:id="@+id/dash_news_mostcurrent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+++ Test News Ticker Nachricht: Es funzt +++"
+                android:text="@string/news_dummy_content"
                 android:textSize="@dimen/p"
                 android:fontFamily="monospace"
                 android:textColor="@color/darkgrey"

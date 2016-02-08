@@ -1,21 +1,12 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
-import android.view.Window;
 import android.widget.VideoView;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -37,7 +28,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run()
             {
                 ErrorReporting.Initialize(context);
-                ContentManager.UpdateFormRemote(context);
+                ContentManager.UpdateFromRemote(context);
             }
         }).start();
 
@@ -53,7 +44,12 @@ public class SplashScreen extends AppCompatActivity {
     public void onWindowFocusChanged(boolean visible) {
         if(visible) {
             //splashAnim.start();
-            anim.start();
+
+            try {
+                anim.start();
+            } catch (Exception e) {
+                ErrorReporting.NewError(ErrorReporting.Errors.Video);
+            }
             (new Thread()
             {
                 public void run()
@@ -65,7 +61,6 @@ public class SplashScreen extends AppCompatActivity {
                     catch (Exception e){}
                     finally
                     {
-
                         if(Weiterleitung==null)
                             Weiterleitung = new Intent(SplashScreen.this, StartScreen.class);
                         Weiterleitung.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

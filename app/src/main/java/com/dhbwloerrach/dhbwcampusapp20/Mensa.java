@@ -19,9 +19,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable {
 
@@ -76,11 +76,24 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.mensa, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == android.R.id.home) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             finish();
             Goto(Pages.StartScreen);
+            return true;
+        }
+        else if(id==R.id.mensa_actionbar_refresh)
+        {
+            ContentManager.UpdateFromRemote(this);
             return true;
         }
         return false;

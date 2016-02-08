@@ -19,7 +19,7 @@
     <string name="guthaben_header">Guthaben</string>
 
     //News Strings
-    <string name="feed_limiter">+++</string>
+
 
     // Debugging
     <string name="unkown_action">Unknown click action for this element</string>
@@ -28,13 +28,36 @@
     <string name="title_activity_lageplan">Lageplan</string>
     <string name="title_activity_guthaben">Guthaben</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     // Toast-Messages
     <string name="networkconnectionError">Verbindungsfehler</string>
     <string name="extractionError">Fehlerhafte Daten</string>
+
+    //##################################
+    //# Menü
+    //##################################
+
+    // Sidemenü
+    <string name="nav_side_subp_mensa">Mensa</string>
+    <string name="nav_side_subp_lageplan">Lageplan</string>
+    <string name="nav_side_subp_geld">Geld</string>
+    <string name="nav_side_subp_news">News</string>
+
+    <string name="nav_side_role_student">Student</string>
+    <string name="nav_side_role_mitarbeiter">Mitarbeiter</string>
+    <string name="nav_side_role_gast">Gast</string>
+
+    //##################################
+    //# News
+    //##################################
+
+    // Allgemein
+    <string name="news_template">+++ % +++</string>
+
+    // Dummy
+    <string name="news_dummy_content">+++ Test News Ticker Nachricht +++</string>
+
 
     //##################################
     //# Allgemein
@@ -112,5 +135,6 @@
     <string name="ErrorR_Network">Netzwerkfehler</string>
     <string name="ErrorR_XML">Fehlerhafte Daten</string>
     <string name="ErrorR_OFFLINE">Keine Internetverbindung</string>
+    <string name="ErrorR_Video">Videofehler</string>
 
 </resources>

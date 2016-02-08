@@ -4,19 +4,27 @@
         <item
             android:id="@+id/nav_news"
             android:icon="@drawable/news"
-            android:title="News" />
+            android:title="@string/nav_side_subp_news" />
         <item
             android:id="@+id/nav_geld"
             android:icon="@drawable/geld"
-            android:title="Geld" />
+            android:title="@string/nav_side_subp_geld" />
         <item
             android:id="@+id/nav_lageplan"
             android:icon="@drawable/lageplan"
-            android:title="Lageplan" />
+            android:title="@string/nav_side_subp_lageplan" />
         <item
             android:id="@+id/nav_mensa"
             android:icon="@drawable/mensa"
-            android:title="Mensa" />
+            android:title="@string/nav_side_subp_lageplan" />
     </group>
-
+    <group android:checkableBehavior="single" >
+        <item android:id="@+id/nav_role_student"
+            android:checked="true"
+            android:title="@string/nav_side_role_student" />
+        <item android:id="@+id/nav_role_mitarbeiter"
+            android:title="@string/nav_side_role_mitarbeiter" />
+        <item android:id="@+id/nav_role_gast"
+            android:title="@string/nav_side_role_gast" />
+    </group>
 </menu>

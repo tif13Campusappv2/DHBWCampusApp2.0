@@ -2,7 +2,6 @@ package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -63,8 +62,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==R.id.startscreen_actionbar_refresh) {
-            ContentManager.UpdateFormRemote(this);
-            ContentManager.UpdateActivity(this);
+            ContentManager.UpdateFromRemote(this);
             return true;
         }
 
@@ -146,19 +144,20 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         }
     }
 
-    public void Refresh(final Updated areas)
+    public void Refresh(final Updated update)
     {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                if(areas.IsUpdated(Updated.Mensa) && areas.IsUpdated(Updated.Role))
+                if(update.IsUpdated(Updated.Mensa) && update.IsUpdated(Updated.Role))
                 {
-                    LoadMensaData(areas.GetMensaPlan(),areas.GetRole());
+                    LoadMensaData(update.GetMensaPlan(),update.GetRole());
                 }
-                if(areas.IsUpdated(Updated.News))
+                if(update.IsUpdated(Updated.News))
                 {
-
+                    NewsContainer.NewsItem mostcurrentnews= update.GetNews().GetNewsItem(0);
+                    ((TextView)findViewById(R.id.dash_news_mostcurrent)).setText(getString(R.string.news_template).replace("%",mostcurrentnews.Title));
                 }
-                if(areas.IsUpdated(Updated.Guthaben))
+                if(update.IsUpdated(Updated.Guthaben))
                 {
 
                 }
