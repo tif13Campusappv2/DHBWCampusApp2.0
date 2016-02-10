@@ -26,7 +26,10 @@ public class NewsContainer {
 
     public List<NewsItem> GetNewsItemList()
     {
-        return (Arrays.asList(Items));
+        List<NewsItem> list= new ArrayList<NewsItem>();
+        for(int i=0;i<Items.length;i++)
+            list.add(Items[i]);
+        return list;
     }
 
     public List<NewsItem> GetNewsItemList(int Category)

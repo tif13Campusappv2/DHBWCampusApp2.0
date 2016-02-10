@@ -5,12 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class News extends AppCompatActivity implements Updated.Refreshable, news_fragment.OnListFragmentInteractionListener,ViewPager.OnPageChangeListener {
+public class News extends AppCompatActivity implements Updated.Refreshable, news_fragment.OnListFragmentInteractionListener,ViewPager.OnPageChangeListener ,SwipeRefreshLayout.OnRefreshListener {
 
     private ViewPager mViewPager;
     private  AppSectionsPagerAdapter mAppSectionsPagerAdapter;
@@ -23,6 +24,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((SwipeRefreshLayout)findViewById(R.id.news_refreshlayout)).setOnRefreshListener(this);
         InitializeTabView();
     }
 
@@ -55,7 +57,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
             Goto(Pages.StartScreen);
             return true;
         }
-        else if(id==R.id.mensa_actionbar_refresh)
+        else if(id==R.id.news_actionbar_refresh)
         {
             ContentManager.UpdateFromRemote(this);
             return true;
@@ -144,6 +146,13 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         {
             return TabHeaders[position];
         }
+    }
+
+    @Override
+    public void onRefresh()
+    {
+        ContentManager.UpdateFromRemote(this);
+        ((SwipeRefreshLayout)findViewById(R.id.news_refreshlayout)).setRefreshing(false);
     }
 
     public void Refresh(final Updated updater)

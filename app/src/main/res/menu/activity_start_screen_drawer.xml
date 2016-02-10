@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none" android:id="@+id/nav_side_pages">
         <item
             android:id="@+id/nav_news"
             android:icon="@drawable/news"
@@ -18,13 +18,9 @@
             android:icon="@drawable/mensa"
             android:title="@string/nav_side_subp_lageplan" />
     </group>
-    <group android:checkableBehavior="single" >
-        <item android:id="@+id/nav_role_student"
-            android:checked="true"
-            android:title="@string/nav_side_role_student" />
-        <item android:id="@+id/nav_role_mitarbeiter"
-            android:title="@string/nav_side_role_mitarbeiter" />
-        <item android:id="@+id/nav_role_gast"
-            android:title="@string/nav_side_role_gast" />
+    <group android:checkableBehavior="none" android:id="@+id/nav_side_roles">
+        <item android:id="@+id/nav_side_role"
+            android:icon="@drawable/user"
+            android:title="@string/nav_side_role" />
     </group>
 </menu>

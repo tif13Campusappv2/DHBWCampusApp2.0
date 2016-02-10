@@ -1,7 +1,11 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +18,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Updated.Refreshable {
+public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Updated.Refreshable,SwipeRefreshLayout.OnRefreshListener  {
+
+    private int userRole=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +28,6 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_start_screen);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         LoadClickHandler();
-
 
     }
 
@@ -84,10 +89,11 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
             Goto(Pages.Mensa);
         } else if (id == R.id.nav_news) {
             Goto(Pages.News);
+        }else if(id==R.id.nav_side_role) {
+            ShowRoleDialog();
         }else{
             (Toast.makeText(this,R.string.unkown_action,Toast.LENGTH_LONG)).show();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -111,6 +117,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         findViewById(R.id.dash_Mensa).setOnClickListener(this);
         findViewById(R.id.dash_News).setOnClickListener(this);
         findViewById(R.id.dash_Guthaben).setOnClickListener(this);
+        ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setOnRefreshListener(this);
 
         // Actionbar open
         ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
@@ -151,6 +158,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                 if(update.IsUpdated(Updated.Mensa) && update.IsUpdated(Updated.Role))
                 {
                     LoadMensaData(update.GetMensaPlan(),update.GetRole());
+                    userRole=update.GetRole();
                 }
                 if(update.IsUpdated(Updated.News))
                 {
@@ -163,6 +171,13 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                 }
             }
         });
+    }
+
+    @Override
+    public void onRefresh()
+    {
+        ContentManager.UpdateFromRemote(this);
+        ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setRefreshing(false);
     }
 
     private void LoadMensaData(MensaPlan mensaPlan,int role)
@@ -183,5 +198,19 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
 
         ((TextView) findViewById(R.id.startscreen_mensa_buffet_name)).setText(day.Menues[MensaPlan.Menues.Buffet].Name);
         ((TextView) findViewById(R.id.startscreen_mensa_buffet_price)).setText(day.Menues[MensaPlan.Menues.Buffet].prices[role]);
+    }
+
+    private  void ShowRoleDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final Activity context=this;
+        // final static int Schueler=0, Studenten=1, Mitarbeiter=2, Gaeste=3;
+        builder.setTitle(R.string.nav_side_role_popup_title).setSingleChoiceItems(R.array.nav_side_role_popup_options, userRole, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int role) {
+                ContentManager.UpdateUserRole(context, role);
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
     }
 }

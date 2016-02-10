@@ -38,15 +38,21 @@
     //# Menü
     //##################################
 
-    // Sidemenü
+    // Pages
     <string name="nav_side_subp_mensa">Mensa</string>
     <string name="nav_side_subp_lageplan">Lageplan</string>
     <string name="nav_side_subp_geld">Geld</string>
     <string name="nav_side_subp_news">News</string>
 
-    <string name="nav_side_role_student">Student</string>
-    <string name="nav_side_role_mitarbeiter">Mitarbeiter</string>
-    <string name="nav_side_role_gast">Gast</string>
+    // Role
+    <string name="nav_side_role">Benutzer</string>
+    <string name="nav_side_role_popup_title">Benutzer ist:</string>
+    <array name="nav_side_role_popup_options">
+        <item>Schüler</item>
+        <item>Student</item>
+        <item>Mitarbeiter</item>
+        <item>Gast</item>
+    </array>
 
     //##################################
     //# News
