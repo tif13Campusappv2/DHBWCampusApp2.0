@@ -1,5 +1,7 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.text.Html;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -50,7 +52,7 @@ public class NewsUpdater {
 
         public NewsContainer Extract(String rowData)
         {
-            rowData= rowData.replaceAll("\r\n","").replaceAll("\t", "").replaceAll(">\\s+<","><").replaceAll("<br>","\r\n");
+            rowData= rowData.replaceAll("\r\n", "").replaceAll("\t", "").replaceAll(">\\s+<","><").replaceAll("<br>","\r\n");
             Document serverResponse;
             try
             {
@@ -68,7 +70,10 @@ public class NewsUpdater {
                     String title= currentNewsItem.getElementsByTagName("title").item(0).getTextContent();
                     String link= currentNewsItem.getElementsByTagName("link").item(0).getTextContent();
                     String description= currentNewsItem.getElementsByTagName("description").item(0).getTextContent();
-                    String content= currentNewsItem.getElementsByTagName("content:encoded").item(0).getTextContent();
+                    String content= ConverFromHtml(currentNewsItem.getElementsByTagName("content:encoded").item(0).getTextContent());
+
+
+
                     NewsContainer.NewsItem newNewsItem= new NewsContainer.NewsItem(date,title,link,description,content);
                     NodeList currentCategories= currentNewsItem.getElementsByTagName("category");
                     for(int j=0;j<currentCategories.getLength();j++)
@@ -100,6 +105,13 @@ public class NewsUpdater {
                 return null;
             }
 
+        }
+
+        private String ConverFromHtml(String textWithHtml)
+        {
+            if(textWithHtml.startsWith("<div>"))
+                textWithHtml=textWithHtml.substring(5);
+            return Html.fromHtml(Html.fromHtml(textWithHtml.replaceAll("<div>", "%nl%%nl%")).toString()).toString().replaceAll("%nl%", "\r\n");
         }
     }
 }

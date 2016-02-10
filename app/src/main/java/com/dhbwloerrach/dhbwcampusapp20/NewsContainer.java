@@ -1,5 +1,7 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.content.ClipData;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.List;
 
 public class NewsContainer {
     private NewsItem Items[];
+    private int selectedItem;
 
     public NewsContainer(int numberOfNews)
     {
@@ -17,6 +20,16 @@ public class NewsContainer {
     {
         if(positon>=0 && positon< Items.length)
             Items[positon]=item;
+    }
+
+    public void SetSelectedItem(int selectedItem)
+    {
+        this.selectedItem =selectedItem;
+    }
+
+    public NewsItem GetSelectedNewsItem()
+    {
+        return Items[selectedItem];
     }
 
     public NewsItem GetNewsItem(int position)
@@ -95,7 +108,7 @@ public class NewsContainer {
 
         public String GetFormatedDate()
         {
-            return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." ; //+ (Date.getYear()+1900);
+            return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." + (Date.getYear()+1900) + " " + AddLeadingZeros(Date.getHours(),2) + ":" + AddLeadingZeros(Date.getMinutes(),2);
         }
 
         public void SetCategory(int position)

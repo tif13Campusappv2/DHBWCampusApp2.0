@@ -1,5 +1,6 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +15,8 @@ import android.view.MenuItem;
 public class News extends AppCompatActivity implements Updated.Refreshable, news_fragment.OnListFragmentInteractionListener,ViewPager.OnPageChangeListener ,SwipeRefreshLayout.OnRefreshListener {
 
     private ViewPager mViewPager;
-    private  AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    private AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    private NewsContainer currentContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,12 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         {
             this.overridePendingTransition(R.anim.scale_in, R.anim.right_out);
         }
+        else if(page == Pages.NewsDetail)
+        {
+            startActivity(new Intent(News.this,NewsDetail.class));
+            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+        }
+
     }
 
     private void InitializeTabView()
@@ -161,7 +169,8 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
             public void run() {
                 if(updater.IsUpdated(Updated.News))
                 {
-                    mAppSectionsPagerAdapter.Update(updater.GetNews());
+                    currentContainer=updater.GetNews();
+                    mAppSectionsPagerAdapter.Update(currentContainer);
                 }
             }
         });
@@ -169,7 +178,12 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
 
     @Override
     public void onListFragmentInteraction(NewsContainer.NewsItem item){
-        ErrorReporting.NewError(ErrorReporting.Errors.Video);
+        for(int i=0;i<currentContainer.GetCountNews();i++)
+            if(currentContainer.GetNewsItem(i)==item)
+            {
+                ContentManager.UpdateSelectedNewsItem(i);
+                Goto(Pages.NewsDetail);
+            }
     }
 
 }
