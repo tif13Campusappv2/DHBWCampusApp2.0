@@ -54,9 +54,12 @@
 
     // Allgemein
     <string name="news_template">+++ % +++</string>
+    <string name="news_image_desc">News Feed icon</string>
 
     // Dummy
     <string name="news_dummy_content">+++ Test News Ticker Nachricht +++</string>
+    <string name="news_dummy_title">Amtsübergabe an der Dualen Hochschule Baden-Württemberg</string>
+    <string name="news_dummy_description">Professor Arnold van Zyl (PhD) ist neuer Präsident der DHBW / Verabschiedung von Professor Reinhold R. Geilsdörfer</string>
 
 
     //##################################

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/news_newsitem_container"
+    >
+
+    <ImageView
+        style="@style/news_newsitem_image"
+        />
+    <LinearLayout
+        style="@style/news_newsitem_innercontainer"
+        >
+        <TextView
+            android:id="@+id/title"
+            style="@style/news_newsitem_title"
+            android:text="@string/news_dummy_title"
+            />
+        <TextView
+            android:id="@+id/description"
+            style="@style/news_newsitem_description"
+            android:text="@string/news_dummy_description"
+         />
+    </LinearLayout>
+
+</LinearLayout>

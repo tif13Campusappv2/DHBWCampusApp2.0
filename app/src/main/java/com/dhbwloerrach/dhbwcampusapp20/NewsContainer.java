@@ -1,7 +1,9 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class NewsContainer {
     private NewsItem Items[];
@@ -20,6 +22,20 @@ public class NewsContainer {
     public NewsItem GetNewsItem(int position)
     {
         return position>=0 && position< Items.length ? Items[position]:null;
+    }
+
+    public List<NewsItem> GetNewsItemList()
+    {
+        return (Arrays.asList(Items));
+    }
+
+    public List<NewsItem> GetNewsItemList(int Category)
+    {
+        List<NewsItem> list= new ArrayList<NewsItem>();
+        for(int i=0;i<Items.length;i++)
+            if(Items[i].IsCategory(Category))
+            list.add(Items[i]);
+        return list;
     }
 
     public int GetCountNews()

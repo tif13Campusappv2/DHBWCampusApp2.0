@@ -39,7 +39,7 @@ public class ErrorReporting {
         if(context!=null)
         context.runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(context, Errors.Errors[Error],Toast.LENGTH_LONG).show();
+                Toast.makeText(context, Errors.Errors[Error],Toast.LENGTH_SHORT).show();
             }
         });
     }

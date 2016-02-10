@@ -135,10 +135,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
     }
 
-    public void onFragmentInteraction(Uri uri)
-    {
-
-    }
 
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {

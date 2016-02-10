@@ -1,8 +1,6 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,9 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class News extends AppCompatActivity implements Updated.Refreshable {
+public class News extends AppCompatActivity implements Updated.Refreshable, news_fragment.OnListFragmentInteractionListener,ViewPager.OnPageChangeListener {
 
     private ViewPager mViewPager;
     private  AppSectionsPagerAdapter mAppSectionsPagerAdapter;
@@ -26,6 +23,15 @@ public class News extends AppCompatActivity implements Updated.Refreshable {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        InitializeTabView();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        ErrorReporting.NewContext(this);
+        ContentManager.UpdateActivity(this);
     }
 
     @Override
@@ -65,12 +71,34 @@ public class News extends AppCompatActivity implements Updated.Refreshable {
         }
     }
 
+    private void InitializeTabView()
+    {
+        mAppSectionsPagerAdapter= new AppSectionsPagerAdapter(getSupportFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.news_ViewPager);
+        mViewPager.setAdapter(mAppSectionsPagerAdapter);
+        mViewPager.setOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {
         private Fragment[] items;
         private final int NumberTabs=5;
-        private String[] TabHeaders={"Alle News","Presse","Mitarbeiter","Dozierende"};
+        private String[] TabHeaders={"Alle","News","Presse","Mitarbeiter","Dozierende"};
 
         public AppSectionsPagerAdapter(FragmentManager fm)
         {
@@ -80,15 +108,12 @@ public class News extends AppCompatActivity implements Updated.Refreshable {
 
         public void Update(NewsContainer newsContainer)
         {
-            /*
-            for(int i=0;i<items.length;i++)
+            ((news_fragment)items[0]).UpdateNews(newsContainer.GetNewsItemList());
+            for(int i=1;i<items.length;i++)
             {
-                TabHeaders[i]=mensaplan.GetDay(i).GetFormatedDate();
-                ((mensa_fragment)items[i]).UpdateData(mensaplan.GetDay(i),Role);
+                ((news_fragment)items[i]).UpdateNews(newsContainer.GetNewsItemList(i-1));
             }
-            */
             this.notifyDataSetChanged();
-
         }
 
         @Override
@@ -103,9 +128,8 @@ public class News extends AppCompatActivity implements Updated.Refreshable {
         private void ReloadFragments()
         {
             items= new Fragment[NumberTabs];
-            TabHeaders= new String[NumberTabs];
             for(int i=0;i<NumberTabs;i++) {
-                items[i] = new mensa_fragment();
+                items[i] = new news_fragment();
             }
         }
 
@@ -132,6 +156,11 @@ public class News extends AppCompatActivity implements Updated.Refreshable {
                 }
             }
         });
+    }
+
+    @Override
+    public void onListFragmentInteraction(NewsContainer.NewsItem item){
+        ErrorReporting.NewError(ErrorReporting.Errors.Video);
     }
 
 }

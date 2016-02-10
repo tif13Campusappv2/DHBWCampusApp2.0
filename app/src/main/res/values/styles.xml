@@ -67,6 +67,57 @@
         <item name="android:background">@color/darkgrey</item>
     </style>
 
+    <!--
+    ##################################
+    #  News
+    ##################################
+    -->
+    <style name="news_newsitem_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:background">@drawable/panelbox</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:weightSum">11</item>
+    </style>
+
+    <style name="news_newsitem_image">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:src">@drawable/feed</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:contentDescription">@string/news_image_desc</item>
+    </style>
+
+    <style name="news_newsitem_innercontainer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">9</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="news_newsitem_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+    </style>
+
+    <style name="news_newsitem_description">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+    </style>
+
 
     <!--
     ##################################
