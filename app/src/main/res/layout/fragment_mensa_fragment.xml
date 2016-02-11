@@ -1,9 +1,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
+    android:id="@+id/mensa_fragment_scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
+    android:layout_margin="0dp"
+    android:padding="0dp"
     android:scrollbars="none"
     tools:context="com.dhbwloerrach.dhbwcampusapp20.mensa_fragment">
 

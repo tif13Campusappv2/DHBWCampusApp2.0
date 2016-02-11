@@ -153,8 +153,9 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         @Override
         public Fragment getItem(int i)
         {
-            if(i<0 || i>=items.length)
+            if(i<0 || i>=items.length) {
                 return new Fragment();
+            }
             else
                 return items[i];
         }
@@ -165,6 +166,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             TabHeaders= new String[NumberTabs];
             for(int i=0;i<NumberTabs;i++) {
                 items[i] = new mensa_fragment();
+                ((mensa_fragment)items[i]).SetNumber(i);
                 TabHeaders[i]="Section " + (i+1);
             }
         }
@@ -204,5 +206,10 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
     {
         ContentManager.UpdateFromRemote(this);
         ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setRefreshing(false);
+    }
+
+    public void ChangeRefreshLayout(boolean enabled, int number){
+        if(number== mViewPager.getCurrentItem())
+            ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setEnabled(enabled);
     }
 }

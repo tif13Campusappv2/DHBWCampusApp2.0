@@ -7,36 +7,37 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class mensa_fragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private Boolean IsActive;
+    private int number;
     private MensaPlan.Day day;
+    private ScrollView scrollView;
     private int role;
 
     public mensa_fragment() {
         IsActive=false;
     }
 
+    public void SetNumber(int number)
+    {
+        this.number=number;
+    }
+
     public static mensa_fragment newInstance() {
-        mensa_fragment fragment = new mensa_fragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new mensa_fragment();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        mListener = (OnFragmentInteractionListener) context;
     }
 
     @Override
@@ -57,6 +58,17 @@ public class mensa_fragment extends Fragment {
         try {
             IsActive=true;
             ShowData();
+            scrollView=(ScrollView)(this.getView()).findViewById(R.id.mensa_fragment_scrollView);
+            scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+                @Override
+                public void onScrollChanged() {
+                    int scrollY = scrollView.getScrollY();
+                    if(scrollY == 0) mListener.ChangeRefreshLayout(true, number);
+                    else mListener.ChangeRefreshLayout(false, number);
+
+                }
+            });
         }
         catch (Exception e)
         {
@@ -64,6 +76,8 @@ public class mensa_fragment extends Fragment {
         }
 
     }
+
+
 
     @Override
     public void onPause()
@@ -127,6 +141,6 @@ public class mensa_fragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-       // MensaPlan.Day
+       void ChangeRefreshLayout(boolean enabled, int number);
     }
 }
