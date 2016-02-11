@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dhbwloerrach.dhbwcampusapp20.news_fragment.OnListFragmentInteractionListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<NewsContainer.NewsItem> mValues;
+    private List<NewsContainer.NewsItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public MyItemRecyclerViewAdapter(List<NewsContainer.NewsItem> items, OnListFragmentInteractionListener listener) {
@@ -44,8 +46,18 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     {
         while (!mValues.isEmpty())
         {
-            mValues.remove(mValues.size()-1);
+            try {
+                mValues.remove(mValues.size()-1);
+            } catch (Exception e) {
+                e.printStackTrace();
+                break;
+            }
             notifyItemRemoved(mValues.size());
+        }
+        if(!mValues.isEmpty()) {
+            for(int i=0;i<mValues.size();i++)
+                notifyItemRemoved(i);
+            mValues = new ArrayList<>();
         }
 
         for(int i=0;i<newlist.size();i++)

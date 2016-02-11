@@ -38,15 +38,21 @@
     //# Menü
     //##################################
 
-    // Sidemenü
+    // Pages
     <string name="nav_side_subp_mensa">Mensa</string>
     <string name="nav_side_subp_lageplan">Lageplan</string>
     <string name="nav_side_subp_geld">Geld</string>
     <string name="nav_side_subp_news">News</string>
 
-    <string name="nav_side_role_student">Student</string>
-    <string name="nav_side_role_mitarbeiter">Mitarbeiter</string>
-    <string name="nav_side_role_gast">Gast</string>
+    // Role
+    <string name="nav_side_role">Benutzer</string>
+    <string name="nav_side_role_popup_title">Benutzer ist:</string>
+    <array name="nav_side_role_popup_options">
+        <item>Schüler</item>
+        <item>Student</item>
+        <item>Mitarbeiter</item>
+        <item>Gast</item>
+    </array>
 
     //##################################
     //# News
@@ -61,6 +67,11 @@
     <string name="news_dummy_title">Amtsübergabe an der Dualen Hochschule Baden-Württemberg</string>
     <string name="news_dummy_description">Professor Arnold van Zyl (PhD) ist neuer Präsident der DHBW / Verabschiedung von Professor Reinhold R. Geilsdörfer</string>
 
+    //##################################
+    //# News Detail
+    //##################################
+
+    <string name="newsdetail_gotoWebsite">Zur Webseite</string>
 
     //##################################
     //# Allgemein
@@ -139,5 +150,6 @@
     <string name="ErrorR_XML">Fehlerhafte Daten</string>
     <string name="ErrorR_OFFLINE">Keine Internetverbindung</string>
     <string name="ErrorR_Video">Videofehler</string>
+    <string name="title_activity_news_detail">News</string>
 
 </resources>

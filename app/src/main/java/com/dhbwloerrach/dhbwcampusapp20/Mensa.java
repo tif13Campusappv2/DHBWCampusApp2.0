@@ -1,29 +1,20 @@
-/* ToDo Mensa:
-    - Überschriften bei Laden der Daten anpassen
-    - Preiseinstellungen für verschiedene Personengruppen importieren (momentan hardcoded auf Studenten)
-    - Datenbankanbindung
-    - Evtl. andere Symbole für Vegan/Vegetarisch
-    - Evtl. Zeilenumbrüche aus API importieren
-    - Aufruf zum Aktualisieren an andere Stelle packen
- */
-
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable {
+public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable, SwipeRefreshLayout.OnRefreshListener  {
 
 
     private ViewPager mViewPager;
@@ -51,6 +42,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+        ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setOnRefreshListener(this);
         InitializeTabView();
     }
 
@@ -161,8 +153,9 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         @Override
         public Fragment getItem(int i)
         {
-            if(i<0 || i>=items.length)
+            if(i<0 || i>=items.length) {
                 return new Fragment();
+            }
             else
                 return items[i];
         }
@@ -173,6 +166,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             TabHeaders= new String[NumberTabs];
             for(int i=0;i<NumberTabs;i++) {
                 items[i] = new mensa_fragment();
+                ((mensa_fragment)items[i]).SetNumber(i);
                 TabHeaders[i]="Section " + (i+1);
             }
         }
@@ -207,4 +201,15 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         });
     }
 
+    @Override
+    public void onRefresh()
+    {
+        ContentManager.UpdateFromRemote(this);
+        ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setRefreshing(false);
+    }
+
+    public void ChangeRefreshLayout(boolean enabled, int number){
+        if(number== mViewPager.getCurrentItem())
+            ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setEnabled(enabled);
+    }
 }

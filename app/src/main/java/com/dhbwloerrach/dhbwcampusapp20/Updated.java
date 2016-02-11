@@ -7,7 +7,7 @@ public class Updated
     private MensaPlan mensa;
     private NewsContainer news;
     private int role;
-    private boolean values[]={false,false,false, false};
+    private boolean values[]={false,false,false,false};
 
     public Updated()
     {

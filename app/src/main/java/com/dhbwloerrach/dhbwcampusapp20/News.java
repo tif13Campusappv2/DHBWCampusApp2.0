@@ -1,19 +1,22 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class News extends AppCompatActivity implements Updated.Refreshable, news_fragment.OnListFragmentInteractionListener,ViewPager.OnPageChangeListener {
+public class News extends AppCompatActivity implements Updated.Refreshable, news_fragment.OnListFragmentInteractionListener,ViewPager.OnPageChangeListener ,SwipeRefreshLayout.OnRefreshListener {
 
     private ViewPager mViewPager;
-    private  AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    private AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    private NewsContainer currentContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((SwipeRefreshLayout)findViewById(R.id.news_refreshlayout)).setOnRefreshListener(this);
         InitializeTabView();
     }
 
@@ -55,7 +59,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
             Goto(Pages.StartScreen);
             return true;
         }
-        else if(id==R.id.mensa_actionbar_refresh)
+        else if(id==R.id.news_actionbar_refresh)
         {
             ContentManager.UpdateFromRemote(this);
             return true;
@@ -69,6 +73,12 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         {
             this.overridePendingTransition(R.anim.scale_in, R.anim.right_out);
         }
+        else if(page == Pages.NewsDetail)
+        {
+            startActivity(new Intent(News.this,NewsDetail.class));
+            this.overridePendingTransition(R.anim.right_in, R.anim.scale_out);
+        }
+
     }
 
     private void InitializeTabView()
@@ -146,13 +156,21 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         }
     }
 
+    @Override
+    public void onRefresh()
+    {
+        ContentManager.UpdateFromRemote(this);
+        ((SwipeRefreshLayout)findViewById(R.id.news_refreshlayout)).setRefreshing(false);
+    }
+
     public void Refresh(final Updated updater)
     {
         this.runOnUiThread(new Runnable() {
             public void run() {
                 if(updater.IsUpdated(Updated.News))
                 {
-                    mAppSectionsPagerAdapter.Update(updater.GetNews());
+                    currentContainer=updater.GetNews();
+                    mAppSectionsPagerAdapter.Update(currentContainer);
                 }
             }
         });
@@ -160,7 +178,12 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
 
     @Override
     public void onListFragmentInteraction(NewsContainer.NewsItem item){
-        ErrorReporting.NewError(ErrorReporting.Errors.Video);
+        for(int i=0;i<currentContainer.GetCountNews();i++)
+            if(currentContainer.GetNewsItem(i)==item)
+            {
+                ContentManager.UpdateSelectedNewsItem(i);
+                Goto(Pages.NewsDetail);
+            }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.content.ClipData;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.List;
 
 public class NewsContainer {
     private NewsItem Items[];
+    private int selectedItem;
 
     public NewsContainer(int numberOfNews)
     {
@@ -19,6 +22,16 @@ public class NewsContainer {
             Items[positon]=item;
     }
 
+    public void SetSelectedItem(int selectedItem)
+    {
+        this.selectedItem =selectedItem;
+    }
+
+    public NewsItem GetSelectedNewsItem()
+    {
+        return Items[selectedItem];
+    }
+
     public NewsItem GetNewsItem(int position)
     {
         return position>=0 && position< Items.length ? Items[position]:null;
@@ -26,7 +39,10 @@ public class NewsContainer {
 
     public List<NewsItem> GetNewsItemList()
     {
-        return (Arrays.asList(Items));
+        List<NewsItem> list= new ArrayList<NewsItem>();
+        for(int i=0;i<Items.length;i++)
+            list.add(Items[i]);
+        return list;
     }
 
     public List<NewsItem> GetNewsItemList(int Category)
@@ -92,7 +108,7 @@ public class NewsContainer {
 
         public String GetFormatedDate()
         {
-            return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." ; //+ (Date.getYear()+1900);
+            return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." + (Date.getYear()+1900) + " " + AddLeadingZeros(Date.getHours(),2) + ":" + AddLeadingZeros(Date.getMinutes(),2);
         }
 
         public void SetCategory(int position)

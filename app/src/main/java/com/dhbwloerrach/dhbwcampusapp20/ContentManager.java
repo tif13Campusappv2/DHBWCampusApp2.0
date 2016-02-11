@@ -13,6 +13,7 @@ public class ContentManager {
     private MensaPlan mensaPlan;
     private NewsContainer newsContainer;
     private int role;
+    private int selectedNewsItem;
     private boolean loaded;
 
     public ContentManager() {
@@ -20,6 +21,7 @@ public class ContentManager {
         newsUpdater= new NewsUpdater();
         role=-1;
         loaded=false;
+        selectedNewsItem=0;
     }
 
     public static void Initialize(Activity context)
@@ -43,6 +45,11 @@ public class ContentManager {
         if(manager==null)
             Initialize(context);
         manager._UpdateUserRole(context, role);
+    }
+
+    public static void UpdateSelectedNewsItem(int selectedNewsItem)
+    {
+        manager._UpdateCurrentNewsItem(selectedNewsItem);
     }
 
     public static void UpdateActivity(Activity context)
@@ -140,6 +147,7 @@ public class ContentManager {
                 if(_IsOnline(context)) {
                     NewsContainer newNews = newsUpdater.LoadNewsData();
                     if (newNews != null) {
+                        newNews.SetSelectedItem(selectedNewsItem);
                         newsContainer = newNews;
                         DatabaseSocket dbSocket = new DatabaseSocket(context);
                         dbSocket.SaveNews(newsContainer);
@@ -169,9 +177,16 @@ public class ContentManager {
                 {
                     Updated update= new Updated();
                     update.InsertRole(role);
+                    update.InsertMensaPlan(mensaPlan);
                     ((Updated.Refreshable) context).Refresh(update);
                 }
             }
         }.start();
+    }
+
+    private void _UpdateCurrentNewsItem(int item)
+    {
+        this.selectedNewsItem=item;
+        newsContainer.SetSelectedItem(selectedNewsItem);
     }
 }

@@ -284,7 +284,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
             ContentValues values = new ContentValues();
             values.put(DatabaseUserRole._ID, 0);
             values.put(DatabaseUserRole.COLUMN_ROLE, role);
-            db.insert(DatabaseMensa.TABLE_NAME, null, values);
+            db.insert(DatabaseUserRole.TABLE_NAME, null, values);
         }
         catch (Exception e)
         {
