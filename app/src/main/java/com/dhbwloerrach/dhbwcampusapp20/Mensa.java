@@ -193,10 +193,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
                     mViewPager.setCurrentItem(updater.GetMensaPlan().GetBestFittingDay(),true);
                     mAppSectionsPagerAdapter.Update(updater.GetMensaPlan(), updater.GetRole());
                 }
-                if(updater.IsUpdated(Updated.Guthaben))
-                {
-
-                }
             }
         });
     }
@@ -210,6 +206,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
     public void ChangeRefreshLayout(boolean enabled, int number){
         if(number== mViewPager.getCurrentItem())
-            ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setEnabled(enabled);
+            (findViewById(R.id.mensa_refreshlayout)).setEnabled(enabled);
     }
 }
