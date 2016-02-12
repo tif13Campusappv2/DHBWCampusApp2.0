@@ -9,6 +9,10 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -75,9 +79,33 @@ public class MensaUpdater {
                         prices[MensaPlan.Prices.Mitarbeiter]=priceNode.getElementsByTagName("angestellte").item(0).getTextContent();
                         prices[MensaPlan.Prices.Gaeste]=priceNode.getElementsByTagName("gaeste").item(0).getTextContent();
 
-                        MensaPlan.Menue newMenue= new MensaPlan.Menue(currentMenu.getAttribute("zusatz"),
-                                currentMenu.getElementsByTagName("nameMitUmbruch").item(0).getTextContent(),
-                                prices);
+                        String Name=currentMenu.getElementsByTagName("nameMitUmbruch").item(0).getTextContent();
+
+                        List<String> ke= new ArrayList<>();
+                        Pattern Brackets = Pattern.compile("\\([^\\)]*\\)");
+                        Matcher m= Brackets.matcher(Name);
+                        while (m.find()) {
+                            String s = m.group(0);
+                            if(s.equals("(Preis für Studierende)"))
+                                continue;
+                            Name=Name.replace(s,"");
+                            s=s.replaceAll("[\\(\\)]","");
+                            String a[]=s.split(",");
+                            for(int k=0;k<a.length;k++)
+                                ke.add(a[k]);
+                        }
+                        String Kennzeichnungen=", ";
+                        for(int k=0;k<ke.size();k++)
+                            if(!Kennzeichnungen.contains(", " + ke.get(k) + ","))
+                                Kennzeichnungen+= ke.get(k)+", ";
+
+                        if(Kennzeichnungen.equals(", "))
+                            Kennzeichnungen="-";
+                        else
+                            Kennzeichnungen=Kennzeichnungen.replaceAll("^,\\s", "").replaceAll(",\\s$","");
+                        Name=Name.replaceAll("^\r\n","").replaceAll("^\r","").replaceAll("^\n","").replaceAll("\r\n$","").replaceAll("\r$","").replaceAll("\n$","");
+
+                        MensaPlan.Menue newMenue= new MensaPlan.Menue(currentMenu.getAttribute("zusatz"),Name, prices,Kennzeichnungen);
                         switch (currentMenu.getAttribute("art"))
                         {
                             case "Essen 1":

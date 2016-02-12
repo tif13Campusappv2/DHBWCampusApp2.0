@@ -1,6 +1,5 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -118,13 +117,17 @@ public class MensaPlan
         public String zusatz;
         public String Name;
         public String prices[];
+        public String Kennzeichnungen;
 
-        public Menue(String zusatz, String Name, String prices[])
+        public Menue(String zusatz, String Name, String prices[],String kennzeichnungen)
         {
             this.zusatz=zusatz;
+
             this.Name=Name;
             this.prices=prices;
+            this.Kennzeichnungen=kennzeichnungen;
         }
+
     }
 
 }

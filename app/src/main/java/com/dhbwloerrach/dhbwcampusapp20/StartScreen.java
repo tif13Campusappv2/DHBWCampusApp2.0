@@ -3,7 +3,6 @@ package com.dhbwloerrach.dhbwcampusapp20;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +28,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_start_screen);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         LoadClickHandler();
+
 
     }
 
@@ -53,6 +52,8 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
             Goto(Pages.Guthaben);
         else if(id==R.id.dash_News)
             Goto(Pages.News);
+        else if(id==R.id.dash_Lageplan)
+            Goto(Pages.Lageplan);
     }
 
     @Override
@@ -119,6 +120,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         findViewById(R.id.dash_Mensa).setOnClickListener(this);
         findViewById(R.id.dash_News).setOnClickListener(this);
         findViewById(R.id.dash_Guthaben).setOnClickListener(this);
+        findViewById(R.id.dash_Lageplan).setOnClickListener(this);
         ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setOnRefreshListener(this);
 
         // Actionbar open

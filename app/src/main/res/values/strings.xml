@@ -98,6 +98,7 @@
     <string name="mensa_menue_2_headline">Essen 2</string>
     <string name="mensa_menue_3_headline">Essen 3</string>
     <string name="mensa_menue_buffet_headline">Buffet</string>
+    <string name="mensa_menue_ken">Kennzeichnungen: </string>
     <string name="mensa_menue_price_dummy">3,00€</string>
     <string name="mensa_menue_name_dummy">Riesenbürger</string>
     <string name="mensa_menue_additonals_des">Zusatzinformationen zum Essen</string>

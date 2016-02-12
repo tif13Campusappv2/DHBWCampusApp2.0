@@ -16,7 +16,7 @@
         <item
             android:id="@+id/nav_mensa"
             android:icon="@drawable/mensa"
-            android:title="@string/nav_side_subp_lageplan" />
+            android:title="@string/nav_side_subp_mensa" />
     </group>
     <group android:checkableBehavior="none" android:id="@+id/nav_side_roles">
         <item android:id="@+id/nav_side_role"

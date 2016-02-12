@@ -46,6 +46,22 @@
                 android:src="@drawable/veg"
                 />
         </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_1_KenHl"
+                style="@style/mensa_menue_KenHl"
+                android:text="@string/mensa_menue_ken"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                style="@style/mensa_menue_Ken"
+                android:id="@+id/mensa_menue_1_Ken"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -76,6 +92,22 @@
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_2_additionals"
                 android:src="@drawable/leer"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_2_KenHl"
+                style="@style/mensa_menue_KenHl"
+                android:text="@string/mensa_menue_ken"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                style="@style/mensa_menue_Ken"
+                android:id="@+id/mensa_menue_2_Ken"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -110,6 +142,22 @@
                 android:src="@drawable/leer"
                 />
         </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_3_KenHl"
+                style="@style/mensa_menue_KenHl"
+                android:text="@string/mensa_menue_ken"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                style="@style/mensa_menue_Ken"
+                android:id="@+id/mensa_menue_3_Ken"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -140,6 +188,22 @@
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_buffet_additionals"
                 android:src="@drawable/leer"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_buffet_KenHl"
+                style="@style/mensa_menue_KenHl"
+                android:text="@string/mensa_menue_ken"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            >
+            <TextView
+                style="@style/mensa_menue_Ken"
+                android:id="@+id/mensa_menue_buffet_Ken"
                 />
         </LinearLayout>
     </LinearLayout>
