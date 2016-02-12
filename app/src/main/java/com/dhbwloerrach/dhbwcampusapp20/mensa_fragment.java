@@ -1,7 +1,6 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,18 +15,12 @@ public class mensa_fragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private Boolean IsActive;
-    private int number;
     private MensaPlan.Day day;
     private ScrollView scrollView;
     private int role;
 
     public mensa_fragment() {
         IsActive=false;
-    }
-
-    public void SetNumber(int number)
-    {
-        this.number=number;
     }
 
     public static mensa_fragment newInstance() {
@@ -58,17 +51,6 @@ public class mensa_fragment extends Fragment {
         try {
             IsActive=true;
             ShowData();
-            scrollView=(ScrollView)(this.getView()).findViewById(R.id.mensa_fragment_scrollView);
-            scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-
-                @Override
-                public void onScrollChanged() {
-                    int scrollY = scrollView.getScrollY();
-                    if(scrollY == 0) mListener.ChangeRefreshLayout(true, number);
-                    else mListener.ChangeRefreshLayout(false, number);
-
-                }
-            });
         }
         catch (Exception e)
         {
@@ -145,6 +127,6 @@ public class mensa_fragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-       void ChangeRefreshLayout(boolean enabled, int number);
+
     }
 }

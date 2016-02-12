@@ -29,6 +29,15 @@ public class Guthaben extends AppCompatActivity {
     }
 
     @Override
+    public void onStart()
+    {
+        super.onStart();
+        ContentManager.NewContext(this);
+        ErrorReporting.NewContext(this);
+        ContentManager.UpdateActivity();
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         Goto(Pages.StartScreen);

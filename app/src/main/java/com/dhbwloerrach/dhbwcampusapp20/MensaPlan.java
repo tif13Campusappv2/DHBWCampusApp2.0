@@ -28,10 +28,10 @@ public class MensaPlan
             tmp2[i]=Days[i];
         }
         Arrays.sort(tmp1);
-        for(int i=0;i<tmp2.length;i++)
+        for(Day d: tmp2)
             for(int j=0;j<tmp1.length;j++)
-                if(tmp1[j]==tmp2[i].GetTimeStamp())
-                    Days[j]=tmp2[i];
+                if(tmp1[j]==d.GetTimeStamp())
+                    Days[j]=d;
     }
 
     public Day GetDay(int position)

@@ -1,6 +1,5 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,7 +69,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==R.id.startscreen_actionbar_refresh) {
-            ContentManager.UpdateFromRemote(this);
+            ContentManager.UpdateFromRemote();
             return true;
         }
 
@@ -105,8 +104,9 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onStart() {
         super.onStart();
+        ContentManager.NewContext(this);
         ErrorReporting.NewContext(this);
-        ContentManager.UpdateActivity(this);
+        ContentManager.UpdateActivity();
     }
 
     @Override
@@ -180,7 +180,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onRefresh()
     {
-        ContentManager.UpdateFromRemote(this);
+        ContentManager.UpdateFromRemote();
         ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setRefreshing(false);
     }
 
@@ -207,11 +207,10 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     private  void ShowRoleDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final Activity context=this;
         // final static int Schueler=0, Studenten=1, Mitarbeiter=2, Gaeste=3;
         builder.setTitle(R.string.nav_side_role_popup_title).setSingleChoiceItems(R.array.nav_side_role_popup_options, userRole, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int role) {
-                ContentManager.UpdateUserRole(context, role);
+                ContentManager.UpdateUserRole(role);
                 dialog.cancel();
             }
         });

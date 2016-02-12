@@ -10,6 +10,7 @@ public class ContentManager {
 
     private MensaUpdater mensaUpdater;
     private NewsUpdater newsUpdater;
+    private Activity context;
     private MensaPlan mensaPlan;
     private NewsContainer newsContainer;
     private int role;
@@ -28,23 +29,27 @@ public class ContentManager {
     {
         if(manager==null) {
             manager = new ContentManager();
+            manager.context=context;
             manager._LoadFromDatabase(context);
         }
     }
 
-    public static void UpdateFromRemote(Activity context)
-    {
+    public static void NewContext(Activity context) {
         if(manager==null)
             Initialize(context);
-        manager._UpdateMensaData(context);
-        manager._UpdateNewsData(context);
+        else
+            manager.context=context;
     }
 
-    public static void UpdateUserRole(Activity context, int role)
+    public static void UpdateFromRemote()
     {
-        if(manager==null)
-            Initialize(context);
-        manager._UpdateUserRole(context, role);
+        manager._UpdateMensaData(manager.context);
+        manager._UpdateNewsData(manager.context);
+    }
+
+    public static void UpdateUserRole(int role)
+    {
+        manager._UpdateUserRole(manager.context, role);
     }
 
     public static void UpdateSelectedNewsItem(int selectedNewsItem)
@@ -54,9 +59,12 @@ public class ContentManager {
 
     public static void UpdateActivity(Activity context)
     {
-        if(manager==null)
-            Initialize(context);
         manager._UpdateActivity(context);
+    }
+
+    public static void UpdateActivity()
+    {
+        manager._UpdateActivity(manager.context);
     }
 
     private void _LoadFromDatabase(final Activity context)
@@ -104,10 +112,7 @@ public class ContentManager {
     private boolean _IsOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnected()) {
-            return true;
-        }
-        return false;
+        return netInfo != null && netInfo.isConnected();
     }
 
     private void _UpdateMensaData(final Activity context)

@@ -1,7 +1,5 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import android.content.ClipData;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -39,18 +37,18 @@ public class NewsContainer {
 
     public List<NewsItem> GetNewsItemList()
     {
-        List<NewsItem> list= new ArrayList<NewsItem>();
-        for(int i=0;i<Items.length;i++)
-            list.add(Items[i]);
+        List<NewsItem> list= new ArrayList<>();
+        for(NewsItem nItem:Items)
+            list.add(nItem);
         return list;
     }
 
     public List<NewsItem> GetNewsItemList(int Category)
     {
-        List<NewsItem> list= new ArrayList<NewsItem>();
-        for(int i=0;i<Items.length;i++)
-            if(Items[i].IsCategory(Category))
-            list.add(Items[i]);
+        List<NewsItem> list= new ArrayList<>();
+        for(NewsItem nItem:Items)
+            if(nItem.IsCategory(Category))
+            list.add(nItem);
         return list;
     }
 
@@ -69,10 +67,10 @@ public class NewsContainer {
             tmp2[i]=Items[i];
         }
         Arrays.sort(tmp1);
-        for(int i=0;i<tmp2.length;i++)
+        for(NewsItem nItem:tmp2)
             for(int j=0;j<tmp1.length;j++)
-                if(tmp1[j]==tmp2[i].GetTimeStamp())
-                    Items[Items.length-1-j]=tmp2[i];
+                if(tmp1[j]==nItem.GetTimeStamp())
+                    Items[Items.length-1-j]=nItem;
     }
 
     public static class NewsItem{

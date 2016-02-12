@@ -2,7 +2,6 @@ package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.widget.VideoView;
 
 public class SplashScreen extends AppCompatActivity {
 
-    AnimationDrawable splashAnim;
     VideoView anim;
     private Intent Weiterleitung;
 
@@ -28,23 +26,19 @@ public class SplashScreen extends AppCompatActivity {
             public void run()
             {
                 ErrorReporting.Initialize(context);
-                ContentManager.UpdateFromRemote(context);
+                ContentManager.NewContext(context);
+                ContentManager.UpdateFromRemote();
             }
         }).start();
 
         anim=(VideoView) findViewById(R.id.splash_anim);
         Uri uri = Uri.parse("android.resource://com.dhbwloerrach.dhbwcampusapp20/" + R.raw.splash_anim);
         anim.setVideoURI(uri);
-        /*ImageView animImage = (ImageView) findViewById(R.id.SplashView);
-        animImage.setBackgroundResource(R.drawable.splash_anim);
-        splashAnim = (AnimationDrawable) animImage.getBackground();*/
     }
 
     @Override
     public void onWindowFocusChanged(boolean visible) {
         if(visible) {
-            //splashAnim.start();
-
             try {
                 anim.start();
             } catch (Exception e) {
@@ -58,7 +52,7 @@ public class SplashScreen extends AppCompatActivity {
                     {
                         sleep(3000);
                     }
-                    catch (Exception e){}
+                    catch (Exception e){e.printStackTrace();}
                     finally
                     {
                         if(Weiterleitung==null)

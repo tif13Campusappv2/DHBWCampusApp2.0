@@ -91,8 +91,8 @@ public class MensaUpdater {
                             Name=Name.replace(s,"");
                             s=s.replaceAll("[\\(\\)]","");
                             String a[]=s.split(",");
-                            for(int k=0;k<a.length;k++)
-                                ke.add(a[k]);
+                            for(String substring:a)
+                                ke.add(substring);
                         }
                         String Kennzeichnungen=", ";
                         for(int k=0;k<ke.size();k++)

@@ -253,10 +253,8 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 do {
                     NewsContainer.NewsItem item= new NewsContainer.NewsItem(cursor.getLong(4),cursor.getString(5),cursor.getString(0),cursor.getString(3),cursor.getString(2));
                     String tmp[]=cursor.getString(1).split("\\|");
-                    for(int i=0;i<tmp.length;i++)
-                    {
-                        item.SetCategory(Integer.parseInt(tmp[i]));
-                    }
+                    for(String tmpitem:tmp)
+                        item.SetCategory(Integer.parseInt(tmpitem));
                     news.IncertNews(item,counter++);
                 }while(cursor.moveToNext());  //cursor.isLast()
                 cursor.close();

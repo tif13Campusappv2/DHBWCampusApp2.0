@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class NewsDetail extends AppCompatActivity implements Updated.Refreshable, View.OnClickListener {
@@ -27,7 +26,9 @@ public class NewsDetail extends AppCompatActivity implements Updated.Refreshable
     @Override
     public void onStart() {
         super.onStart();
-        ContentManager.UpdateActivity(this);
+        ContentManager.NewContext(this);
+        ErrorReporting.NewContext(this);
+        ContentManager.UpdateActivity();
     }
 
     public void Refresh(final Updated update)

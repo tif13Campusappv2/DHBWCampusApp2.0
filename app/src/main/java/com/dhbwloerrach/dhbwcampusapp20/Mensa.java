@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable, SwipeRefreshLayout.OnRefreshListener  {
+public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable{
 
 
     private ViewPager mViewPager;
@@ -42,7 +42,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setOnRefreshListener(this);
         InitializeTabView();
     }
 
@@ -50,8 +49,9 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
     protected void onStart()
     {
         super.onStart();
+        ContentManager.NewContext(this);
         ErrorReporting.NewContext(this);
-        ContentManager.UpdateActivity(this);
+        ContentManager.UpdateActivity();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
         else if(id==R.id.mensa_actionbar_refresh)
         {
-            ContentManager.UpdateFromRemote(this);
+            ContentManager.UpdateFromRemote();
             return true;
         }
         return false;
@@ -166,8 +166,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             TabHeaders= new String[NumberTabs];
             for(int i=0;i<NumberTabs;i++) {
                 items[i] = new mensa_fragment();
-                ((mensa_fragment)items[i]).SetNumber(i);
-                TabHeaders[i]="Section " + (i+1);
+                TabHeaders[i]="Tag " + (i+1);
             }
         }
 
@@ -195,17 +194,5 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
                 }
             }
         });
-    }
-
-    @Override
-    public void onRefresh()
-    {
-        ContentManager.UpdateFromRemote(this);
-        ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setRefreshing(false);
-    }
-
-    public void ChangeRefreshLayout(boolean enabled, int number){
-        if(number== mViewPager.getCurrentItem())
-            (findViewById(R.id.mensa_refreshlayout)).setEnabled(enabled);
     }
 }
