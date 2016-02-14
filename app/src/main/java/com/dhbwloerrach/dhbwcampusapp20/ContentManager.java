@@ -14,6 +14,7 @@ public class ContentManager {
     private MensaPlan mensaPlan;
     private NewsContainer newsContainer;
     private int role;
+    private double credit;
     private int selectedNewsItem;
     private boolean loaded;
 
@@ -21,17 +22,16 @@ public class ContentManager {
         mensaUpdater= new MensaUpdater();
         newsUpdater= new NewsUpdater();
         role=-1;
+        credit=0.0;
         loaded=false;
         selectedNewsItem=0;
     }
 
     public static void Initialize(Activity context)
     {
-        if(manager==null) {
-            manager = new ContentManager();
-            manager.context=context;
-            manager._LoadFromDatabase(context);
-        }
+        manager = new ContentManager();
+        manager.context=context;
+        manager._LoadFromDatabase(context);
     }
 
     public static void NewContext(Activity context) {
@@ -85,6 +85,8 @@ public class ContentManager {
                     role= dbSocket.GetUserRole();
                 if(newsContainer==null)
                     newsContainer= dbSocket.GetNews();
+                if(credit==0.0)
+                    credit= dbSocket.GetCredit();
                 loaded=true;
             }
         }.start();
@@ -107,6 +109,7 @@ public class ContentManager {
                         update.InsertMensaPlan(mensaPlan);
                         update.InsertRole(role);
                         update.InsertNewsContainer(newsContainer);
+                        update.InsertCredit(credit);
                         ((Updated.Refreshable) context).Refresh(update);
                     }
                 }
@@ -115,8 +118,7 @@ public class ContentManager {
     }
 
     private boolean _IsOnline(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        NetworkInfo netInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnected();
     }
 
@@ -178,6 +180,7 @@ public class ContentManager {
 
     private void _UpdateUserRole(final Activity context, final int role)
     {
+        this.role=role;
         new Thread()
         {
             public void run() {
@@ -196,6 +199,7 @@ public class ContentManager {
 
     private void _UpdateUserCredit(final Activity context, final double credit)
     {
+        this.credit=credit;
         new Thread()
         {
             public void run() {

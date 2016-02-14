@@ -73,14 +73,14 @@
     //##################################
 
     // List
-    <string name="guthaben_list_menue1_desc">Mensa Menü 1 (à %€)</string>
-    <string name="guthaben_list_menue2_desc">Mensa Menü 2 (à %€)</string>
-    <string name="guthaben_list_menue3_desc">Mensa Menü 3 (à %€)</string>
-    <string name="guthaben_list_kopiesw_desc">A4 Seiten in Schwarzweiß (à 0,04€)</string>
-    <string name="guthaben_list_kopiecl_desc">A4 Seiten in Farbe (à 0,08€)</string>
-    <string name="guthaben_list_getrwasser_des">Flaschen Wasser (à 1,30€)</string>
-    <string name="guthaben_list_getrcola_desc">Flaschen Cola o.Ä. (à 1,50€)</string>
-    <string name="guthaben_list_salat_desc">Salat (à %€)</string>
+    <string name="guthaben_list_menue1_desc">Mensa Menü 1 (à %)</string>
+    <string name="guthaben_list_menue2_desc">Mensa Menü 2 (à %)</string>
+    <string name="guthaben_list_menue3_desc">Mensa Menü 3 (à %)</string>
+    <string name="guthaben_list_salad_desc">Salat (à %)</string>
+    <string name="guthaben_list_kopiesw_desc">A4 Seiten (à %)</string>
+    <string name="guthaben_list_kopiecl_desc">A4 Seiten (à %)</string>
+    <string name="guthaben_list_getrwasser_des">Wasser (à %)</string>
+    <string name="guthaben_list_getrcola_desc">Cola o.Ä. (à %)</string>
 
     <string name="guthaben_list_icon_desc">Icon zu Artikel</string>
 

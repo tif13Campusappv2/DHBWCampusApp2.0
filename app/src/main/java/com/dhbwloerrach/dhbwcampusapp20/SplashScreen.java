@@ -26,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run()
             {
                 ErrorReporting.Initialize(context);
-                ContentManager.NewContext(context);
+                ContentManager.Initialize(context);
                 ContentManager.UpdateFromRemote();
             }
         }).start();
