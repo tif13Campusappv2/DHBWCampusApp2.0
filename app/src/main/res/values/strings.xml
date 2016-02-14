@@ -62,10 +62,31 @@
     <string name="news_template">+++ % +++</string>
     <string name="news_image_desc">News Feed icon</string>
 
+
     // Dummy
     <string name="news_dummy_content">+++ Test News Ticker Nachricht +++</string>
     <string name="news_dummy_title">Amtsübergabe an der Dualen Hochschule Baden-Württemberg</string>
     <string name="news_dummy_description">Professor Arnold van Zyl (PhD) ist neuer Präsident der DHBW / Verabschiedung von Professor Reinhold R. Geilsdörfer</string>
+
+    //##################################
+    //# Guthaben
+    //##################################
+
+    // List
+    <string name="guthaben_list_menue1_desc">Mensa Menü 1 (à %€)</string>
+    <string name="guthaben_list_menue2_desc">Mensa Menü 2 (à %€)</string>
+    <string name="guthaben_list_menue3_desc">Mensa Menü 3 (à %€)</string>
+    <string name="guthaben_list_kopiesw_desc">A4 Seiten in Schwarzweiß (à 0,04€)</string>
+    <string name="guthaben_list_kopiecl_desc">A4 Seiten in Farbe (à 0,08€)</string>
+    <string name="guthaben_list_getrwasser_des">Flaschen Wasser (à 1,30€)</string>
+    <string name="guthaben_list_getrcola_desc">Flaschen Cola o.Ä. (à 1,50€)</string>
+    <string name="guthaben_list_salat_desc">Salat (à %€)</string>
+
+    <string name="guthaben_list_icon_desc">Icon zu Artikel</string>
+
+    // Dummy
+    <string name="guthaben_list_amount_dummy">12x</string>
+    <string name="guthaben_list_desc_dummy">Mensa Menü 1 (à 2,90€)</string>
 
     //##################################
     //# News Detail

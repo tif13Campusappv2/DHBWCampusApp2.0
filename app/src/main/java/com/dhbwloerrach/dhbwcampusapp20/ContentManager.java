@@ -52,6 +52,11 @@ public class ContentManager {
         manager._UpdateUserRole(manager.context, role);
     }
 
+    public static void UpdateUserCredit(double credit)
+    {
+        manager._UpdateUserCredit(manager.context, credit);
+    }
+
     public static void UpdateSelectedNewsItem(int selectedNewsItem)
     {
         manager._UpdateCurrentNewsItem(selectedNewsItem);
@@ -183,6 +188,23 @@ public class ContentManager {
                     Updated update= new Updated();
                     update.InsertRole(role);
                     update.InsertMensaPlan(mensaPlan);
+                    ((Updated.Refreshable) context).Refresh(update);
+                }
+            }
+        }.start();
+    }
+
+    private void _UpdateUserCredit(final Activity context, final double credit)
+    {
+        new Thread()
+        {
+            public void run() {
+                DatabaseSocket dbSocket = new DatabaseSocket(context);
+                dbSocket.SaveCredit(credit);
+                if(context instanceof Updated.Refreshable)
+                {
+                    Updated update= new Updated();
+                    update.InsertCredit(credit);
                     ((Updated.Refreshable) context).Refresh(update);
                 }
             }

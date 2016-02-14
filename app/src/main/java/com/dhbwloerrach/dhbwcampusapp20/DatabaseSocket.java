@@ -90,6 +90,24 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DELETE FROM " + TABLE_NAME +";";
     }
 
+    public static abstract class DatabaseCredit implements BaseColumns
+    {
+        public static final String TABLE_NAME = "CREDIT";
+        public static final String _ID = "_ID";
+        public static final String COLUMN_CREDIT = "USERCREDIT";
+
+        private static final String SQL_CREATE_ENTRIES =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
+                        _ID + " INTEGER PRIMARY KEY," +
+                        COLUMN_CREDIT + " TEXT);";
+
+        private static final String SQL_DELETE_ENTRIES =
+                "DROP TABLE IF EXISTS " + TABLE_NAME +";";
+
+        private static final String SQL_DELETE_CONTENT =
+                "DELETE FROM " + TABLE_NAME +";";
+    }
+
     // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CAMPUSAPP";
@@ -105,7 +123,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         db.execSQL(DatabaseMensa.SQL_CREATE_ENTRIES);
         db.execSQL(DatabaseUserRole.SQL_CREATE_ENTRIES);
         db.execSQL(DatabaseNews.SQL_CREATE_ENTRIES);
-        //ToDo: db.execSQL(Credit.SQL_CREATE_ENTRIES);
+        db.execSQL(DatabaseCredit.SQL_CREATE_ENTRIES);
 
     }
 
@@ -115,7 +133,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         db.execSQL(DatabaseMensa.SQL_DELETE_ENTRIES);
         db.execSQL(DatabaseUserRole.SQL_DELETE_ENTRIES);
         db.execSQL(DatabaseNews.SQL_DELETE_ENTRIES);
-        //ToDo: db.execSQL(Credit.SQL_DELETE_ENTRIES);
+        db.execSQL(DatabaseCredit.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
@@ -319,6 +337,50 @@ public class DatabaseSocket extends SQLiteOpenHelper
         }
         db.close();
         return role;
+    }
+
+    public void SaveCredit(double credit)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.execSQL(DatabaseCredit.SQL_DELETE_CONTENT);
+            ContentValues values = new ContentValues();
+            values.put(DatabaseCredit._ID, 0);
+            values.put(DatabaseCredit.COLUMN_CREDIT, String.valueOf(credit));
+            db.insert(DatabaseCredit.TABLE_NAME, null, values);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+    }
+
+    public double GetCredit() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String creditS;
+        try {
+            Cursor cursor = db.query(DatabaseCredit.TABLE_NAME, new String[]{DatabaseCredit.COLUMN_CREDIT}, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                creditS=cursor.getString(0);
+                cursor.close();
+            } else // Table empty
+            {
+                cursor.close();
+                db.close();
+                return 0.0;
+            }
+        }
+        catch (Exception e)
+        {
+            db.close();
+            e.printStackTrace();
+            return 0.0;
+        }
+        db.close();
+        return Double.parseDouble(creditS);
     }
 
 }

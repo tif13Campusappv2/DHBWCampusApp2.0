@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-public class Guthaben extends AppCompatActivity {
+public class Guthaben extends AppCompatActivity implements Updated.Refreshable{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +18,6 @@ public class Guthaben extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -61,6 +54,17 @@ public class Guthaben extends AppCompatActivity {
         {
             this.overridePendingTransition(R.anim.scale_in, R.anim.right_out);
         }
+    }
+
+    public void Refresh(final Updated update)
+    {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                if (update.IsUpdated(Updated.Guthaben)) {
+
+                }
+            }
+        });
     }
 
 }
