@@ -20,6 +20,9 @@ import android.widget.Toast;
 public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Updated.Refreshable,SwipeRefreshLayout.OnRefreshListener  {
 
     private int userRole=0;
+    // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc.
+    // Note 0-4 werden dynamisch gesetzt
+    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.20,1.50};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,8 +164,13 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
             public void run() {
                 if(update.IsUpdated(Updated.Mensa) && update.IsUpdated(Updated.Role))
                 {
-                    LoadMensaData(update.GetMensaPlan(),update.GetRole());
+                    MensaPlan.Day day= update.GetMensaPlan().GetDay(update.GetMensaPlan().GetBestFittingDay());
+                    LoadMensaData(day,update.GetRole());
                     userRole=update.GetRole();
+                    prices[0]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue1].prices[userRole]);
+                    prices[1]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue2].prices[userRole]);
+                    prices[2]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue3].prices[userRole]);
+                    prices[3]= ExtractPrice(day.Menues[MensaPlan.Menues.Buffet].prices[userRole]);
                 }
                 if(update.IsUpdated(Updated.News))
                 {
@@ -171,10 +179,32 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                 }
                 if(update.IsUpdated(Updated.Guthaben))
                 {
+                    double credit=update.GetCredit();
+                    ((TextView)findViewById(R.id.dash_guthaben_amount)).setText(FormatPrice(credit));
 
+
+                    ((TextView)findViewById(R.id.dash_guthaben_menue1)).setText(String.valueOf((int) (credit / prices[0])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_menue2)).setText(String.valueOf((int) (credit / prices[1])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_menue3)).setText(String.valueOf((int) (credit / prices[2])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_salad)).setText(String.valueOf((int)(credit*100/prices[3])) + "g");
+                    ((TextView)findViewById(R.id.dash_guthaben_swkopie)).setText(String.valueOf((int) (credit / prices[4])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_clkopie)).setText(String.valueOf((int) (credit / prices[5])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_water)).setText(String.valueOf((int) (credit / prices[6])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_cola)).setText(String.valueOf((int) (credit / prices[7])) + "x");
                 }
             }
         });
+    }
+
+    private static String FormatPrice(double price)
+    {
+        return String.format("%.2f", price).replace('.', ',').replaceAll("-","") + "€";
+    }
+
+    private static double ExtractPrice(String price)
+    {
+        price=price.replaceAll("€.*", "").replaceAll("[^0-9,]","").replace(',','.');
+        return Double.parseDouble(price);
     }
 
     @Override
@@ -184,9 +214,9 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setRefreshing(false);
     }
 
-    private void LoadMensaData(MensaPlan mensaPlan,int role)
+    private void LoadMensaData(MensaPlan.Day day,int role)
     {
-        MensaPlan.Day day= mensaPlan.GetDay(mensaPlan.GetBestFittingDay());
+
         ((TextView) findViewById(R.id.startscreen_mensa_date)).setText(day.GetFormatedDate());
 
 

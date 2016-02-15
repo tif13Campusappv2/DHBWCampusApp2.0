@@ -199,6 +199,7 @@ public class ContentManager {
                     Updated update= new Updated();
                     update.InsertRole(role);
                     update.InsertMensaPlan(mensaPlan);
+                    update.InsertCredit(credit);
                     ((Updated.Refreshable) context).Refresh(update);
                 }
             }

@@ -145,7 +145,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="13,30€ - zuletzt um 12:00 Uhr aktualisiert"
+                android:id="@+id/dash_guthaben_amount"
                 android:textSize="@dimen/p"
                 android:textColor="@color/darkgrey"
                 android:layout_margin="6dp"/>
@@ -165,32 +165,7 @@
                         style="@style/guthabenAnzahlLayout">
                         <TextView
                             style="@style/innerbox"
-                            android:text="12x"
-                            />
-                        <ImageView
-                            style="@style/guthabenIcons"
-                            android:src="@drawable/farbkopie"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/guthabenAnzahlLayout">
-                        <TextView
-                            style="@style/innerbox"
-                            android:text="12x"
-                            />
-                        <ImageView
-                            style="@style/guthabenIcons"
-                            android:src="@drawable/swkopie"
-                            />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        style="@style/guthabenAnzahlLayout">
-                        <TextView
-                            style="@style/innerbox"
-                            android:text="2x"
+                            android:id="@+id/dash_guthaben_menue1"
                             />
                         <ImageView
                             style="@style/guthabenIcons"
@@ -202,7 +177,31 @@
                         style="@style/guthabenAnzahlLayout">
                         <TextView
                             style="@style/innerbox"
-                            android:text="4000g"
+                            android:id="@+id/dash_guthaben_menue2"
+                            />
+                        <ImageView
+                            style="@style/guthabenIcons"
+                            android:src="@drawable/mensa"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/guthabenAnzahlLayout">
+                        <TextView
+                            style="@style/innerbox"
+                            android:id="@+id/dash_guthaben_menue3"
+                            />
+                        <ImageView
+                            style="@style/guthabenIcons"
+                            android:src="@drawable/mensa"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/guthabenAnzahlLayout">
+                        <TextView
+                            style="@style/innerbox"
+                            android:id="@+id/dash_guthaben_salad"
                             />
                         <ImageView
                             style="@style/guthabenIcons"
@@ -214,7 +213,31 @@
                         style="@style/guthabenAnzahlLayout">
                         <TextView
                             style="@style/innerbox"
-                            android:text="12x"
+                            android:id="@+id/dash_guthaben_swkopie"
+                            />
+                        <ImageView
+                            style="@style/guthabenIcons"
+                            android:src="@drawable/swkopie"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/guthabenAnzahlLayout">
+                        <TextView
+                            style="@style/innerbox"
+                            android:id="@+id/dash_guthaben_clkopie"
+                            />
+                        <ImageView
+                            style="@style/guthabenIcons"
+                            android:src="@drawable/farbkopie"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/guthabenAnzahlLayout">
+                        <TextView
+                            style="@style/innerbox"
+                            android:id="@+id/dash_guthaben_water"
                             />
                         <ImageView
                             style="@style/guthabenIcons"
@@ -226,7 +249,7 @@
                         style="@style/guthabenAnzahlLayout">
                         <TextView
                             style="@style/innerbox"
-                            android:text="1200x"
+                            android:id="@+id/dash_guthaben_cola"
                             />
                         <ImageView
                             style="@style/guthabenIcons"
