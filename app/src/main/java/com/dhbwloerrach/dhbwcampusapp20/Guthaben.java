@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 public class Guthaben extends AppCompatActivity implements Updated.Refreshable, View.OnClickListener{
 
-    // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc.
+    // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc., 8=Kaffee
     // Note 0-4 werden dynamisch gesetzt
-    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.20,1.50};
+    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.10,1.50,1.00};
     private double credit;
 
     @Override
@@ -43,6 +43,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         ((TextView) findViewById(R.id.guthaben_list_clkopie_desc)).setText(getString(R.string.guthaben_list_kopiecl_desc).replace("%", FormatPrice(prices[5])));
         ((TextView) findViewById(R.id.guthaben_list_water_desc)).setText(getString(R.string.guthaben_list_getrwasser_des).replace("%", FormatPrice(prices[6])));
         ((TextView) findViewById(R.id.guthaben_list_cola_desc)).setText(getString(R.string.guthaben_list_getrcola_desc).replace("%", FormatPrice(prices[7])));
+        ((TextView) findViewById(R.id.guthaben_list_coffee_desc)).setText(getString(R.string.guthaben_list_coffee_desc).replace("%", FormatPrice(prices[8])));
     }
 
     @Override
@@ -105,6 +106,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                         ((TextView) findViewById(R.id.guthaben_list_menue1_amount)).setText(String.valueOf((int) (credit / prices[0])) + "x");
                         ((TextView) findViewById(R.id.guthaben_list_menue2_amount)).setText(String.valueOf((int)(credit/prices[1])) + "x");
                         ((TextView) findViewById(R.id.guthaben_list_menue3_amount)).setText(String.valueOf((int)(credit/prices[2])) + "x");
+                        ((TextView) findViewById(R.id.guthaben_list_coffee_amount)).setText(String.valueOf((int)(credit/prices[8])) + "x");
                         ((TextView) findViewById(R.id.guthaben_list_salad_amount)).setText(String.valueOf((int)(credit*100/prices[3])) + "g");
                         ((TextView) findViewById(R.id.guthaben_list_swkopie_amount)).setText(String.valueOf((int)(credit/prices[4])) + "x");
                         ((TextView) findViewById(R.id.guthaben_list_clkopie_amount)).setText(String.valueOf((int)(credit/prices[5])) + "x");
@@ -158,11 +160,11 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             final Button btn4=(Button) theView.findViewById(R.id.guthaben_dialog_btn4);
             final Button btn5=(Button) theView.findViewById(R.id.guthaben_dialog_btn5);
             if(add) {
-                btn1.setText(FormatPrice(20.00));
+                btn1.setText(FormatPrice(10.00));
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,20.00);
+                        SetDialogPrice(unit_euro,cent,10.00);
                     }
                 });
                 btn2.setText(FormatPrice(15.00));
@@ -172,18 +174,18 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                         SetDialogPrice(unit_euro, cent, 15.00);
                     }
                 });
-                btn3.setText(FormatPrice(15.00));
+                btn3.setText(FormatPrice(20.00));
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,10.00);
+                        SetDialogPrice(unit_euro,cent,20.00);
                     }
                 });
-                btn4.setText(FormatPrice(5.00));
+                btn4.setText(FormatPrice(50.00));
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,5.00);
+                        SetDialogPrice(unit_euro,cent,50.00);
                     }
                 });
                 btn5.setText(FormatPrice(0.30));

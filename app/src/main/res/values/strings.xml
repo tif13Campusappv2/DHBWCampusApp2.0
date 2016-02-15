@@ -76,6 +76,7 @@
     <string name="guthaben_list_menue1_desc">Mensa Menü 1 (à %)</string>
     <string name="guthaben_list_menue2_desc">Mensa Menü 2 (à %)</string>
     <string name="guthaben_list_menue3_desc">Mensa Menü 3 (à %)</string>
+    <string name="guthaben_list_coffee_desc">Becher Kaffee (à %)</string>
     <string name="guthaben_list_salad_desc">Salat (à %)</string>
     <string name="guthaben_list_kopiesw_desc">A4 Seiten (à %)</string>
     <string name="guthaben_list_kopiecl_desc">A4 Seiten (à %)</string>

@@ -3,10 +3,12 @@ package com.dhbwloerrach.dhbwcampusapp20;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class MensaPlan
 {
     private Day Days[];
+    private static final int showNextDayMenueAfter =14;
 
     public MensaPlan(int numberDays)
     {
@@ -47,12 +49,14 @@ public class MensaPlan
     public int GetBestFittingDay()
     {
         SortDays();
-        Calendar now = Calendar.getInstance();
-        Date today= new Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH) ,now.get(Calendar.DAY_OF_MONTH));
-        long timestamp=today.getTime();
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
+        Date today= new Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH) ,now.get(Calendar.DAY_OF_MONTH),now.get(Calendar.HOUR_OF_DAY),0,0);
+        //boolean dst=TimeZone.getTimeZone("Europe/Berlin").inDaylightTime(today);
+        Date later=new Date(today.getTime()- showNextDayMenueAfter *3600000+1);
+        long timestampLater=(later.getTime());
         int pos=-1;
         for(int i=0;i<Days.length;i++)
-            if(Days[i].GetTimeStamp()>=timestamp) {
+            if(Days[i].GetTimeStamp()>=timestampLater) {
                 pos = i;
                 break;
             }

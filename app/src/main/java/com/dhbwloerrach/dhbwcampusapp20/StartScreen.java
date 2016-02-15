@@ -20,9 +20,9 @@ import android.widget.Toast;
 public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Updated.Refreshable,SwipeRefreshLayout.OnRefreshListener  {
 
     private int userRole=0;
-    // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc.
+    // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc., 8=Kaffee
     // Note 0-4 werden dynamisch gesetzt
-    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.20,1.50};
+    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.10,1.50,1.00};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +186,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                     ((TextView)findViewById(R.id.dash_guthaben_menue1)).setText(String.valueOf((int) (credit / prices[0])) + "x");
                     ((TextView)findViewById(R.id.dash_guthaben_menue2)).setText(String.valueOf((int) (credit / prices[1])) + "x");
                     ((TextView)findViewById(R.id.dash_guthaben_menue3)).setText(String.valueOf((int) (credit / prices[2])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_coffee)).setText(String.valueOf((int) (credit / prices[8])) + "x");
                     ((TextView)findViewById(R.id.dash_guthaben_salad)).setText(String.valueOf((int)(credit*100/prices[3])) + "g");
                     ((TextView)findViewById(R.id.dash_guthaben_swkopie)).setText(String.valueOf((int) (credit / prices[4])) + "x");
                     ((TextView)findViewById(R.id.dash_guthaben_clkopie)).setText(String.valueOf((int) (credit / prices[5])) + "x");

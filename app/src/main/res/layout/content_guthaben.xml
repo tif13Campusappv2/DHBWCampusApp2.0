@@ -62,12 +62,18 @@
     </LinearLayout>
 
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/guthaben_guthaben_container"
+        android:id="@+id/guthaben_list_sepperator"
+        android:background="@drawable/innerbox_top"/>
     <ScrollView
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:layout_width="match_parent"
         android:scrollbars="none"
-        android:layout_below="@+id/guthaben_guthaben_container"
+        android:layout_below="@+id/guthaben_list_sepperator"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,6 +135,25 @@
                     style="@style/guthaben_list_desc"
                     android:text="@string/guthaben_list_desc_dummy"
                     android:id="@+id/guthaben_list_menue3_desc"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/guthaben_list_container"
+                >
+                <ImageView
+                    style="@style/guthaben_list_icon"
+                    android:src="@drawable/coffee"
+                    />
+                <TextView
+                    style="@style/guthaben_list_amount"
+                    android:id="@+id/guthaben_list_coffee_amount"
+                    android:text="@string/guthaben_list_amount_dummy"
+                    />
+                <TextView
+                    style="@style/guthaben_list_desc"
+                    android:text="@string/guthaben_list_coffee_desc"
+                    android:id="@+id/guthaben_list_coffee_desc"
                     />
             </LinearLayout>
 
