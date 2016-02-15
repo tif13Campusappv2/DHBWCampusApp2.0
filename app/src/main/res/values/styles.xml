@@ -253,25 +253,24 @@
         <item name="android:layout_weight">3</item>
     </style>
 
-    <style name="mensa_menue_KenHl">
+    <style name="mensa_menue_ExInHl">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">10</item>
-        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_weight">5</item>
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">6dp</item>
-        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="mensa_menue_Ken">
+    <style name="mensa_menue_ExIn">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginTop">0dp</item>
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">6dp</item>
-        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">10</item>
+        <item name="android:layout_weight">5</item>
     </style>
 
     <style name="mensa_menue_name">

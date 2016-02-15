@@ -17,6 +17,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_KIND = "kind";
         public static final String COLUMN_Ken = "kennzeichnungen";
+        public static final String COLUMN_Alg = "allergene";
         public static final String COLUMN_PRICE_ST = "price_student";
         public static final String COLUMN_PRICE_PL = "price_pupil";
         public static final String COLUMN_PRICE_GU = "price_guest";
@@ -31,6 +32,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                         COLUMN_ADDITIONALS + " TEXT, " +
                         COLUMN_KIND + " INTEGER, " +
                         COLUMN_Ken + " TEXT, " +
+                        COLUMN_Alg + " TEXT, " +
                         COLUMN_PRICE_ST + " TEXT, " +
                         COLUMN_PRICE_PL + " TEXT, " +
                         COLUMN_PRICE_GU + " TEXT, " +
@@ -158,6 +160,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                     values.put(DatabaseMensa.COLUMN_NAME, plan.GetDay(i).Menues[j].Name);
                     values.put(DatabaseMensa.COLUMN_KIND, j);
                     values.put(DatabaseMensa.COLUMN_Ken, plan.GetDay(i).Menues[j].Kennzeichnungen);
+                    values.put(DatabaseMensa.COLUMN_Alg, plan.GetDay(i).Menues[j].Allergene);
                     values.put(DatabaseMensa.COLUMN_PRICE_ST, plan.GetDay(i).Menues[j].prices[MensaPlan.Prices.Studenten]);
                     values.put(DatabaseMensa.COLUMN_PRICE_PL, plan.GetDay(i).Menues[j].prices[MensaPlan.Prices.Schueler]);
                     values.put(DatabaseMensa.COLUMN_PRICE_GU, plan.GetDay(i).Menues[j].prices[MensaPlan.Prices.Gaeste]);
@@ -195,7 +198,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 return null;
             }
 
-            cursor = db.query(DatabaseMensa.TABLE_NAME,new String[] {DatabaseMensa.COLUMN_DATE, DatabaseMensa.COLUMN_ADDITIONALS,DatabaseMensa.COLUMN_NAME, DatabaseMensa.COLUMN_KIND, DatabaseMensa.COLUMN_PRICE_PL,DatabaseMensa.COLUMN_PRICE_ST,DatabaseMensa.COLUMN_PRICE_EM,DatabaseMensa.COLUMN_PRICE_GU, DatabaseMensa.COLUMN_Ken},null,null,null,null,null);
+            cursor = db.query(DatabaseMensa.TABLE_NAME,new String[] {DatabaseMensa.COLUMN_DATE, DatabaseMensa.COLUMN_ADDITIONALS,DatabaseMensa.COLUMN_NAME, DatabaseMensa.COLUMN_KIND, DatabaseMensa.COLUMN_PRICE_PL,DatabaseMensa.COLUMN_PRICE_ST,DatabaseMensa.COLUMN_PRICE_EM,DatabaseMensa.COLUMN_PRICE_GU, DatabaseMensa.COLUMN_Ken, DatabaseMensa.COLUMN_Alg},null,null,null,null,null);
             if(cursor.moveToFirst()) {
                 do {
                     for(int i=0;i<plan.GetCountDays();i++)
@@ -207,7 +210,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                             prices[MensaPlan.Prices.Studenten]=cursor.getString(5);
                             prices[MensaPlan.Prices.Mitarbeiter]=cursor.getString(6);
                             prices[MensaPlan.Prices.Gaeste]=cursor.getString(7);
-                            plan.GetDay(i).Menues[cursor.getInt(3)]= new MensaPlan.Menue(cursor.getString(1),cursor.getString(2), prices,cursor.getString(8));
+                            plan.GetDay(i).Menues[cursor.getInt(3)]= new MensaPlan.Menue(cursor.getString(1),cursor.getString(2), prices,cursor.getString(8),cursor.getString(9));
                             break;
                         }
                     }

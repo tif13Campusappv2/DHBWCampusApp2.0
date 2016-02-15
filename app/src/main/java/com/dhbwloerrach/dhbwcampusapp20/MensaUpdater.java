@@ -1,5 +1,6 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -79,33 +80,41 @@ public class MensaUpdater {
                         prices[MensaPlan.Prices.Mitarbeiter]=priceNode.getElementsByTagName("angestellte").item(0).getTextContent();
                         prices[MensaPlan.Prices.Gaeste]=priceNode.getElementsByTagName("gaeste").item(0).getTextContent();
 
-                        String Name=currentMenu.getElementsByTagName("nameMitUmbruch").item(0).getTextContent();
-
-                        List<String> ke= new ArrayList<>();
-                        Pattern Brackets = Pattern.compile("\\([^\\)]*\\)");
-                        Matcher m= Brackets.matcher(Name);
-                        while (m.find()) {
-                            String s = m.group(0);
-                            if(s.equals("(Preis für Studierende)"))
-                                continue;
-                            Name=Name.replace(s,"");
-                            s=s.replaceAll("[\\(\\)]","");
-                            String a[]=s.split(",");
-                            for(String substring:a)
-                                ke.add(substring);
-                        }
-                        String Kennzeichnungen=", ";
-                        for(int k=0;k<ke.size();k++)
-                            if(!Kennzeichnungen.contains(", " + ke.get(k) + ","))
-                                Kennzeichnungen+= ke.get(k)+", ";
-
-                        if(Kennzeichnungen.equals(", "))
+                        String Kennzeichnungen= " " + currentMenu.getElementsByTagName("kennzeichnungen").item(0).getTextContent();
+                        String Allergene= " " + currentMenu.getElementsByTagName("allergikerhinweise").item(0).getTextContent();
+                        if(Kennzeichnungen.equals(" "))
                             Kennzeichnungen="-";
                         else
+                        {
+                            List<String> tmp= new ArrayList<>();
+                            Pattern Brackets = Pattern.compile("\\s[\\w]+:\\s");
+                            Matcher m= Brackets.matcher(Kennzeichnungen);
+                            while (m.find())
+                                tmp.add(m.group(0).trim().replaceAll(":",""));
+                            Kennzeichnungen=", ";
+                            for(int k=0;k<tmp.size();k++)
+                                if(!Kennzeichnungen.contains(", " + tmp.get(k) + ","))
+                                    Kennzeichnungen+= tmp.get(k)+", ";
                             Kennzeichnungen=Kennzeichnungen.replaceAll("^,\\s", "").replaceAll(",\\s$","");
-                        Name=Name.replaceAll("^\r\n","").replaceAll("^\r","").replaceAll("^\n","").replaceAll("\r\n$","").replaceAll("\r$","").replaceAll("\n$","");
+                        }
+                        if(Allergene.equals(" "))
+                            Allergene="-";
+                        else
+                        {
+                            List<String> tmp= new ArrayList<>();
+                            Pattern Brackets = Pattern.compile("\\s[\\w]+:\\s");
+                            Matcher m= Brackets.matcher(Allergene);
+                            while (m.find())
+                                tmp.add(m.group(0).trim().replaceAll(":",""));
+                            Allergene=", ";
+                            for(int k=0;k<tmp.size();k++)
+                                if(!Allergene.contains(", " + tmp.get(k) + ","))
+                                    Allergene+= tmp.get(k)+", ";
+                            Allergene=Allergene.replaceAll("^,\\s", "").replaceAll(",\\s$","");
+                        }
 
-                        MensaPlan.Menue newMenue= new MensaPlan.Menue(currentMenu.getAttribute("zusatz"),Name, prices,Kennzeichnungen);
+
+                        MensaPlan.Menue newMenue= new MensaPlan.Menue(currentMenu.getAttribute("zusatz"), currentMenu.getElementsByTagName("nameMitUmbruch").item(0).getTextContent(), prices,Kennzeichnungen,Allergene);
                         switch (currentMenu.getAttribute("art"))
                         {
                             case "Essen 1":

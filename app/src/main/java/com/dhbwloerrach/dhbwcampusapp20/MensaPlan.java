@@ -122,14 +122,16 @@ public class MensaPlan
         public String Name;
         public String prices[];
         public String Kennzeichnungen;
+        public String Allergene;
 
-        public Menue(String zusatz, String Name, String prices[],String kennzeichnungen)
+        public Menue(String zusatz, String Name, String prices[],String kennzeichnungen, String Allergene)
         {
             this.zusatz=zusatz;
 
             this.Name=Name;
             this.prices=prices;
             this.Kennzeichnungen=kennzeichnungen;
+            this.Allergene=Allergene;
         }
 
     }

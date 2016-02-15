@@ -1,6 +1,7 @@
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ public class mensa_fragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Boolean IsActive;
     private MensaPlan.Day day;
-    private ScrollView scrollView;
+    private double credit;
     private int role;
 
     public mensa_fragment() {
@@ -74,10 +75,11 @@ public class mensa_fragment extends Fragment {
         mListener = null;
     }
 
-    public void UpdateData(MensaPlan.Day day, int role)
+    public void UpdateData(MensaPlan.Day day, int role, double credit)
     {
         this.day=day;
         this.role=role;
+        this.credit=credit;
         ShowData();
     }
 
@@ -87,24 +89,31 @@ public class mensa_fragment extends Fragment {
             return;
         try {
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_1_price)).setText(day.Menues[MensaPlan.Menues.Menue1].prices[role]);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_1_price)).setTextColor(Color.parseColor(credit >= ExtractPrice(day.Menues[MensaPlan.Menues.Menue1].prices[role]) ? "#626465" : "#FF0000"));
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_1_name)).setText(day.Menues[MensaPlan.Menues.Menue1].Name);
             ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_1_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Menue1].zusatz));
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_1_Ken)).setText(day.Menues[MensaPlan.Menues.Menue1].Kennzeichnungen);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_1_All)).setText(day.Menues[MensaPlan.Menues.Menue1].Allergene);
 
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_2_price)).setText(day.Menues[MensaPlan.Menues.Menue2].prices[role]);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_2_price)).setTextColor(Color.parseColor(credit >= ExtractPrice(day.Menues[MensaPlan.Menues.Menue2].prices[role]) ? "#626465" : "#FF0000"));
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_2_name)).setText(day.Menues[MensaPlan.Menues.Menue2].Name);
             ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_2_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Menue2].zusatz));
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_2_Ken)).setText(day.Menues[MensaPlan.Menues.Menue2].Kennzeichnungen);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_2_All)).setText(day.Menues[MensaPlan.Menues.Menue2].Allergene);
 
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_3_price)).setText(day.Menues[MensaPlan.Menues.Menue3].prices[role]);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_3_price)).setTextColor(Color.parseColor(credit >= ExtractPrice(day.Menues[MensaPlan.Menues.Menue3].prices[role]) ? "#626465" : "#FF0000"));
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_3_name)).setText(day.Menues[MensaPlan.Menues.Menue3].Name);
             ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_3_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Menue3].zusatz));
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_3_Ken)).setText(day.Menues[MensaPlan.Menues.Menue3].Kennzeichnungen);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_3_All)).setText(day.Menues[MensaPlan.Menues.Menue3].Allergene);
 
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_buffet_price)).setText(day.Menues[MensaPlan.Menues.Buffet].prices[role]);
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_buffet_name)).setText(day.Menues[MensaPlan.Menues.Buffet].Name);
             ((ImageView)(this.getView()).findViewById(R.id.mensa_menue_buffet_additionals)).setImageResource(GetImageRessource(day.Menues[MensaPlan.Menues.Buffet].zusatz));
             ((TextView)(this.getView()).findViewById(R.id.mensa_menue_buffet_Ken)).setText(day.Menues[MensaPlan.Menues.Buffet].Kennzeichnungen);
+            ((TextView)(this.getView()).findViewById(R.id.mensa_menue_buffet_All)).setText(day.Menues[MensaPlan.Menues.Buffet].Allergene);
         }
         catch (Exception e)
         {
@@ -123,6 +132,12 @@ public class mensa_fragment extends Fragment {
             default:
                 return R.drawable.leer;
         }
+    }
+
+    private static double ExtractPrice(String price)
+    {
+        price=price.replaceAll("€.*", "").replaceAll("[^0-9,]","").replace(',','.');
+        return Double.parseDouble(price);
     }
 
 

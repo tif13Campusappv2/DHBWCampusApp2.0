@@ -123,6 +123,7 @@
     <string name="mensa_menue_3_headline">Essen 3</string>
     <string name="mensa_menue_buffet_headline">Buffet</string>
     <string name="mensa_menue_ken">Kennzeichnungen: </string>
+    <string name="mensa_menue_all">Allergene: </string>
     <string name="mensa_menue_price_dummy">3,00€</string>
     <string name="mensa_menue_name_dummy">Riesenbürger</string>
     <string name="mensa_menue_additonals_des">Zusatzinformationen zum Essen</string>
@@ -131,40 +132,104 @@
     <string name="mensa_ken_headline">Kennzeichnungen</string>
 
     <string name="mensa_ken_msc">aus nachhaltiger Fischerei</string>
-    <string name="mensa_ken_msc_No">(MSC)</string>
+    <string name="mensa_ken_msc_No">MSC</string>
 
     <string name="mensa_ken_schwe">mit Schwein</string>
-    <string name="mensa_ken_schwe_No">(1)</string>
+    <string name="mensa_ken_schwe_No">1</string>
 
     <string name="mensa_ken_alk">mit Alkohol</string>
-    <string name="mensa_ken_alk_No">(2)</string>
+    <string name="mensa_ken_alk_No">2</string>
 
     <string name="mensa_ken_gsch">mit Geschmacksverstärker</string>
-    <string name="mensa_ken_gsch_No">(3)</string>
+    <string name="mensa_ken_gsch_No">3</string>
 
     <string name="mensa_ken_farb">mit Farbstoff</string>
-    <string name="mensa_ken_farb_No">(4)</string>
+    <string name="mensa_ken_farb_No">4</string>
 
     <string name="mensa_ken_ant">mit Antioxidationsmittel</string>
-    <string name="mensa_ken_ant_No">(5)</string>
+    <string name="mensa_ken_ant_No">5</string>
 
     <string name="mensa_ken_kon">mit Konservierungsstoff</string>
-    <string name="mensa_ken_kon_No">(6)</string>
+    <string name="mensa_ken_kon_No">6</string>
 
     <string name="mensa_ken_schw">geschwefelt</string>
-    <string name="mensa_ken_schw_No">(7)</string>
+    <string name="mensa_ken_schw_No">7</string>
 
     <string name="mensa_ken_phos">mit Phosphat</string>
-    <string name="mensa_ken_phos_No">(8)</string>
+    <string name="mensa_ken_phos_No">8</string>
 
     <string name="mensa_ken_sues">mit Süßungsmittel</string>
-    <string name="mensa_ken_sues_No">(9)</string>
+    <string name="mensa_ken_sues_No">9</string>
 
     <string name="mensa_ken_gesch">geschwärzt</string>
-    <string name="mensa_ken_gesch_No">(10)</string>
+    <string name="mensa_ken_gesch_No">10</string>
 
     <string name="mensa_ken_rind">mit Rindfleisch</string>
-    <string name="mensa_ken_rind_No">(15)</string>
+    <string name="mensa_ken_rind_No">15</string>
+
+    // Allergene
+
+    <string name="mensa_all_headline">Allergene</string>
+
+    <string name="mensa_all_1_sht">Ei</string>
+    <string name="mensa_all_1">Eier</string>
+
+    <string name="mensa_all_2_sht">Fi</string>
+    <string name="mensa_all_2">Fisch</string>
+
+    <string name="mensa_all_3_sht">Gl</string>
+    <string name="mensa_all_3">GLUTENHALTIGES Getreide</string>
+
+    <string name="mensa_all_4_sht">GlD</string>
+    <string name="mensa_all_4">Dinkel</string>
+
+    <string name="mensa_all_5_sht">GlG</string>
+    <string name="mensa_all_5">Gerste</string>
+
+    <string name="mensa_all_6_sht">GlH</string>
+    <string name="mensa_all_6">Hafer</string>
+
+    <string name="mensa_all_7_sht">GlK</string>
+    <string name="mensa_all_7">Kamut</string>
+
+    <string name="mensa_all_8_sht">GlR</string>
+    <string name="mensa_all_8">Roggen</string>
+
+    <string name="mensa_all_9_sht">GlW</string>
+    <string name="mensa_all_9">Weizen</string>
+
+    <string name="mensa_all_10_sht">Kr</string>
+    <string name="mensa_all_10">Krebstiere</string>
+
+    <string name="mensa_all_11_sht">Lak</string>
+    <string name="mensa_all_11">Laktose</string>
+
+    <string name="mensa_all_12_sht">ML</string>
+    <string name="mensa_all_12">Milch /-erzeugnisse</string>
+
+    <string name="mensa_all_13_sht">NC</string>
+    <string name="mensa_all_13">Cashew</string>
+
+    <string name="mensa_all_14_sht">Nu</string>
+    <string name="mensa_all_14">SCHALENFRÜCHTE/Nüsse</string>
+
+    <string name="mensa_all_15_sht">Sa</string>
+    <string name="mensa_all_15">Sesam</string>
+
+    <string name="mensa_all_16_sht">Se</string>
+    <string name="mensa_all_16">Sellerie</string>
+
+    <string name="mensa_all_17_sht">Sf</string>
+    <string name="mensa_all_17">Schwefeldioxid/Sulfite</string>
+
+    <string name="mensa_all_18_sht">Sn</string>
+    <string name="mensa_all_18">Senf</string>
+
+    <string name="mensa_all_19_sht">So</string>
+    <string name="mensa_all_19">Soja</string>
+
+    <string name="mensa_all_20_sht">We</string>
+    <string name="mensa_all_20">Weichtiere</string>
 
 
     //##################################

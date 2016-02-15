@@ -140,12 +140,12 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             ReloadFragments();
         }
 
-        public void Update(MensaPlan mensaplan, int Role)
+        public void Update(MensaPlan mensaplan, int Role, double credit)
         {
             for(int i=0;i<items.length;i++)
             {
                 TabHeaders[i]=mensaplan.GetDay(i).GetFormatedDate();
-                ((mensa_fragment)items[i]).UpdateData(mensaplan.GetDay(i),Role);
+                ((mensa_fragment)items[i]).UpdateData(mensaplan.GetDay(i),Role,credit);
             }
             this.notifyDataSetChanged();
         }
@@ -187,10 +187,10 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
     {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                if(updater.IsUpdated(Updated.Mensa) && updater.IsUpdated(Updated.Role))
+                if(updater.IsUpdated(Updated.Mensa) && updater.IsUpdated(Updated.Role) && updater.IsUpdated(Updated.Guthaben))
                 {
                     mViewPager.setCurrentItem(updater.GetMensaPlan().GetBestFittingDay(),true);
-                    mAppSectionsPagerAdapter.Update(updater.GetMensaPlan(), updater.GetRole());
+                    mAppSectionsPagerAdapter.Update(updater.GetMensaPlan(), updater.GetRole(), updater.GetCredit());
                 }
             }
         });
