@@ -57,6 +57,14 @@ public class ContentManager {
         manager._UpdateUserCredit(manager.context, credit);
     }
 
+    public static void ChangeUserCredit(double value,boolean add)
+    {
+        if(add)
+            manager._UpdateUserCredit(manager.context,manager._UserCredit()+value);
+        else
+            manager._UpdateUserCredit(manager.context,manager._UserCredit()-value);
+    }
+
     public static void UpdateSelectedNewsItem(int selectedNewsItem)
     {
         manager._UpdateCurrentNewsItem(selectedNewsItem);
@@ -213,6 +221,11 @@ public class ContentManager {
                 }
             }
         }.start();
+    }
+
+    private double _UserCredit()
+    {
+        return this.credit;
     }
 
     private void _UpdateCurrentNewsItem(int item)

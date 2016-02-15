@@ -46,7 +46,7 @@ public class ErrorReporting {
 
     public static abstract class Errors
     {
-        public static final int NETWORK=0, XML=1, OFFLINE=2,Video=3;
-        private static final int[] Errors={R.string.ErrorR_Network,R.string.ErrorR_XML,R.string.ErrorR_OFFLINE,R.string.ErrorR_Video};
+        public static final int NETWORK=0, XML=1, OFFLINE=2,Video=3, MONEY =4;
+        private static final int[] Errors={R.string.ErrorR_Network,R.string.ErrorR_XML,R.string.ErrorR_OFFLINE,R.string.ErrorR_Video,R.string.ErrorR_Money};
     }
 }

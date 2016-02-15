@@ -80,7 +80,7 @@
     <string name="guthaben_list_kopiesw_desc">A4 Seiten (à %)</string>
     <string name="guthaben_list_kopiecl_desc">A4 Seiten (à %)</string>
     <string name="guthaben_list_getrwasser_des">Wasser (à %)</string>
-    <string name="guthaben_list_getrcola_desc">Cola o.Ä. (à %)</string>
+    <string name="guthaben_list_getrcola_desc">Softdrink (à %)</string>
 
     <string name="guthaben_list_icon_desc">Icon zu Artikel</string>
 
@@ -109,6 +109,8 @@
 
     // Basic dict
     <string name="refresh">aktualisieren</string>
+    <string name="ok">OK</string>
+    <string name="abourt">Abbrechen</string>
 
     //##################################
     //# Mensa
@@ -172,6 +174,14 @@
     <string name="ErrorR_XML">Fehlerhafte Daten</string>
     <string name="ErrorR_OFFLINE">Keine Internetverbindung</string>
     <string name="ErrorR_Video">Videofehler</string>
+    <string name="ErrorR_Money">Nicht genug Guthaben</string>
     <string name="title_activity_news_detail">News</string>
+
+
+
+
+
+
+
 
 </resources>

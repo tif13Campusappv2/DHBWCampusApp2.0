@@ -61,7 +61,7 @@
             android:textColor="#FFF"
 
             android:text="@string/newsdetail_gotoWebsite"
-            android:background="@drawable/website_button"
+            android:background="@drawable/button"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content" />
     </LinearLayout>
