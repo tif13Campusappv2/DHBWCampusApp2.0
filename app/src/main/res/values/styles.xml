@@ -242,7 +242,7 @@
         <item name="android:textSize">@dimen/h1</item>
         <item name="android:textColor">@color/dhbwRed</item>
         <item name="android:layout_margin">6dp</item>
-        <item name="android:layout_weight">7</item>
+        <item name="android:layout_weight">7</item>#
     </style>
 
     <style name="mensa_menue_price">
