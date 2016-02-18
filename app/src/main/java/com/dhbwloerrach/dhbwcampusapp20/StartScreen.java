@@ -72,7 +72,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==R.id.startscreen_actionbar_refresh) {
-            ContentManager.UpdateFromRemote();
+            ContentManager.OnlineUpdate();
             return true;
         }
 
@@ -162,11 +162,12 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     {
         this.runOnUiThread(new Runnable() {
             public void run() {
+                if(update.IsUpdated(Updated.Role))
+                    userRole=update.GetRole();
                 if(update.IsUpdated(Updated.Mensa) && update.IsUpdated(Updated.Role))
                 {
                     MensaPlan.Day day= update.GetMensaPlan().GetDay(update.GetMensaPlan().GetBestFittingDay());
                     LoadMensaData(day,update.GetRole());
-                    userRole=update.GetRole();
                     prices[0]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue1].prices[userRole]);
                     prices[1]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue2].prices[userRole]);
                     prices[2]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue3].prices[userRole]);
@@ -179,8 +180,8 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                 }
                 if(update.IsUpdated(Updated.Guthaben))
                 {
-                    double credit=update.GetCredit();
-                    ((TextView)findViewById(R.id.dash_guthaben_amount)).setText(FormatPrice(credit));
+                    double credit=update.GetCredit().GetCredit();
+                    ((TextView)findViewById(R.id.dash_guthaben_amount)).setText(FormatPrice(credit) + " - Aktualisiert am " + update.GetCredit().GetFormatedDate());
 
 
                     ((TextView)findViewById(R.id.dash_guthaben_menue1)).setText(String.valueOf((int) (credit / prices[0])) + "x");
@@ -211,7 +212,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onRefresh()
     {
-        ContentManager.UpdateFromRemote();
+        ContentManager.OnlineUpdate();
         ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setRefreshing(false);
     }
 

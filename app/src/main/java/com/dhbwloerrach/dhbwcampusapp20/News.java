@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 public class News extends AppCompatActivity implements Updated.Refreshable, news_fragment.OnListFragmentInteractionListener,ViewPager.OnPageChangeListener{
     private AppSectionsPagerAdapter mAppSectionsPagerAdapter;
@@ -59,7 +59,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         }
         else if(id==R.id.news_actionbar_refresh)
         {
-            ContentManager.UpdateFromRemote();
+            ContentManager.OnlineUpdate();
             return true;
         }
         return false;
@@ -104,7 +104,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
 
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {
-        private Fragment[] items;
+        private news_fragment[] items;
         private final int NumberTabs=5;
         private String[] TabHeaders={"Alle","News","Presse","Mitarbeiter","Dozierende"};
 
@@ -116,12 +116,17 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
 
         public void Update(NewsContainer newsContainer)
         {
-            ((news_fragment)items[0]).UpdateNews(newsContainer.GetNewsItemList());
+            items[0].UpdateNews(newsContainer.GetNewsItemList());
             for(int i=1;i<items.length;i++)
-            {
-                ((news_fragment)items[i]).UpdateNews(newsContainer.GetNewsItemList(i-1));
-            }
+                items[i].UpdateNews(newsContainer.GetNewsItemList(i-1));
             this.notifyDataSetChanged();
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            news_fragment fragment = (news_fragment) super.instantiateItem(container, position);
+            items[position] = fragment;
+            return fragment;
         }
 
         @Override
@@ -135,10 +140,9 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
 
         private void ReloadFragments()
         {
-            items= new Fragment[NumberTabs];
-            for(int i=0;i<NumberTabs;i++) {
+            items= new news_fragment[NumberTabs];
+            for(int i=0;i<NumberTabs;i++)
                 items[i] = new news_fragment();
-            }
         }
 
         @Override

@@ -5,6 +5,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class ContentManager {
     private static ContentManager manager;
 
@@ -14,16 +18,15 @@ public class ContentManager {
     private MensaPlan mensaPlan;
     private NewsContainer newsContainer;
     private int role;
-    private double credit;
+    private CreditContainer credit;
     private int selectedNewsItem;
     private boolean loaded;
 
     public ContentManager() {
         mensaUpdater= new MensaUpdater();
         newsUpdater= new NewsUpdater();
+        credit= new CreditContainer(0.0);
         role=-1;
-        credit=0.0;
-        loaded=false;
         selectedNewsItem=0;
     }
 
@@ -41,10 +44,17 @@ public class ContentManager {
             manager.context=context;
     }
 
-    public static void UpdateFromRemote()
+    public static void OnlineUpdate()
     {
-        manager._UpdateMensaData(manager.context);
-        manager._UpdateNewsData(manager.context);
+        if(manager._IsOnline(manager.context)) {
+            manager._UpdateMensaData(manager.context);
+            manager._UpdateNewsData(manager.context);
+        }
+        else
+        {
+            ErrorReporting.NewError(ErrorReporting.Errors.OFFLINE);
+        }
+
     }
 
     public static void UpdateUserRole(int role)
@@ -59,10 +69,11 @@ public class ContentManager {
 
     public static void ChangeUserCredit(double value,boolean add)
     {
+
         if(add)
-            manager._UpdateUserCredit(manager.context,manager._UserCredit()+value);
+            manager._UpdateUserCredit(manager.context,manager._UserCredit().GetCredit()+value);
         else
-            manager._UpdateUserCredit(manager.context,manager._UserCredit()-value);
+            manager._UpdateUserCredit(manager.context,manager._UserCredit().GetCredit()-value);
     }
 
     public static void UpdateSelectedNewsItem(int selectedNewsItem)
@@ -93,7 +104,7 @@ public class ContentManager {
                     role= dbSocket.GetUserRole();
                 if(newsContainer==null)
                     newsContainer= dbSocket.GetNews();
-                if(credit==0.0)
+                if(credit.GetCredit()==0.0)
                     credit= dbSocket.GetCredit();
                 loaded=true;
             }
@@ -208,23 +219,25 @@ public class ContentManager {
 
     private void _UpdateUserCredit(final Activity context, final double credit)
     {
-        this.credit=credit;
+        long timestamp=Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis();
+        this.credit= new CreditContainer(credit,timestamp);
+        final CreditContainer cr= this.credit;
         new Thread()
         {
             public void run() {
                 DatabaseSocket dbSocket = new DatabaseSocket(context);
-                dbSocket.SaveCredit(credit);
+                dbSocket.SaveCredit(cr);
                 if(context instanceof Updated.Refreshable)
                 {
                     Updated update= new Updated();
-                    update.InsertCredit(credit);
+                    update.InsertCredit(cr);
                     ((Updated.Refreshable) context).Refresh(update);
                 }
             }
         }.start();
     }
 
-    private double _UserCredit()
+    private CreditContainer _UserCredit()
     {
         return this.credit;
     }

@@ -100,7 +100,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 }
                 if (update.IsUpdated(Updated.Guthaben)) {
 
-                    credit=update.GetCredit();
+                    credit=update.GetCredit().GetCredit();
                     try {
                         ((TextView) findViewById(R.id.guthaben_guthaben)).setText(FormatPrice(credit));
                         ((TextView) findViewById(R.id.guthaben_list_menue1_amount)).setText(String.valueOf((int) (credit / prices[0])) + "x");

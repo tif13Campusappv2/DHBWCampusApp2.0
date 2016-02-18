@@ -64,9 +64,9 @@
 
 
     // Dummy
-    <string name="news_dummy_content">+++ Test News Ticker Nachricht +++</string>
-    <string name="news_dummy_title">Amtsübergabe an der Dualen Hochschule Baden-Württemberg</string>
-    <string name="news_dummy_description">Professor Arnold van Zyl (PhD) ist neuer Präsident der DHBW / Verabschiedung von Professor Reinhold R. Geilsdörfer</string>
+    <string name="news_dummy_content">+++ Keine Nachrichten, für erste Syncronisation bitte Internetverbindung herstellen +++</string>
+    <string name="news_dummy_title">Test Title</string>
+    <string name="news_dummy_description">Test Description</string>
 
     //##################################
     //# Guthaben
@@ -124,7 +124,7 @@
     <string name="mensa_menue_buffet_headline">Buffet</string>
     <string name="mensa_menue_ken">Kennzeichnungen: </string>
     <string name="mensa_menue_all">Allergene: </string>
-    <string name="mensa_menue_price_dummy">3,00€</string>
+    <string name="mensa_menue_price_dummy">3,60€</string>
     <string name="mensa_menue_name_dummy">Riesenbürger</string>
     <string name="mensa_menue_additonals_des">Zusatzinformationen zum Essen</string>
 

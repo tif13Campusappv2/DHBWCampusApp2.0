@@ -7,7 +7,7 @@ public class Updated
     private MensaPlan mensa;
     private NewsContainer news;
     private int role;
-    private double credit;
+    private CreditContainer credit;
     private boolean values[]={false,false,false,false};
 
     public Updated()
@@ -54,15 +54,15 @@ public class Updated
         return values[Updated.Role] ? role:0;
     }
 
-    public void InsertCredit(double credit)
+    public void InsertCredit(CreditContainer credit)
     {
         this.credit = credit;
         values[Updated.Guthaben] = true;
     }
 
-    public double GetCredit()
+    public CreditContainer GetCredit()
     {
-        return values[Updated.Guthaben] ? credit:0.0;
+        return values[Updated.Guthaben] ? credit:new CreditContainer(0.0);
     }
 
     public boolean IsUpdated(int area)

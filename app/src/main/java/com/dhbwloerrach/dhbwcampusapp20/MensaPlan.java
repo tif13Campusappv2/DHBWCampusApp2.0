@@ -49,11 +49,7 @@ public class MensaPlan
     public int GetBestFittingDay()
     {
         SortDays();
-        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
-        Date today= new Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH) ,now.get(Calendar.DAY_OF_MONTH),now.get(Calendar.HOUR_OF_DAY),0,0);
-        //boolean dst=TimeZone.getTimeZone("Europe/Berlin").inDaylightTime(today);
-        Date later=new Date(today.getTime()- showNextDayMenueAfter *3600000+1);
-        long timestampLater=(later.getTime());
+        long timestampLater=((new Date(Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis()- showNextDayMenueAfter *3600000+1)).getTime());
         int pos=-1;
         for(int i=0;i<Days.length;i++)
             if(Days[i].GetTimeStamp()>=timestampLater) {

@@ -6,6 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class DatabaseSocket extends SQLiteOpenHelper
 {
     public static abstract class DatabaseMensa implements BaseColumns
@@ -97,11 +101,13 @@ public class DatabaseSocket extends SQLiteOpenHelper
         public static final String TABLE_NAME = "CREDIT";
         public static final String _ID = "_ID";
         public static final String COLUMN_CREDIT = "USERCREDIT";
+        public static final String COLUMN_TIME = "TIMESTAMP";
 
         private static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                         _ID + " INTEGER PRIMARY KEY," +
-                        COLUMN_CREDIT + " TEXT);";
+                        COLUMN_CREDIT + " TEXT," +
+                        COLUMN_TIME + " INTEGER);";
 
         private static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + TABLE_NAME +";";
@@ -342,14 +348,15 @@ public class DatabaseSocket extends SQLiteOpenHelper
         return role;
     }
 
-    public void SaveCredit(double credit)
+    public void SaveCredit(CreditContainer container)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             db.execSQL(DatabaseCredit.SQL_DELETE_CONTENT);
             ContentValues values = new ContentValues();
             values.put(DatabaseCredit._ID, 0);
-            values.put(DatabaseCredit.COLUMN_CREDIT, String.valueOf(credit));
+            values.put(DatabaseCredit.COLUMN_CREDIT, String.valueOf(container.GetCredit()));
+            values.put(DatabaseCredit.COLUMN_TIME, container.GetUnformatedDate());
             db.insert(DatabaseCredit.TABLE_NAME, null, values);
         }
         catch (Exception e)
@@ -361,29 +368,29 @@ public class DatabaseSocket extends SQLiteOpenHelper
         }
     }
 
-    public double GetCredit() {
+    public CreditContainer GetCredit() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String creditS;
+        CreditContainer container;
         try {
-            Cursor cursor = db.query(DatabaseCredit.TABLE_NAME, new String[]{DatabaseCredit.COLUMN_CREDIT}, null, null, null, null, null);
+            Cursor cursor = db.query(DatabaseCredit.TABLE_NAME, new String[]{DatabaseCredit.COLUMN_CREDIT, DatabaseCredit.COLUMN_TIME}, null, null, null, null, null);
             if (cursor.moveToFirst()) {
-                creditS=cursor.getString(0);
+                container=new CreditContainer(Double.parseDouble(cursor.getString(0)), cursor.getLong(1));
                 cursor.close();
             } else // Table empty
             {
                 cursor.close();
                 db.close();
-                return 0.0;
+                return new CreditContainer(0.0,Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis());
             }
         }
         catch (Exception e)
         {
             db.close();
             e.printStackTrace();
-            return 0.0;
+            return new CreditContainer(0.0,Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis());
         }
         db.close();
-        return Double.parseDouble(creditS);
+        return container;
     }
 
 }

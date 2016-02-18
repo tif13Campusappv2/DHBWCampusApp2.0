@@ -69,13 +69,14 @@
         android:id="@+id/guthaben_list_sepperator"
         android:background="@drawable/innerbox_top"/>
     <ScrollView
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+
         android:layout_width="match_parent"
         android:scrollbars="none"
         android:layout_below="@+id/guthaben_list_sepperator"
         android:layout_height="match_parent">
         <LinearLayout
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

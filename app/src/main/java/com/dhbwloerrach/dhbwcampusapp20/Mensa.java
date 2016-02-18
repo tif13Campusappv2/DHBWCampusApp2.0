@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable{
 
@@ -85,7 +85,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
         else if(id==R.id.mensa_actionbar_refresh)
         {
-            ContentManager.UpdateFromRemote();
+            ContentManager.OnlineUpdate();
             return true;
         }
         return false;
@@ -130,7 +130,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {
-        private Fragment[] items;
+        private mensa_fragment[] items;
         private final int NumberTabs=5;
         private String[] TabHeaders;
 
@@ -145,9 +145,16 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             for(int i=0;i<items.length;i++)
             {
                 TabHeaders[i]=mensaplan.GetDay(i).GetFormatedDate();
-                ((mensa_fragment)items[i]).UpdateData(mensaplan.GetDay(i),Role,credit);
+                items[i].UpdateData(mensaplan.GetDay(i),Role,credit);
             }
             this.notifyDataSetChanged();
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            mensa_fragment fragment = (mensa_fragment) super.instantiateItem(container, position);
+            items[position] = fragment;
+            return fragment;
         }
 
         @Override
@@ -162,7 +169,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
         private void ReloadFragments()
         {
-            items= new Fragment[NumberTabs];
+            items= new mensa_fragment[NumberTabs];
             TabHeaders= new String[NumberTabs];
             for(int i=0;i<NumberTabs;i++) {
                 items[i] = new mensa_fragment();
@@ -190,7 +197,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
                 if(updater.IsUpdated(Updated.Mensa) && updater.IsUpdated(Updated.Role) && updater.IsUpdated(Updated.Guthaben))
                 {
                     mViewPager.setCurrentItem(updater.GetMensaPlan().GetBestFittingDay(),true);
-                    mAppSectionsPagerAdapter.Update(updater.GetMensaPlan(), updater.GetRole(), updater.GetCredit());
+                    mAppSectionsPagerAdapter.Update(updater.GetMensaPlan(), updater.GetRole(), updater.GetCredit().GetCredit());
                 }
             }
         });
