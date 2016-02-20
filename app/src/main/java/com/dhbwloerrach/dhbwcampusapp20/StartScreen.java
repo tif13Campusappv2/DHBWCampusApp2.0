@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet alle Code für Hauptactivity
+ *      Autoren: 		Philipp Mosch, Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.DialogInterface;
@@ -108,7 +124,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     public void onStart() {
         super.onStart();
         ContentManager.NewContext(this);
-        ErrorReporting.NewContext(this);
+        MessageReporting.NewContext(this);
         ContentManager.UpdateActivity();
     }
 
@@ -117,7 +133,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         super.onStop();
     }
 
-
+    // Läd alle Clickhandler in der Hauptactivity
     public  void LoadClickHandler()
     {
         findViewById(R.id.dash_Mensa).setOnClickListener(this);
@@ -134,6 +150,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
     }
 
+    // Verwaltet die Navigation innerhalb der App
     public void Goto(Pages page)
     {
         if(page== Pages.Mensa)
@@ -158,6 +175,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         }
     }
 
+    // Wird vom ContentContainer aufgerufen um die Activity zu aktualisieren
     public void Refresh(final Updated update)
     {
         this.runOnUiThread(new Runnable() {
@@ -166,6 +184,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                     userRole=update.GetRole();
                 if(update.IsUpdated(Updated.Mensa) && update.IsUpdated(Updated.Role))
                 {
+                    // Ändert die Menüs und Preise anhand der neuen Daten
                     MensaPlan.Day day= update.GetMensaPlan().GetDay(update.GetMensaPlan().GetBestFittingDay());
                     LoadMensaData(day,update.GetRole());
                     prices[0]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue1].prices[userRole]);
@@ -175,11 +194,13 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
                 }
                 if(update.IsUpdated(Updated.News))
                 {
+                    // Zeigt das aktuellste Newsitem an
                     NewsContainer.NewsItem mostcurrentnews= update.GetNews().GetNewsItem(0);
                     ((TextView)findViewById(R.id.dash_news_mostcurrent)).setText(getString(R.string.news_template).replace("%",mostcurrentnews.Title));
                 }
                 if(update.IsUpdated(Updated.Guthaben))
                 {
+                    // Ändert die angezeigten Mengen in der Guthabenliste anhand des momentanen Guthabens und der momentanen Preise
                     double credit=update.GetCredit().GetCredit();
                     ((TextView)findViewById(R.id.dash_guthaben_amount)).setText(FormatPrice(credit) + " - Aktualisiert am " + update.GetCredit().GetFormatedDate());
 
@@ -198,17 +219,20 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         });
     }
 
+    // Formatiert die übergebene Zahl zum einem Geldbetrag
     private static String FormatPrice(double price)
     {
         return String.format("%.2f", price).replace('.', ',').replaceAll("-","") + "€";
     }
 
+    // Extrahiert einen Preis aus einem Text
     private static double ExtractPrice(String price)
     {
         price=price.replaceAll("€.*", "").replaceAll("[^0-9,]","").replace(',','.');
         return Double.parseDouble(price);
     }
 
+    // Wird vom SwipeRefreshLayout aufgerufen, wenn der Benutzer die App über diese Funktion aktualisieren möchte
     @Override
     public void onRefresh()
     {
@@ -216,12 +240,10 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setRefreshing(false);
     }
 
+    // Fügt die übergebenen Mensadaten in das Layout ein
     private void LoadMensaData(MensaPlan.Day day,int role)
     {
-
         ((TextView) findViewById(R.id.startscreen_mensa_date)).setText(day.GetFormatedDate());
-
-
 
         ((TextView) findViewById(R.id.startscreen_mensa_menue1_name)).setText(day.Menues[MensaPlan.Menues.Menue1].Name);
         ((TextView) findViewById(R.id.startscreen_mensa_menue1_price)).setText(day.Menues[MensaPlan.Menues.Menue1].prices[role]);
@@ -236,6 +258,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         ((TextView) findViewById(R.id.startscreen_mensa_buffet_price)).setText(day.Menues[MensaPlan.Menues.Buffet].prices[role]);
     }
 
+    // Öffnet den Rollenauswahldialog
     private  void ShowRoleDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

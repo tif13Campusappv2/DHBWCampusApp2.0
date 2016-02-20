@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allen Code für die Lageplanseite
+ *      Autoren: 		Marius Korioth, Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.os.Bundle;

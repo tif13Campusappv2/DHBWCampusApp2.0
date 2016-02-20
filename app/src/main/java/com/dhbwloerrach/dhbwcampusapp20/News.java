@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allen Code für die Newsseite
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
@@ -32,7 +48,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
     {
         super.onStart();
         ContentManager.NewContext(this);
-        ErrorReporting.NewContext(this);
+        MessageReporting.NewContext(this);
         ContentManager.UpdateActivity();
     }
 
@@ -65,6 +81,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         return false;
     }
 
+    // Verwaltet die Navigation innerhalb der App
     public void Goto(Pages page)
     {
         if(page== Pages.StartScreen)
@@ -79,6 +96,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
 
     }
 
+    // Initialisert die Fragments für die einzelnen Tabs
     private void InitializeTabView()
     {
         mAppSectionsPagerAdapter= new AppSectionsPagerAdapter(getSupportFragmentManager());
@@ -102,6 +120,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
 
     }
 
+    // Stellt einen Adapter für die Fragmenttabs der Newsseite bereit
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {
         private news_fragment[] items;
@@ -114,6 +133,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
             ReloadFragments();
         }
 
+        // Updatet den Inhalt eines Newstabs
         public void Update(NewsContainer newsContainer)
         {
             items[0].UpdateNews(newsContainer.GetNewsItemList());
@@ -158,6 +178,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         }
     }
 
+    // Wird vom ContentManager aufgerufen, um die Activity zu aktualisieren
     public void Refresh(final Updated updater)
     {
         this.runOnUiThread(new Runnable() {
@@ -171,6 +192,7 @@ public class News extends AppCompatActivity implements Updated.Refreshable, news
         });
     }
 
+    // Wird von einem Fragment aufgerufen, sobald auf ein Newsitem gecklickt wird. Leitet auf die Newsdetailseite weiter
     @Override
     public void onListFragmentInteraction(NewsContainer.NewsItem item){
         for(int i=0;i<currentContainer.GetCountNews();i++)

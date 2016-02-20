@@ -1,6 +1,21 @@
+/*
+ *      Beschreibung:	Stellt eine Klasse für das Onlineabrufen der Mensadaten bereit
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -21,11 +36,12 @@ public class MensaUpdater {
     private MensaXMLExtractor extractor;
     private static final String APIURI = "http://www.swfr.de/index.php?id=1400&type=98&tx_swfrspeiseplan_pi1[apiKey]=c3841e89a2c8c301b890723ecdb786ad&tx_swfrspeiseplan_pi1[ort]=677";
 
+	// Erstellt einen neuen MensaUpdater
     public MensaUpdater() {
         extractor= new MensaXMLExtractor();
     }
 
-
+	// Ruft den aktuellen Mensaplan online ab 
     public MensaPlan LoadMensaData() {
 
         try {
@@ -42,15 +58,17 @@ public class MensaUpdater {
 
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorReporting.NewError(ErrorReporting.Errors.NETWORK);
+            MessageReporting.ShowMessage(MessageReporting.Messages.NETWORK);
             return null;
         }
     }
 
+	// Stellt eine Klasse für die Extrahierung der Mensadaten bereit
     private class MensaXMLExtractor{
 
         public MensaXMLExtractor(){}
 
+		// Nimmt einen XML String mit Mensadaten entgegen und erstellt einen Mensacontainer
         public MensaPlan Extract(String rowData)
         {
             rowData= rowData.replaceAll("\r\n","").replaceAll("\t", "").replaceAll(">\\s+<","><").replaceAll("<br>","\r\n");
@@ -139,7 +157,7 @@ public class MensaUpdater {
             catch (Exception e)
             {
                 e.printStackTrace();
-                ErrorReporting.NewError(ErrorReporting.Errors.XML);
+                MessageReporting.ShowMessage(MessageReporting.Messages.XML);
                 return null;
             }
 

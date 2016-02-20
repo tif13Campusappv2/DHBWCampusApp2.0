@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allem Code für die Mensaseite
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
@@ -50,7 +66,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
     {
         super.onStart();
         ContentManager.NewContext(this);
-        ErrorReporting.NewContext(this);
+        MessageReporting.NewContext(this);
         ContentManager.UpdateActivity();
     }
 
@@ -65,7 +81,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         super.onBackPressed();
         Goto(Pages.StartScreen);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,6 +106,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         return false;
     }
 
+	// Verwaltet die Navigation innerhalb der App
     public void Goto(Pages page)
     {
         if(page== Pages.StartScreen)
@@ -104,6 +120,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
     }
 
+	// Inizialisiert die Tabansicht für die einzelnen Tage
     private void InitializeTabView()
     {
         mAppSectionsPagerAdapter= new AppSectionsPagerAdapter(getSupportFragmentManager());
@@ -127,7 +144,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
     }
 
-
+	// Stellt einen Adapter für die Mensa Tabs bereit
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {
         private mensa_fragment[] items;
@@ -140,6 +157,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             ReloadFragments();
         }
 
+		// Updatet die einzelnen Tabs der Mensa Activity
         public void Update(MensaPlan mensaplan, int Role, double credit)
         {
             for(int i=0;i<items.length;i++)
@@ -190,6 +208,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
     }
 
+	// Wird vom ContentManager aufgerufen, um die Inhalte der Activity zu aktualisieren
     public void Refresh(final Updated updater)
     {
         this.runOnUiThread(new Runnable() {

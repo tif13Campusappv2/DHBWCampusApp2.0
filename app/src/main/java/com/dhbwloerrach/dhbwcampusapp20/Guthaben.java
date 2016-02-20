@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allen Code für die Guthabenseite
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.DialogInterface;
@@ -15,7 +31,7 @@ import android.widget.TextView;
 public class Guthaben extends AppCompatActivity implements Updated.Refreshable, View.OnClickListener{
 
     // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc., 8=Kaffee
-    // Note 0-4 werden dynamisch gesetzt
+    // Wichtig: 0-4 werden dynamisch gesetzt
     private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.10,1.50,1.00};
     private double credit;
 
@@ -37,8 +53,9 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
     {
         super.onStart();
         ContentManager.NewContext(this);
-        ErrorReporting.NewContext(this);
+        MessageReporting.NewContext(this);
         ContentManager.UpdateActivity();
+        // Setzt die Preise in der Preisliste, die nicht abhängige von der Benutzerrolle sind
         ((TextView) findViewById(R.id.guthaben_list_swkopie_desc)).setText(getString(R.string.guthaben_list_kopiesw_desc).replace("%", FormatPrice(prices[4])));
         ((TextView) findViewById(R.id.guthaben_list_clkopie_desc)).setText(getString(R.string.guthaben_list_kopiecl_desc).replace("%", FormatPrice(prices[5])));
         ((TextView) findViewById(R.id.guthaben_list_water_desc)).setText(getString(R.string.guthaben_list_getrwasser_des).replace("%", FormatPrice(prices[6])));
@@ -73,6 +90,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         return false;
     }
 
+	// Verwaltet die Navigation innerhalb der App
     public void Goto(Pages page)
     {
         if(page== Pages.StartScreen)
@@ -81,6 +99,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         }
     }
 
+	// Wird vom ContentManager aufgerufen, um die Inhalte der Activity zu aktualisieren
     public void Refresh(final Updated update)
     {
         this.runOnUiThread(new Runnable() {
@@ -89,10 +108,12 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 {
                     int role= update.GetRole();
                     MensaPlan.Day bestDay= update.GetMensaPlan().GetDay(update.GetMensaPlan().GetBestFittingDay());
+                    // Ändert die Preise anhand der aktuellen Benutzerrolle
                     prices[0]= ExtractPrice(bestDay.Menues[MensaPlan.Menues.Menue1].prices[role]);
                     prices[1]= ExtractPrice(bestDay.Menues[MensaPlan.Menues.Menue2].prices[role]);
                     prices[2]= ExtractPrice(bestDay.Menues[MensaPlan.Menues.Menue3].prices[role]);
                     prices[3]= ExtractPrice(bestDay.Menues[MensaPlan.Menues.Buffet].prices[role]);
+                    // Ändert die Preise in der Preisliste anhand der aktualisierten Daten
                     ((TextView) findViewById(R.id.guthaben_list_menue1_desc)).setText(getString(R.string.guthaben_list_menue1_desc).replace("%",FormatPrice(prices[0])));
                     ((TextView) findViewById(R.id.guthaben_list_menue2_desc)).setText(getString(R.string.guthaben_list_menue2_desc).replace("%",FormatPrice(prices[1])));
                     ((TextView) findViewById(R.id.guthaben_list_menue3_desc)).setText(getString(R.string.guthaben_list_menue3_desc).replace("%",FormatPrice(prices[2])));
@@ -102,6 +123,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
 
                     credit=update.GetCredit().GetCredit();
                     try {
+						// Ändert die Mengen in der Preisliste anhand des neuen Guthabens
                         ((TextView) findViewById(R.id.guthaben_guthaben)).setText(FormatPrice(credit));
                         ((TextView) findViewById(R.id.guthaben_list_menue1_amount)).setText(String.valueOf((int) (credit / prices[0])) + "x");
                         ((TextView) findViewById(R.id.guthaben_list_menue2_amount)).setText(String.valueOf((int)(credit/prices[1])) + "x");
@@ -119,18 +141,21 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             }
         });
     }
-
+	
+	// Extrahiert einen Preis aus einem String
     private static double ExtractPrice(String price)
     {
         price=price.replaceAll("€.*", "").replaceAll("[^0-9,]","").replace(',','.');
         return Double.parseDouble(price);
     }
 
+	// Formatiert die übergebene Zahl zu einem Preis
     private static String FormatPrice(double price)
     {
         return String.format("%.2f", price).replace('.', ',').replaceAll("-","") + "€";
     }
 
+	// Erstellt und öffnet den Dialog zur Guthabenänderung
     public void CreateDialog(final boolean add)
     {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -143,8 +168,9 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     double guthabenChange= ((double) unit_euro.getValue()) + ((double)cent.getValue())/100;
+                    // Prüft ob beim Abbuchen genug Geld vorhanden ist
                     if(!add && guthaben<guthabenChange)
-                        ErrorReporting.NewError(ErrorReporting.Errors.MONEY);
+                        MessageReporting.ShowMessage(MessageReporting.Messages.MONEY);
                     else
                         ContentManager.ChangeUserCredit(guthabenChange,add);
                 }
@@ -159,6 +185,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             final Button btn3=(Button) theView.findViewById(R.id.guthaben_dialog_btn3);
             final Button btn4=(Button) theView.findViewById(R.id.guthaben_dialog_btn4);
             final Button btn5=(Button) theView.findViewById(R.id.guthaben_dialog_btn5);
+            // Setzt die Vorauswahlbuttons und Clickhandler anhand der ausgewählten Option (Zu- oder Abbuchen)
             if(add) {
                 btn1.setText(FormatPrice(10.00));
                 btn1.setOnClickListener(new View.OnClickListener() {
@@ -235,6 +262,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 });
             }
 
+            // Setzt die Werte, die über die Slider eingestellt werden können
             unit_euro.setMinValue(0);
             unit_euro.setMaxValue(100);
             cent.setMinValue(0);
@@ -243,6 +271,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             builder.show();
     }
 
+	// Setzt den übergebenen Geldwert im Dialogfenster 
     private void SetDialogPrice(NumberPicker euro,NumberPicker cent, double value)
     {
         int valueeuro=(int) value;

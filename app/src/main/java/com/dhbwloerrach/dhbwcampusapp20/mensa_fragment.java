@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allen Code für einen Tab der Mensaseite
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Context;
@@ -75,6 +91,7 @@ public class mensa_fragment extends Fragment {
         mListener = null;
     }
 
+	// Updatet das Fragment
     public void UpdateData(MensaPlan.Day day, int role, double credit)
     {
         this.day=day;
@@ -83,6 +100,7 @@ public class mensa_fragment extends Fragment {
         ShowData();
     }
 
+	// Zeigt die aktuell gespeicherten Daten an
     private void ShowData()
     {
         if(!this.IsActive || day==null)
@@ -121,6 +139,7 @@ public class mensa_fragment extends Fragment {
         }
     }
 
+	// Löst den Zusatz zu einer Bildressource auf
     private int GetImageRessource(String zusatz)
     {
         switch (zusatz)
@@ -134,6 +153,7 @@ public class mensa_fragment extends Fragment {
         }
     }
 
+	// Extrahiert einen Preis aus einem String
     private static double ExtractPrice(String price)
     {
         price=price.replaceAll("€.*", "").replaceAll("[^0-9,]","").replace(',','.');

@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allen Code für ein Newstab
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Context;
@@ -66,6 +82,7 @@ public class news_fragment extends Fragment {
         IsActive=false;
     }
 
+    // Wird von der übergeordneten Activity aufgerufen um den Inhalt des Fragments zu aktualisieren
     public void UpdateNews(List<NewsContainer.NewsItem> list) {
         newsItemList=list;
         if(this.IsActive)
@@ -84,6 +101,7 @@ public class news_fragment extends Fragment {
         mListener = null;
     }
 
+    // Stellt eine Schnittstelle für die Kommunikation mit der übergeordneten Activity da
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(NewsContainer.NewsItem item);
     }

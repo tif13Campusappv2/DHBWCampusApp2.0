@@ -1,12 +1,29 @@
+/*
+ *      Beschreibung:	Der ContentManager ist für die zentrale Verwaltung der dynamischen Inhalte verantwortlich
+ *                      - Er greift auf folgende Komponenten zu:
+ *                      - Datenbank
+ *                      - News und Mensa Updater
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 public class ContentManager {
@@ -30,6 +47,7 @@ public class ContentManager {
         selectedNewsItem=0;
     }
 
+	// Inizialisiert eine neue Instanz des Contentmanager
     public static void Initialize(Activity context)
     {
         manager = new ContentManager();
@@ -37,6 +55,7 @@ public class ContentManager {
         manager._LoadFromDatabase(context);
     }
 
+	// Ändert die aktuelle Activity, über die Datenbankaufrufe und Updates gemacht werden. 
     public static void NewContext(Activity context) {
         if(manager==null)
             Initialize(context);
@@ -44,6 +63,7 @@ public class ContentManager {
             manager.context=context;
     }
 
+	// Updatet alle Informationen, die online abgerufen werden
     public static void OnlineUpdate()
     {
         if(manager._IsOnline(manager.context)) {
@@ -52,21 +72,24 @@ public class ContentManager {
         }
         else
         {
-            ErrorReporting.NewError(ErrorReporting.Errors.OFFLINE);
+            MessageReporting.ShowMessage(MessageReporting.Messages.OFFLINE);
         }
 
     }
 
+	// Updatet die Rolle des Benutzers
     public static void UpdateUserRole(int role)
     {
         manager._UpdateUserRole(manager.context, role);
     }
 
+	// Updatet das Guthaben des Nutzers. (Der Zeitstempel wird später gesetzt)
     public static void UpdateUserCredit(double credit)
     {
         manager._UpdateUserCredit(manager.context, credit);
     }
 
+	// Ändert das Guthaben um den übergebenden Wert
     public static void ChangeUserCredit(double value,boolean add)
     {
 
@@ -76,21 +99,25 @@ public class ContentManager {
             manager._UpdateUserCredit(manager.context,manager._UserCredit().GetCredit()-value);
     }
 
+	// Ändert den zuletzt ausgewählten Artikel
     public static void UpdateSelectedNewsItem(int selectedNewsItem)
     {
         manager._UpdateCurrentNewsItem(selectedNewsItem);
     }
 
+	// Updatet die übergebene Activity
     public static void UpdateActivity(Activity context)
     {
         manager._UpdateActivity(context);
     }
 
+	// Updatet die aktuell gesetzt
     public static void UpdateActivity()
     {
         manager._UpdateActivity(manager.context);
     }
 
+	// Läd alle Daten, die noch nicht geladen wurden aus der Datenbank.
     private void _LoadFromDatabase(final Activity context)
     {
         new Thread()
@@ -111,6 +138,7 @@ public class ContentManager {
         }.start();
     }
 
+	// Updatet die übergebene Activity
     private void _UpdateActivity(final Activity context)
     {
         new Thread()
@@ -136,11 +164,13 @@ public class ContentManager {
         }.start();
     }
 
+	// Prüft ob das Gerät online ist
     private boolean _IsOnline(Context context) {
         NetworkInfo netInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnected();
     }
 
+	// Versucht aktuelle Mensadaten online abzurufen
     private void _UpdateMensaData(final Activity context)
     {
         new Thread()
@@ -163,12 +193,13 @@ public class ContentManager {
                 }
                 else
                 {
-                    ErrorReporting.NewError(ErrorReporting.Errors.OFFLINE);
+                    MessageReporting.ShowMessage(MessageReporting.Messages.OFFLINE);
                 }
             }
         }.start();
     }
 
+	// Versucht aktuelle Newsdaten online abzurufen
     private void _UpdateNewsData(final Activity context)
     {
         new Thread()
@@ -191,12 +222,13 @@ public class ContentManager {
                 }
                 else
                 {
-                    ErrorReporting.NewError(ErrorReporting.Errors.OFFLINE);
+                    MessageReporting.ShowMessage(MessageReporting.Messages.OFFLINE);
                 }
             }
         }.start();
     }
 
+	// Ändert die Role des Benutzers
     private void _UpdateUserRole(final Activity context, final int role)
     {
         this.role=role;
@@ -217,6 +249,7 @@ public class ContentManager {
         }.start();
     }
 
+	// Ändert das aktuelle Guthaben
     private void _UpdateUserCredit(final Activity context, final double credit)
     {
         long timestamp=Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis();
@@ -237,11 +270,13 @@ public class ContentManager {
         }.start();
     }
 
+	// Ruft das aktuelle Guthaben ab
     private CreditContainer _UserCredit()
     {
         return this.credit;
     }
 
+	// Ändert den zuletzt gewählte Artikel
     private void _UpdateCurrentNewsItem(int item)
     {
         this.selectedNewsItem=item;

@@ -1,18 +1,31 @@
+/*
+ *      Beschreibung:	Stellt eine Klasse für das Onlineabrufen der Newsdaten bereit
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.text.Html;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -20,11 +33,12 @@ public class NewsUpdater {
     private NewsXMLExtractor extractor;
     private static final String APIURI = "https://www.dhbw-loerrach.de/index.php?id=59&type=100";
 
+    // Erstellt einen neuen Updater
     public NewsUpdater() {
         extractor= new NewsXMLExtractor();
     }
 
-
+    // Ruft Newsdaten online ab
     public NewsContainer LoadNewsData() {
 
         try {
@@ -41,15 +55,17 @@ public class NewsUpdater {
 
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorReporting.NewError(ErrorReporting.Errors.NETWORK);
+            MessageReporting.ShowMessage(MessageReporting.Messages.NETWORK);
             return null;
         }
     }
 
+    // Stellt eine Klasse für die Extrahierung des XML Codes und die Convertierung zu einem Newscontainer bereit
     private class NewsXMLExtractor{
 
         public NewsXMLExtractor(){}
 
+        // Convertiert von XML zu Newscontainer
         public NewsContainer Extract(String rowData)
         {
             rowData= rowData.replaceAll("\r\n", "").replaceAll("\t", "").replaceAll(">\\s+<","><").replaceAll("<br>","\r\n");
@@ -101,12 +117,13 @@ public class NewsUpdater {
             catch (Exception e)
             {
                 e.printStackTrace();
-                ErrorReporting.NewError(ErrorReporting.Errors.XML);
+                MessageReporting.ShowMessage(MessageReporting.Messages.XML);
                 return null;
             }
 
         }
 
+        // Entfertn aus dem übergebnen String alle HTML-Elemente
         private String ConverFromHtml(String textWithHtml)
         {
             if(textWithHtml.startsWith("<div>"))

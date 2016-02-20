@@ -1,17 +1,35 @@
+/*
+ *      Beschreibung:	Verwaltet die Datenbankzugriffe zum Speichern und Laden.
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class DatabaseSocket extends SQLiteOpenHelper
 {
+	
+	// Stellt einen Satz an Daten für die Mensatabelle bereit
     public static abstract class DatabaseMensa implements BaseColumns
     {
         public static final String TABLE_NAME = "MensaPlan";
@@ -49,6 +67,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DELETE FROM " + TABLE_NAME +";";
     }
 
+	// Stellt einen Satz an Daten für die Newstabelle bereit
     public static abstract class DatabaseNews implements BaseColumns
     {
         public static final String TABLE_NAME = "News";
@@ -78,6 +97,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DELETE FROM " + TABLE_NAME +";";
     }
 
+	// Stellt einen Satz an Daten für die Nutzertabelle bereit
     public static abstract class DatabaseUserRole implements BaseColumns
     {
         public static final String TABLE_NAME = "UserRole";
@@ -96,6 +116,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DELETE FROM " + TABLE_NAME +";";
     }
 
+	// Stellt einen Satz an Daten für die Guthabentabelle bereit
     public static abstract class DatabaseCredit implements BaseColumns
     {
         public static final String TABLE_NAME = "CREDIT";
@@ -116,15 +137,16 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 "DELETE FROM " + TABLE_NAME +";";
     }
 
-    // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CAMPUSAPP";
 
+	// Erstellt ein neues Datenbankobjekt 
     public DatabaseSocket(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+	// Erstellt beim ersten Start alle Tabellen der App
     @Override
     public void onCreate(SQLiteDatabase db)
     {
@@ -135,6 +157,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
 
     }
 
+	// Updatet die Datenbank
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
@@ -145,12 +168,14 @@ public class DatabaseSocket extends SQLiteOpenHelper
         onCreate(db);
     }
 
+	// Downgradet die Datenbank
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
         onUpgrade(db, oldVersion, newVersion);
     }
-
+    
+	// Ersetzt die Menasdaten in der Datenbank mit den übergebenen Daten
     public void SaveMensaData(MensaPlan plan)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -183,6 +208,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         }
     }
 
+	// Ruft die Mensadaten aus der Datenbank ab
     public MensaPlan GetMensaData()
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -242,6 +268,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         return plan;
     }
 
+	// Ersetzt die Newsdaten in der Datenbank mit den übergebenen Daten
     public void SaveNews(NewsContainer newsContainer)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -268,6 +295,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         }
     }
 
+	// Ruft die Newsdaten aus der Datenbank ab
     public NewsContainer GetNews()
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -304,6 +332,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         return news;
     }
 
+	// Ersetzt die Benutzerrolle in der Datenbank mit den übergebenen Daten
     public void SaveUserRole(int role)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -323,6 +352,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         }
     }
 
+	// Ruft die Benutzerrolle aus der Datenbank ab
     public int GetUserRole() {
         SQLiteDatabase db = this.getReadableDatabase();
         int role;
@@ -348,6 +378,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         return role;
     }
 
+	// Ersetzt die Guthabendaten in der Datenbank mit den übergebenen Daten
     public void SaveCredit(CreditContainer container)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -368,6 +399,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         }
     }
 
+	// Ruft die Guthabendaten aus der Datenbank ab
     public CreditContainer GetCredit() {
         SQLiteDatabase db = this.getReadableDatabase();
         CreditContainer container;
