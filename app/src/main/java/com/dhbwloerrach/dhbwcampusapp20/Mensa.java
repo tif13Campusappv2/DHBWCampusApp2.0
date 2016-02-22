@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allem Code für die Mensaseite
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
@@ -7,14 +23,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
-public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable, SwipeRefreshLayout.OnRefreshListener  {
+public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable{
 
 
     private ViewPager mViewPager;
@@ -42,7 +58,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setOnRefreshListener(this);
         InitializeTabView();
     }
 
@@ -50,8 +65,9 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
     protected void onStart()
     {
         super.onStart();
-        ErrorReporting.NewContext(this);
-        ContentManager.UpdateActivity(this);
+        ContentManager.NewContext(this);
+        MessageReporting.NewContext(this);
+        ContentManager.UpdateActivity();
     }
 
     @Override
@@ -65,7 +81,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         super.onBackPressed();
         Goto(Pages.StartScreen);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,12 +100,13 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
         else if(id==R.id.mensa_actionbar_refresh)
         {
-            ContentManager.UpdateFromRemote(this);
+            ContentManager.OnlineUpdate();
             return true;
         }
         return false;
     }
 
+	// Verwaltet die Navigation innerhalb der App
     public void Goto(Pages page)
     {
         if(page== Pages.StartScreen)
@@ -104,6 +120,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
     }
 
+	// Inizialisiert die Tabansicht für die einzelnen Tage
     private void InitializeTabView()
     {
         mAppSectionsPagerAdapter= new AppSectionsPagerAdapter(getSupportFragmentManager());
@@ -127,10 +144,10 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
     }
 
-
+	// Stellt einen Adapter für die Mensa Tabs bereit
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {
-        private Fragment[] items;
+        private mensa_fragment[] items;
         private final int NumberTabs=5;
         private String[] TabHeaders;
 
@@ -140,14 +157,22 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
             ReloadFragments();
         }
 
-        public void Update(MensaPlan mensaplan, int Role)
+		// Updatet die einzelnen Tabs der Mensa Activity
+        public void Update(MensaPlan mensaplan, int Role, double credit)
         {
             for(int i=0;i<items.length;i++)
             {
                 TabHeaders[i]=mensaplan.GetDay(i).GetFormatedDate();
-                ((mensa_fragment)items[i]).UpdateData(mensaplan.GetDay(i),Role);
+                items[i].UpdateData(mensaplan.GetDay(i),Role,credit);
             }
             this.notifyDataSetChanged();
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            mensa_fragment fragment = (mensa_fragment) super.instantiateItem(container, position);
+            items[position] = fragment;
+            return fragment;
         }
 
         @Override
@@ -162,12 +187,11 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
         private void ReloadFragments()
         {
-            items= new Fragment[NumberTabs];
+            items= new mensa_fragment[NumberTabs];
             TabHeaders= new String[NumberTabs];
             for(int i=0;i<NumberTabs;i++) {
                 items[i] = new mensa_fragment();
-                ((mensa_fragment)items[i]).SetNumber(i);
-                TabHeaders[i]="Section " + (i+1);
+                TabHeaders[i]="Tag " + (i+1);
             }
         }
 
@@ -184,32 +208,17 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
     }
 
+	// Wird vom ContentManager aufgerufen, um die Inhalte der Activity zu aktualisieren
     public void Refresh(final Updated updater)
     {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                if(updater.IsUpdated(Updated.Mensa) && updater.IsUpdated(Updated.Role))
+                if(updater.IsUpdated(Updated.Mensa) && updater.IsUpdated(Updated.Role) && updater.IsUpdated(Updated.Guthaben))
                 {
                     mViewPager.setCurrentItem(updater.GetMensaPlan().GetBestFittingDay(),true);
-                    mAppSectionsPagerAdapter.Update(updater.GetMensaPlan(), updater.GetRole());
-                }
-                if(updater.IsUpdated(Updated.Guthaben))
-                {
-
+                    mAppSectionsPagerAdapter.Update(updater.GetMensaPlan(), updater.GetRole(), updater.GetCredit().GetCredit());
                 }
             }
         });
-    }
-
-    @Override
-    public void onRefresh()
-    {
-        ContentManager.UpdateFromRemote(this);
-        ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setRefreshing(false);
-    }
-
-    public void ChangeRefreshLayout(boolean enabled, int number){
-        if(number== mViewPager.getCurrentItem())
-            ((SwipeRefreshLayout)findViewById(R.id.mensa_refreshlayout)).setEnabled(enabled);
     }
 }

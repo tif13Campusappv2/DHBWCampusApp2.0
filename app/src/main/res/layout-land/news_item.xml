@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/news_newsitem_container"
+    >
+
+    <ImageView
+        style="@style/news_newsitem_image"
+        android:layout_weight="1"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        />
+    <LinearLayout
+        style="@style/news_newsitem_innercontainer"
+        android:layout_weight="10"
+        >
+        <TextView
+            android:id="@+id/title"
+            style="@style/news_newsitem_title"
+            android:text="@string/news_dummy_title"
+            />
+        <TextView
+            android:id="@+id/description"
+            style="@style/news_newsitem_description"
+            android:text="@string/news_dummy_description"
+         />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,6 +1,20 @@
+/*
+ *      Beschreibung:	Stellt einen Container für News bereit
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
-
-import android.content.ClipData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,54 +25,64 @@ public class NewsContainer {
     private NewsItem Items[];
     private int selectedItem;
 
+    // Erstellt einen neuen NewsContainer
     public NewsContainer(int numberOfNews)
     {
         Items =new NewsItem[numberOfNews];
     }
 
+    // Fügt ein Newsitem an die gegebene Position in den Container ein
     public void IncertNews(NewsItem item, int positon)
     {
         if(positon>=0 && positon< Items.length)
             Items[positon]=item;
     }
 
+    // Setzt das ausgewählte Newselement
     public void SetSelectedItem(int selectedItem)
     {
         this.selectedItem =selectedItem;
     }
 
+    // Ruft das ausgewählte Newselement ab
     public NewsItem GetSelectedNewsItem()
     {
         return Items[selectedItem];
     }
 
+    // Ruft das Newselement an der übergebenen Position ab
     public NewsItem GetNewsItem(int position)
     {
         return position>=0 && position< Items.length ? Items[position]:null;
     }
 
+    // Ruft eine Liste aller Newselemente ab
     public List<NewsItem> GetNewsItemList()
     {
-        List<NewsItem> list= new ArrayList<NewsItem>();
-        for(int i=0;i<Items.length;i++)
-            list.add(Items[i]);
+        // Wichtig: Konvertierung kann nicht in einem Schritt gemacht werden, da es zu Problemen mit der Verwaltung im Newsfragment kam
+        List<NewsItem> list= new ArrayList<>();
+        for(NewsItem nItem:Items)
+            list.add(nItem);
         return list;
     }
 
+    // Ruft eine Liste aller Newselemente ab, die zur übergebenen Kategorie gehören
     public List<NewsItem> GetNewsItemList(int Category)
     {
-        List<NewsItem> list= new ArrayList<NewsItem>();
-        for(int i=0;i<Items.length;i++)
-            if(Items[i].IsCategory(Category))
-            list.add(Items[i]);
+        List<NewsItem> list= new ArrayList<>();
+        for(NewsItem nItem:Items)
+            if(nItem.IsCategory(Category))
+            list.add(nItem);
         return list;
     }
 
+    // Ruft die Anzahl der gespeicherten Newselemente ab
     public int GetCountNews()
     {
         return Items.length;
     }
 
+    // Sortiert die Newselemente absteigend nach ihrem Datum
     public void SortNews()
     {
         long[] tmp1=new long[Items.length];
@@ -69,19 +93,21 @@ public class NewsContainer {
             tmp2[i]=Items[i];
         }
         Arrays.sort(tmp1);
-        for(int i=0;i<tmp2.length;i++)
+        for(NewsItem nItem:tmp2)
             for(int j=0;j<tmp1.length;j++)
-                if(tmp1[j]==tmp2[i].GetTimeStamp())
-                    Items[Items.length-1-j]=tmp2[i];
+                if(tmp1[j]==nItem.GetTimeStamp())
+                    Items[Items.length-1-j]=nItem;
     }
 
+    // Stellt eine Klasse für die Verwaltung eines Newselements bereit
     public static class NewsItem{
         private Date Date;
         public String Title, Link, Description, Content;
         private boolean Categories[];
-
+        // Stellt die Wochentage in der Reihenfolge bereit, wie sie in Java verwaltet werden.
         private static final String[] weekdays={"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"};
 
+        // Erstellt ein neues Newselement mit den übergebenen Werten. Nimmt ein Datum als String in der unten gezeigten Form entgegen
         public NewsItem(String date, String Title, String Link, String Description, String Content) {
             //Tue, 12 Jan 2016 11:33:00 +0100
             try {
@@ -96,6 +122,7 @@ public class NewsContainer {
             this.Content=Content;
         }
 
+        // Erstellt ein neues Newselement mit den übergebenen Werten. Nimmt ein Datum als Zeitstempel entgegen
         public NewsItem(long date, String Title, String Link, String Description, String Content)
         {
             this.Date=new Date(date);
@@ -106,21 +133,25 @@ public class NewsContainer {
             this.Content=Content;
         }
 
+        // Ruft das Datum des Newselements formatiert ab
         public String GetFormatedDate()
         {
             return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." + (Date.getYear()+1900) + " " + AddLeadingZeros(Date.getHours(),2) + ":" + AddLeadingZeros(Date.getMinutes(),2);
         }
 
+        // Fügt dem Newselement eine Kategorie hinzu
         public void SetCategory(int position)
         {
             if(position>=0 && position<Categories.length)
                 Categories[position]=true;
         }
 
+        // Prüft ob das Newselement zur übergebenen Kategorie gehört
         public boolean IsCategory(int position){
                 return position>=0 && position<Categories.length && Categories[position];
         }
 
+        // Serialisiert die Kategorien des Newselements zum Speichern in der Datenbank
         public String GetSerializedCategories()
         {
             String categories="";
@@ -134,11 +165,13 @@ public class NewsContainer {
             return categories;
         }
 
+        // Ruft den Zeitstempel des Datums ab
         public long GetTimeStamp()
         {
             return Date.getTime();
         }
 
+        // Füllt die übergebene Zahl auf die angegebene Länge auf
         private String AddLeadingZeros(int value, int length)
         {
             String val=""+value;
@@ -147,6 +180,7 @@ public class NewsContainer {
             return val;
         }
 
+        // Wandelt die von der API übergebenen Monate in den dazugehörenden Zahlenwert um
         private int GetMonth(String Short)
         {
             switch (Short)
@@ -179,6 +213,7 @@ public class NewsContainer {
         }
     }
 
+    // Stellt eine Enummeration für die Kategorien bereit
     public static class NewsCategories
     {
         public static final int Presse=0, Aktuelles=1,Mitarbeiter=2,Dozierende=3;

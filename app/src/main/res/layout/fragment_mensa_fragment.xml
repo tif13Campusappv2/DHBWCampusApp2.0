@@ -46,6 +46,35 @@
                 android:src="@drawable/veg"
                 />
         </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_1_KenHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_ken"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_1_Ken"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_1_AllHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_all"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_1_All"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -76,6 +105,35 @@
                 style="@style/mensa_menue_additonals"
                 android:id="@+id/mensa_menue_2_additionals"
                 android:src="@drawable/leer"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_2_KenHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_ken"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_2_Ken"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_2_AllHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_all"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_2_All"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -110,6 +168,35 @@
                 android:src="@drawable/leer"
                 />
         </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_3_KenHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_ken"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_3_Ken"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_3_AllHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_all"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_3_All"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -142,12 +229,42 @@
                 android:src="@drawable/leer"
                 />
         </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_buffet_KenHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_ken"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_buffet_Ken"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/mensa_innercontainer"
+            android:layout_marginBottom="3dp"
+            >
+            <TextView
+                android:id="@+id/mensa_menue_buffet_AllHl"
+                style="@style/mensa_menue_ExInHl"
+                android:text="@string/mensa_menue_all"
+                />
+            <TextView
+                style="@style/mensa_menue_ExIn"
+                android:id="@+id/mensa_menue_buffet_All"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <TableLayout
         android:id="@+id/mensa_ken_container"
         style="@style/mensa_container"
         android:stretchColumns="1"
+        android:layout_marginBottom="8dp"
         >
         <TableRow
             >
@@ -287,6 +404,244 @@
             <TextView
                 style="@style/mensa_ken_des"
                 android:text="@string/mensa_ken_rind"
+                />
+        </TableRow>
+
+
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/mensa_all_container"
+        style="@style/mensa_container"
+        android:stretchColumns="1"
+        >
+        <TableRow
+            >
+            <TextView
+                style="@style/Headerline"
+                android:layout_span="2"
+                android:text="@string/mensa_all_headline"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_1_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_1"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_2_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_2"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_3_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_3"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_4_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_4"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_5_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_5"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_6_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_6"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_7_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_7"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_8_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_8"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_9_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_9"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_10_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_10"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_11_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_11"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_12_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_12"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_13_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_13"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_14_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_14"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_15_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_15"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_16_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_16"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_17_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_17"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_18_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_18"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_19_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_19"
+                />
+        </TableRow>
+        <TableRow
+            style="@style/mensa_ken_row"
+            >
+            <TextView
+                style="@style/mensa_ken_no"
+                android:text="@string/mensa_all_20_sht"/>
+            <TextView
+                style="@style/mensa_ken_des"
+                android:text="@string/mensa_all_20"
                 />
         </TableRow>
     </TableLayout>

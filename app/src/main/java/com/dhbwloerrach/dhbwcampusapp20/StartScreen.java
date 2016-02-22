@@ -1,6 +1,21 @@
+/*
+ *      Beschreibung:	Beinhaltet alle Code für Hauptactivity
+ *      Autoren: 		Philipp Mosch, Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +36,9 @@ import android.widget.Toast;
 public class StartScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Updated.Refreshable,SwipeRefreshLayout.OnRefreshListener  {
 
     private int userRole=0;
+    // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc., 8=Kaffee
+    // Note 0-4 werden dynamisch gesetzt
+    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.10,1.50,1.00};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +46,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_start_screen);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         LoadClickHandler();
+
 
     }
 
@@ -51,6 +70,8 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
             Goto(Pages.Guthaben);
         else if(id==R.id.dash_News)
             Goto(Pages.News);
+        else if(id==R.id.dash_Lageplan)
+            Goto(Pages.Lageplan);
     }
 
     @Override
@@ -67,7 +88,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==R.id.startscreen_actionbar_refresh) {
-            ContentManager.UpdateFromRemote(this);
+            ContentManager.OnlineUpdate();
             return true;
         }
 
@@ -102,8 +123,9 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onStart() {
         super.onStart();
-        ErrorReporting.NewContext(this);
-        ContentManager.UpdateActivity(this);
+        ContentManager.NewContext(this);
+        MessageReporting.NewContext(this);
+        ContentManager.UpdateActivity();
     }
 
     @Override
@@ -111,12 +133,13 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         super.onStop();
     }
 
-
+    // Läd alle Clickhandler in der Hauptactivity
     public  void LoadClickHandler()
     {
         findViewById(R.id.dash_Mensa).setOnClickListener(this);
         findViewById(R.id.dash_News).setOnClickListener(this);
         findViewById(R.id.dash_Guthaben).setOnClickListener(this);
+        findViewById(R.id.dash_Lageplan).setOnClickListener(this);
         ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setOnRefreshListener(this);
 
         // Actionbar open
@@ -127,6 +150,7 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
     }
 
+    // Verwaltet die Navigation innerhalb der App
     public void Goto(Pages page)
     {
         if(page== Pages.Mensa)
@@ -151,41 +175,75 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         }
     }
 
+    // Wird vom ContentContainer aufgerufen um die Activity zu aktualisieren
     public void Refresh(final Updated update)
     {
         this.runOnUiThread(new Runnable() {
             public void run() {
+                if(update.IsUpdated(Updated.Role))
+                    userRole=update.GetRole();
                 if(update.IsUpdated(Updated.Mensa) && update.IsUpdated(Updated.Role))
                 {
-                    LoadMensaData(update.GetMensaPlan(),update.GetRole());
-                    userRole=update.GetRole();
+                    // Ändert die Menüs und Preise anhand der neuen Daten
+                    MensaPlan.Day day= update.GetMensaPlan().GetDay(update.GetMensaPlan().GetBestFittingDay());
+                    LoadMensaData(day,update.GetRole());
+                    prices[0]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue1].prices[userRole]);
+                    prices[1]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue2].prices[userRole]);
+                    prices[2]= ExtractPrice(day.Menues[MensaPlan.Menues.Menue3].prices[userRole]);
+                    prices[3]= ExtractPrice(day.Menues[MensaPlan.Menues.Buffet].prices[userRole]);
                 }
                 if(update.IsUpdated(Updated.News))
                 {
+                    // Zeigt das aktuellste Newsitem an
                     NewsContainer.NewsItem mostcurrentnews= update.GetNews().GetNewsItem(0);
                     ((TextView)findViewById(R.id.dash_news_mostcurrent)).setText(getString(R.string.news_template).replace("%",mostcurrentnews.Title));
                 }
                 if(update.IsUpdated(Updated.Guthaben))
                 {
+                    // Ändert die angezeigten Mengen in der Guthabenliste anhand des momentanen Guthabens und der momentanen Preise
+                    double credit=update.GetCredit().GetCredit();
+                    ((TextView)findViewById(R.id.dash_guthaben_amount)).setText(FormatPrice(credit) + " - Aktualisiert am " + update.GetCredit().GetFormatedDate());
 
+
+                    ((TextView)findViewById(R.id.dash_guthaben_menue1)).setText(String.valueOf((int) (credit / prices[0])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_menue2)).setText(String.valueOf((int) (credit / prices[1])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_menue3)).setText(String.valueOf((int) (credit / prices[2])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_coffee)).setText(String.valueOf((int) (credit / prices[8])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_salad)).setText(String.valueOf((int)(credit*100/prices[3])) + "g");
+                    ((TextView)findViewById(R.id.dash_guthaben_swkopie)).setText(String.valueOf((int) (credit / prices[4])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_clkopie)).setText(String.valueOf((int) (credit / prices[5])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_water)).setText(String.valueOf((int) (credit / prices[6])) + "x");
+                    ((TextView)findViewById(R.id.dash_guthaben_cola)).setText(String.valueOf((int) (credit / prices[7])) + "x");
                 }
             }
         });
     }
 
+    // Formatiert die übergebene Zahl zum einem Geldbetrag
+    private static String FormatPrice(double price)
+    {
+        return String.format("%.2f", price).replace('.', ',').replaceAll("-","") + "€";
+    }
+
+    // Extrahiert einen Preis aus einem Text
+    private static double ExtractPrice(String price)
+    {
+        price=price.replaceAll("€.*", "").replaceAll("[^0-9,]","").replace(',','.');
+        return Double.parseDouble(price);
+    }
+
+    // Wird vom SwipeRefreshLayout aufgerufen, wenn der Benutzer die App über diese Funktion aktualisieren möchte
     @Override
     public void onRefresh()
     {
-        ContentManager.UpdateFromRemote(this);
+        ContentManager.OnlineUpdate();
         ((SwipeRefreshLayout)findViewById(R.id.dash_refreshlayout)).setRefreshing(false);
     }
 
-    private void LoadMensaData(MensaPlan mensaPlan,int role)
+    // Fügt die übergebenen Mensadaten in das Layout ein
+    private void LoadMensaData(MensaPlan.Day day,int role)
     {
-        MensaPlan.Day day= mensaPlan.GetDay(mensaPlan.GetBestFittingDay());
         ((TextView) findViewById(R.id.startscreen_mensa_date)).setText(day.GetFormatedDate());
-
-
 
         ((TextView) findViewById(R.id.startscreen_mensa_menue1_name)).setText(day.Menues[MensaPlan.Menues.Menue1].Name);
         ((TextView) findViewById(R.id.startscreen_mensa_menue1_price)).setText(day.Menues[MensaPlan.Menues.Menue1].prices[role]);
@@ -200,14 +258,14 @@ public class StartScreen extends AppCompatActivity implements NavigationView.OnN
         ((TextView) findViewById(R.id.startscreen_mensa_buffet_price)).setText(day.Menues[MensaPlan.Menues.Buffet].prices[role]);
     }
 
+    // Öffnet den Rollenauswahldialog
     private  void ShowRoleDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final Activity context=this;
         // final static int Schueler=0, Studenten=1, Mitarbeiter=2, Gaeste=3;
         builder.setTitle(R.string.nav_side_role_popup_title).setSingleChoiceItems(R.array.nav_side_role_popup_options, userRole, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int role) {
-                ContentManager.UpdateUserRole(context, role);
+                ContentManager.UpdateUserRole(role);
                 dialog.cancel();
             }
         });

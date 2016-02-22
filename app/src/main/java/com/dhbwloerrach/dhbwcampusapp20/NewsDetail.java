@@ -1,3 +1,19 @@
+/*
+ *      Beschreibung:	Beinhaltet allen Code für die Newsdetailseite
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
 import android.content.Intent;
@@ -6,7 +22,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class NewsDetail extends AppCompatActivity implements Updated.Refreshable, View.OnClickListener {
@@ -27,9 +42,12 @@ public class NewsDetail extends AppCompatActivity implements Updated.Refreshable
     @Override
     public void onStart() {
         super.onStart();
-        ContentManager.UpdateActivity(this);
+        ContentManager.NewContext(this);
+        MessageReporting.NewContext(this);
+        ContentManager.UpdateActivity();
     }
 
+    // Wird vom ContentManager aufgerufen um die Activity aktualisiert
     public void Refresh(final Updated update)
     {
         this.runOnUiThread(new Runnable() {

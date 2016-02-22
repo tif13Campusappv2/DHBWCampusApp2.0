@@ -1,24 +1,45 @@
+/*
+ *      Beschreibung:	Stellt einen Container für MensaDaten bereit
+ *      Autoren: 		Daniel Spieker
+ *      Projekt:		Campus App 2.0
+ *
+ *      ╔══════════════════════════════╗
+ *      ║ History                      ║
+ *      ╠════════════╦═════════════════╣
+ *      ║   Datum    ║    Änderung     ║
+ *      ╠════════════╬═════════════════╣
+ *      ║ 2015-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ║ 20xx-xx-xx ║
+ *      ╚════════════╩═════════════════╝
+ *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+ */
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class MensaPlan
 {
     private Day Days[];
+    private static final int showNextDayMenueAfter =14;
 
+	// Erstellt einen neuen MensaPlan Container
     public MensaPlan(int numberDays)
     {
         this.Days= new Day[numberDays];
     }
+    
+    // Fügt einen neuen Tag in den Mensaplan ein
     public void InsertDay(int index, Day day)
     {
         if(index>=0 && index<Days.length)
             Days[index]=day;
     }
 
+	// Sortiert die gespeicherten Tage aufsteigend
     public void SortDays()
     {
         long[] tmp1=new long[Days.length];
@@ -29,31 +50,32 @@ public class MensaPlan
             tmp2[i]=Days[i];
         }
         Arrays.sort(tmp1);
-        for(int i=0;i<tmp2.length;i++)
+        for(Day d: tmp2)
             for(int j=0;j<tmp1.length;j++)
-                if(tmp1[j]==tmp2[i].GetTimeStamp())
-                    Days[j]=tmp2[i];
+                if(tmp1[j]==d.GetTimeStamp())
+                    Days[j]=d;
     }
 
+	// Ruft den Tag an der übergebenen Position ab
     public Day GetDay(int position)
     {
         return position>=0 && position<Days.length ? Days[position]:null;
     }
 
+	// Ruft die Anzahl der gespeicherten Tage ab
     public int GetCountDays()
     {
         return Days.length;
     }
 
+	// Ruft die Position des Tages ab, der am Besten für die aktuelle Anzeige geeignet ist
     public int GetBestFittingDay()
     {
         SortDays();
-        Calendar now = Calendar.getInstance();
-        Date today= new Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH) ,now.get(Calendar.DAY_OF_MONTH));
-        long timestamp=today.getTime();
+        long timestampLater=((new Date(Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis()- showNextDayMenueAfter *3600000+1)).getTime());
         int pos=-1;
         for(int i=0;i<Days.length;i++)
-            if(Days[i].GetTimeStamp()>=timestamp) {
+            if(Days[i].GetTimeStamp()>=timestampLater) {
                 pos = i;
                 break;
             }
@@ -62,11 +84,14 @@ public class MensaPlan
         return pos;
     }
 
+	// Stellt einen Container für die Mensadaten eines Tages bereit
     public static class Day
     {
         private Date Date;
         public Menue Menues[];
         private static final String[] weekdays={"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"};
+        
+        //  Erstellt einen neuen Tag 
         public Day(String date, Menue menues[])
         {
             Menues=menues;
@@ -79,16 +104,19 @@ public class MensaPlan
             }
         }
 
+		// Ruft das gespeicherte Datum formatiert ab
         public String GetFormatedDate()
         {
             return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." ; //+ (Date.getYear()+1900);
         }
 
+		// Ruft das gespeicherte Datum ab
         public String GetUnformatedDate()
         {
             return AddLeadingZeros(Date.getDate(),2) + "." + AddLeadingZeros(Date.getMonth()+1,2) + "." + AddLeadingZeros(Date.getYear()+1900,4);
         }
 
+		// Füllt die übergebene Zahl durch führerende Nulle auf die übergebene Länge
         private String AddLeadingZeros(int value, int length)
         {
             String val=""+value;
@@ -96,35 +124,46 @@ public class MensaPlan
                 val="0" + val;
             return val;
         }
-
+		
+		// Ruft den gespeicherte Zeitstempel ab
         public long GetTimeStamp()
         {
             return Date.getTime();
         }
     }
 
+	// Stellt eine Enummeration für die Position der Preise bereit
     public static abstract class Prices
     {
         final static int Schueler=0, Studenten=1, Mitarbeiter=2, Gaeste=3;
     }
 
+	// stellt eine Enummeration für die Postion der Menüs bereit
     public static abstract class Menues
     {
         final static int Menue1=0, Menue2=1, Menue3=2, Buffet=3;
     }
 
+	// Stellt einen Container für ein Menü bereit
     public static class Menue
     {
         public String zusatz;
         public String Name;
         public String prices[];
+        public String Kennzeichnungen;
+        public String Allergene;
 
-        public Menue(String zusatz, String Name, String prices[])
+		// Erstellt ein neues Menü
+        public Menue(String zusatz, String Name, String prices[],String kennzeichnungen, String Allergene)
         {
             this.zusatz=zusatz;
+
             this.Name=Name;
             this.prices=prices;
+            this.Kennzeichnungen=kennzeichnungen;
+            this.Allergene=Allergene;
         }
+
     }
 
 }
