@@ -186,6 +186,7 @@ public class ContentManager {
                         if (context instanceof Updated.Refreshable) {
                             Updated update = new Updated();
                             update.InsertMensaPlan(mensaPlan);
+                            update.InsertCredit(credit);
                             update.InsertRole(role);
                             ((Updated.Refreshable) context).Refresh(update);
                         }
