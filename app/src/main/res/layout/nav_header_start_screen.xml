@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+*      Beschreibung:	Enthält das Layout des Titelbildes im Seitenmenü der Startseite
+*      Autoren: 		Philipp Mosch
+*      Projekt:		    Campus App 2.0
+*
+*      ╔══════════════════════════════╗
+*      ║ History                      ║
+*      ╠════════════╦═════════════════╣
+*      ║   Datum    ║    Änderung     ║
+*      ╠════════════╬═════════════════╣
+*      ║ 2015-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ╚════════════╩═════════════════╝
+*      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+    -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"

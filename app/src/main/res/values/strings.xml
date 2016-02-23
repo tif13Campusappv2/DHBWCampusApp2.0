@@ -1,48 +1,79 @@
+<!--
+*      Beschreibung:	Enthält alle in der App verwendeten Strings
+*      Autoren: 		Philipp Mosch, Daniel Spieker
+*      Projekt:		    Campus App 2.0
+*
+*      ╔══════════════════════════════╗
+*      ║ History                      ║
+*      ╠════════════╦═════════════════╣
+*      ║   Datum    ║    Änderung     ║
+*      ╠════════════╬═════════════════╣
+*      ║ 2015-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ╚════════════╩═════════════════╝
+*      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+    -->
 <resources>
-    <string name="app_name">DHBW Campus App</string>
-    <string name="app_organisation">DHBW Lörrach</string>
-    <string name="app_type">Campus App</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    //##################################
+    //# Allgemein
+    //##################################
 
-    <string name="menulabel">Menü</string>
+    // Wochentage
+    <string name="monday">Montag</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="wednesday">Mittwoch</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="friday">Freitag</string>
+    <string name="saturday">Samstag</string>
+    <string name="sunday">Sonntag</string>
 
+    // Basic dict
+    <string name="refresh">aktualisieren</string>
+    <string name="ok">OK</string>
+    <string name="abourt">Abbrechen</string>
 
-    <string name="image_description_logo">Logo der DHBW-Lörrach</string>
-
-
-    //Dashboard Strings
-    <string name="news_header">News</string>
-    <string name="mensa_header">Mensa</string>
-    <string name="guthaben_header">Guthaben</string>
-
-    //News Strings
-
-
-    // Debugging
-    <string name="unkown_action">Unknown click action for this element</string>
+    // Activity Header
     <string name="title_activity_mensa">Mensa</string>
     <string name="title_activity_news">News</string>
     <string name="title_activity_lageplan">Lageplan</string>
     <string name="title_activity_guthaben">Guthaben</string>
+    <string name="title_activity_news_detail">News</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    // Basic App Strings
+    <string name="app_name">DHBW Campus App</string>
+    <string name="app_organisation">DHBW Lörrach</string>
+    <string name="app_type">Campus App</string>
 
-    // Toast-Messages
-    <string name="networkconnectionError">Verbindungsfehler</string>
-    <string name="extractionError">Fehlerhafte Daten</string>
+    //##################################
+    //# Dash
+    //##################################
+
+    //Dashboard Header
+    <string name="news_header">News</string>
+    <string name="mensa_header">Mensa</string>
+    <string name="guthaben_header">Guthaben</string>
+
+
 
     //##################################
     //# Menü
     //##################################
+
+    // Menü basic
+    <string name="menulabel">Menü</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     // Pages
     <string name="nav_side_subp_mensa">Mensa</string>
     <string name="nav_side_subp_lageplan">Lageplan</string>
     <string name="nav_side_subp_geld">Geld</string>
     <string name="nav_side_subp_news">News</string>
+
+    // Image Descripbtion
+    <string name="image_description_logo">Logo der DHBW-Lörrach</string>
 
     // Role
     <string name="nav_side_role">Benutzer</string>
@@ -95,23 +126,6 @@
 
     <string name="newsdetail_gotoWebsite">Zur Webseite</string>
 
-    //##################################
-    //# Allgemein
-    //##################################
-
-    // Wochentage
-    <string name="monday">Montag</string>
-    <string name="tuesday">Dienstag</string>
-    <string name="wednesday">Mittwoch</string>
-    <string name="thursday">Donnerstag</string>
-    <string name="friday">Freitag</string>
-    <string name="saturday">Samstag</string>
-    <string name="sunday">Sonntag</string>
-
-    // Basic dict
-    <string name="refresh">aktualisieren</string>
-    <string name="ok">OK</string>
-    <string name="abourt">Abbrechen</string>
 
     //##################################
     //# Mensa
@@ -233,21 +247,16 @@
 
 
     //##################################
-    //# Error reporting
+    //# Message reporting
     //##################################
 
+    // Errors
     <string name="ErrorR_Network">Netzwerkfehler</string>
     <string name="ErrorR_XML">Fehlerhafte Daten</string>
     <string name="ErrorR_OFFLINE">Keine Internetverbindung</string>
     <string name="ErrorR_Video">Videofehler</string>
     <string name="ErrorR_Money">Nicht genug Guthaben</string>
-    <string name="title_activity_news_detail">News</string>
 
-
-
-
-
-
-
-
+    // Debugging
+    <string name="unkown_action">Unknown click action for this element</string>
 </resources>
