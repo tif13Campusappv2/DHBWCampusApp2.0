@@ -16,6 +16,7 @@
  */
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,12 +24,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.NumberPicker;
 
 public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeListener, mensa_fragment.OnFragmentInteractionListener, Updated.Refreshable{
 
@@ -47,8 +52,6 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 Goto(Pages.Guthaben);
             }
         });
@@ -101,6 +104,11 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
         else if(id==R.id.mensa_actionbar_refresh)
         {
             ContentManager.OnlineUpdate();
+            return true;
+        }
+        else if(id== R.id.mensa_actionbar_info)
+        {
+            CreateDialog();
             return true;
         }
         return false;
@@ -221,5 +229,19 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
                 }
             }
         });
+    }
+
+    // Erstellt und öffnet den Dialog zum Anzeigen der Öffnungszeiten
+    public void CreateDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View theView = inflater.inflate(R.layout.mensa_dialog, null);
+        builder.setView(theView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
     }
 }

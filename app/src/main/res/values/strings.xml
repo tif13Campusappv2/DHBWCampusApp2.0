@@ -131,6 +131,13 @@
     //# Mensa
     //##################################
 
+    // Info Menü
+    <string name="mensa_actionbar_info">Öffnungszeiten</string>
+    <string name="mensa_actionbar_info_times">Öffnungszeiten</string>
+    <string name="mensa_actionbar_info_times_val">Mo. – Fr. 8.30 bis 13.45 Uhr</string>
+    <string name="mensa_actionbar_info_lunch">Mittagessen</string>
+    <string name="mensa_actionbar_info_lunch_val">11.45 bis 13.30 Uhr</string>
+
     // Menues
     <string name="mensa_menue_1_headline">Essen 1</string>
     <string name="mensa_menue_2_headline">Essen 2</string>
