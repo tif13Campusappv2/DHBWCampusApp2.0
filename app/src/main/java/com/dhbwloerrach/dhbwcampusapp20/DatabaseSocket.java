@@ -7,11 +7,11 @@
  *      ║ History                      ║
  *      ╠════════════╦═════════════════╣
  *      ║   Datum    ║    Änderung     ║
- *      ╠════════════╬═════════════════╣
- *      ║ 2015-xx-xx ║
+ *      ╠════════════╬═════════════════╩══════════════════════════════════════════╗
+ *      ║ 2016-02-24 ║ Mensa Datumswert von String zu Long geändert               ║
  *      ║ 20xx-xx-xx ║
  *      ║ 20xx-xx-xx ║
- *      ╚════════════╩═════════════════╝
+ *      ╚════════════╩════════════════════════════════════════════════════════════╝
  *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
  */
 package com.dhbwloerrach.dhbwcampusapp20;
@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 public class DatabaseSocket extends SQLiteOpenHelper
@@ -49,7 +48,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
         private static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                         _ID + " INTEGER PRIMARY KEY," +
-                        COLUMN_DATE + " TEXT, " +
+                        COLUMN_DATE + " INTEGER, " +
                         COLUMN_NAME + " TEXT, " +
                         COLUMN_ADDITIONALS + " TEXT, " +
                         COLUMN_KIND + " INTEGER, " +
@@ -186,7 +185,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 for (int j = 0; j < plan.GetDay(i).Menues.length; j++) {
                     ContentValues values = new ContentValues();
                     values.put(DatabaseMensa._ID, rowcounter++);
-                    values.put(DatabaseMensa.COLUMN_DATE, plan.GetDay(i).GetUnformatedDate());
+                    values.put(DatabaseMensa.COLUMN_DATE, plan.GetDay(i).GetTimeStamp());
                     values.put(DatabaseMensa.COLUMN_ADDITIONALS, plan.GetDay(i).Menues[j].zusatz);
                     values.put(DatabaseMensa.COLUMN_NAME, plan.GetDay(i).Menues[j].Name);
                     values.put(DatabaseMensa.COLUMN_KIND, j);
@@ -219,7 +218,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 plan=new MensaPlan(cursor.getCount());
                 int counter=0;
                 do {
-                    plan.InsertDay(counter++,new MensaPlan.Day(cursor.getString(0),new MensaPlan.Menue[]{null,null,null,null}));
+                    plan.InsertDay(counter++,new MensaPlan.Day(cursor.getLong(0),new MensaPlan.Menue[]{null,null,null,null}));
                 }while(cursor.moveToNext());  //cursor.isLast()
                 cursor.close();
             }
@@ -235,7 +234,7 @@ public class DatabaseSocket extends SQLiteOpenHelper
                 do {
                     for(int i=0;i<plan.GetCountDays();i++)
                     {
-                        if(plan.GetDay(i).GetUnformatedDate().equals(cursor.getString(0)))
+                        if(plan.GetDay(i).GetTimeStamp()==cursor.getLong(0))
                         {
                             String[] prices={"0,00€","0,00€","0,00€","0,00€"};
                             prices[MensaPlan.Prices.Schueler]=cursor.getString(4);

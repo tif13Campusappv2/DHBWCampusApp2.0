@@ -148,7 +148,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter
     {
         private mensa_fragment[] items;
-        private final int NumberTabs=5;
+        private int NumberTabs=5;
         private String[] TabHeaders;
 
         public AppSectionsPagerAdapter(FragmentManager fm)
@@ -160,6 +160,7 @@ public class Mensa extends AppCompatActivity implements ViewPager.OnPageChangeLi
 		// Updatet die einzelnen Tabs der Mensa Activity
         public void Update(MensaPlan mensaplan, int Role, double credit)
         {
+
             for(int i=0;i<items.length;i++)
             {
                 TabHeaders[i]=mensaplan.GetDay(i).GetFormatedDate();

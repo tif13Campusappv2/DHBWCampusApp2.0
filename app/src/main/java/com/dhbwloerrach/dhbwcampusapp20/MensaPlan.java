@@ -1,5 +1,5 @@
 /*
- *      Beschreibung:	Stellt einen Container für MensaDaten bereit
+ *      Beschreibung:	Stellt einen Container für Mensa Daten bereit
  *      Autoren: 		Daniel Spieker
  *      Projekt:		Campus App 2.0
  *
@@ -7,11 +7,12 @@
  *      ║ History                      ║
  *      ╠════════════╦═════════════════╣
  *      ║   Datum    ║    Änderung     ║
- *      ╠════════════╬═════════════════╣
- *      ║ 2015-xx-xx ║
+ *      ╠════════════╬═════════════════╩═════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+ *      ║ 2016-02-24 ║ Abrufen von nicht existierenden Tagen von NULL auf Dummy geändert um Fehler bei zu wenig abgerufenen Daten zu verhindern  ║
+ *      ║            ║ Neuen Konstruktor für Tagesplan hinzugefügt um Timestamps verarbeiten zu können                                           ║
  *      ║ 20xx-xx-xx ║
  *      ║ 20xx-xx-xx ║
- *      ╚════════════╩═════════════════╝
+ *      ╚════════════╩═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
  *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
  */
 package com.dhbwloerrach.dhbwcampusapp20;
@@ -59,7 +60,17 @@ public class MensaPlan
 	// Ruft den Tag an der übergebenen Position ab
     public Day GetDay(int position)
     {
-        return position>=0 && position<Days.length ? Days[position]:null;
+        if(position>=0 && position<Days.length)
+            return Days[position];
+        else
+        {
+            Menue menues[]= new Menue[4];
+            menues[0]=new Menue("","Riesenburger", new String[]  {"3,60€","3,60€","3,60€","3,60€"},"","");
+            menues[1]=new Menue("","Riesenburger", new String[]  {"3,60€","3,60€","3,60€","3,60€"},"","");
+            menues[2]=new Menue("","Riesenburger", new String[]  {"3,60€","3,60€","3,60€","3,60€"},"","");
+            menues[3]=new Menue("","Riesenburger", new String[]  {"3,60€","3,60€","3,60€","3,60€"},"","");
+            return new Day(Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis(),menues);
+        }
     }
 
 	// Ruft die Anzahl der gespeicherten Tage ab
@@ -104,16 +115,17 @@ public class MensaPlan
             }
         }
 
+        //  Erstellt einen neuen Tag
+        public Day(long date, Menue menues[])
+        {
+            Menues=menues;
+            Date = new Date(date);
+        }
+
 		// Ruft das gespeicherte Datum formatiert ab
         public String GetFormatedDate()
         {
             return  weekdays[Date.getDay()] + " " + AddLeadingZeros(Date.getDate(), 2) + "." + AddLeadingZeros((Date.getMonth()+1),2)+ "." ; //+ (Date.getYear()+1900);
-        }
-
-		// Ruft das gespeicherte Datum ab
-        public String GetUnformatedDate()
-        {
-            return AddLeadingZeros(Date.getDate(),2) + "." + AddLeadingZeros(Date.getMonth()+1,2) + "." + AddLeadingZeros(Date.getYear()+1900,4);
         }
 
 		// Füllt die übergebene Zahl durch führerende Nulle auf die übergebene Länge
