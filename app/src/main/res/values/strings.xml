@@ -116,6 +116,11 @@
 
     <string name="guthaben_list_icon_desc">Icon zu Artikel</string>
 
+    // Dialog
+    <string name="guthaben_dialog_des">Betrag wählen</string>
+    <string name="guthaben_dialog_price_sep">,</string>
+    <string name="guthaben_dialog_price_unit">€</string>
+
     // Dummy
     <string name="guthaben_list_amount_dummy">12x</string>
     <string name="guthaben_list_desc_dummy">Mensa Menü 1 (à 2,90€)</string>

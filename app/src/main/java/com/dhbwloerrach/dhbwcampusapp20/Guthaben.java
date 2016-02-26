@@ -163,11 +163,12 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             View theView = inflater.inflate(R.layout.guthaben_dialog, null);
             final double guthaben= ((double)Math.round(credit*100))/100;
             final NumberPicker unit_euro = (NumberPicker) theView.findViewById(R.id.euro_picker);
-            final NumberPicker cent = (NumberPicker) theView.findViewById(R.id.cent_picker);
+            final NumberPicker cent1 = (NumberPicker) theView.findViewById(R.id.cent1_picker);
+            final NumberPicker cent2 = (NumberPicker) theView.findViewById(R.id.cent2_picker);
             builder.setView(theView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    double guthabenChange= ((double) unit_euro.getValue()) + ((double)cent.getValue())/100;
+                    double guthabenChange= ((double) unit_euro.getValue()) + ((double)(cent1.getValue()*10+cent2.getValue()))/100;
                     // Prüft ob beim Abbuchen genug Geld vorhanden ist
                     if(!add && guthaben<guthabenChange)
                         MessageReporting.ShowMessage(MessageReporting.Messages.MONEY);
@@ -191,35 +192,35 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,10.00);
+                        SetDialogPrice(unit_euro,cent1,cent2,10.00);
                     }
                 });
                 btn2.setText(FormatPrice(15.00));
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro, cent, 15.00);
+                        SetDialogPrice(unit_euro, cent1,cent2, 15.00);
                     }
                 });
                 btn3.setText(FormatPrice(20.00));
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,20.00);
+                        SetDialogPrice(unit_euro,cent1,cent2,20.00);
                     }
                 });
                 btn4.setText(FormatPrice(50.00));
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,50.00);
+                        SetDialogPrice(unit_euro,cent1,cent2,50.00);
                     }
                 });
                 btn5.setText(FormatPrice(0.30));
                 btn5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,0.30);
+                        SetDialogPrice(unit_euro,cent1,cent2,0.30);
                     }
                 });
             }
@@ -229,35 +230,35 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[0]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[0]);
                     }
                 });
                 btn2.setText(FormatPrice(prices[1]));
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro, cent, prices[1]);
+                        SetDialogPrice(unit_euro, cent1,cent2, prices[1]);
                     }
                 });
                 btn3.setText(FormatPrice(prices[2]));
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[2]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[2]);
                     }
                 });
                 btn4.setText(FormatPrice(prices[6]));
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[6]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[6]);
                     }
                 });
                 btn5.setText(FormatPrice(prices[7]));
                 btn5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[7]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[7]);
                     }
                 });
             }
@@ -265,19 +266,23 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             // Setzt die Werte, die über die Slider eingestellt werden können
             unit_euro.setMinValue(0);
             unit_euro.setMaxValue(100);
-            cent.setMinValue(0);
-            cent.setMaxValue(99);
-            cent.setValue(0);
+            cent1.setMinValue(0);
+            cent1.setMaxValue(9);
+        cent1.setValue(0);
+            cent2.setMinValue(0);
+            cent2.setMaxValue(9);
+            cent2.setValue(0);
             builder.show();
     }
 
 	// Setzt den übergebenen Geldwert im Dialogfenster 
-    private void SetDialogPrice(NumberPicker euro,NumberPicker cent, double value)
+    private void SetDialogPrice(NumberPicker euro,NumberPicker cent1,NumberPicker cent2, double value)
     {
         int valueeuro=(int) value;
         int valuecent=(int) ((value*100)%100);
         euro.setValue(valueeuro);
-        cent.setValue(valuecent);
+        cent1.setValue(valuecent/10);
+        cent2.setValue(valuecent %10);
 
     }
 
