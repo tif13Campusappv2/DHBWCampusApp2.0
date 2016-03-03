@@ -18,8 +18,10 @@ package com.dhbwloerrach.dhbwcampusapp20;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class NewsContainer {
     private NewsItem Items[];
@@ -53,7 +55,13 @@ public class NewsContainer {
     // Ruft das Newselement an der übergebenen Position ab
     public NewsItem GetNewsItem(int position)
     {
-        return position>=0 && position< Items.length ? Items[position]:null;
+        if(position>=0 && position< Items.length)
+            return  Items[position];
+        else
+        {
+            return new NewsItem(Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis(),"Dummy news","www.dhbw-loerrach.de","Dummy news","Dummy news");
+
+        }
     }
 
     // Ruft eine Liste aller Newselemente ab
