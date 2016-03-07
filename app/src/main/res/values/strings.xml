@@ -269,6 +269,9 @@
     <string name="ErrorR_Video">Videofehler</string>
     <string name="ErrorR_Money">Nicht genug Guthaben</string>
 
+    // Info
+    <string name="Message_refesh">Daten werden aktualisiert</string>
+
     // Debugging
     <string name="unkown_action">Unknown click action for this element</string>
 </resources>

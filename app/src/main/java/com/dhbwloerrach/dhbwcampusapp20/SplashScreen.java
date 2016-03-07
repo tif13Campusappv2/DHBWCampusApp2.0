@@ -42,7 +42,7 @@ public class SplashScreen extends AppCompatActivity {
             {
                 MessageReporting.Initialize(context);
                 ContentManager.Initialize(context);
-                ContentManager.OnlineUpdate();
+                ContentManager.OnlineUpdate(true);
             }
         }).start();
 

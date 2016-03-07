@@ -7,11 +7,11 @@
  *      ║ History                      ║
  *      ╠════════════╦═════════════════╣
  *      ║   Datum    ║    Änderung     ║
- *      ╠════════════╬═════════════════╣
- *      ║ 2015-xx-xx ║
+ *      ╠════════════╬═════════════════╩═════════════════════════╗
+ *      ║ 2016-03-07 ║ Nachricht für Aktualisierung hinzugefügt  ║
  *      ║ 20xx-xx-xx ║
  *      ║ 20xx-xx-xx ║
- *      ╚════════════╩═════════════════╝
+ *      ╚════════════╩═══════════════════════════════════════════╝
  *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
  */
 package com.dhbwloerrach.dhbwcampusapp20;
@@ -69,7 +69,7 @@ public class MessageReporting {
 	// Stellt eine Enummeration bereit, über die die Nachrichten abegerufen werden können
     public static abstract class Messages
     {
-        public static final int NETWORK=0, XML=1, OFFLINE=2,Video=3, MONEY =4;
-        private static final int[] Messages ={R.string.ErrorR_Network,R.string.ErrorR_XML,R.string.ErrorR_OFFLINE,R.string.ErrorR_Video,R.string.ErrorR_Money};
+        public static final int NETWORK=0, XML=1, OFFLINE=2,Video=3, MONEY =4, REFRESH=5;
+        private static final int[] Messages ={R.string.ErrorR_Network,R.string.ErrorR_XML,R.string.ErrorR_OFFLINE,R.string.ErrorR_Video,R.string.ErrorR_Money, R.string.Message_refesh};
     }
 }
