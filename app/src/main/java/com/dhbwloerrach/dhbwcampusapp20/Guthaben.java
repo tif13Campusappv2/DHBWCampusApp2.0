@@ -16,7 +16,16 @@
  */
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.IsoDep;
+import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,15 +37,26 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.dhbwloerrach.dhbwcampusapp20.codebutler.farebot.card.desfire.DesfireException;
+import com.dhbwloerrach.dhbwcampusapp20.cardreader.Readers;
+import com.dhbwloerrach.dhbwcampusapp20.cardreader.ValueData;
+
 public class Guthaben extends AppCompatActivity implements Updated.Refreshable, View.OnClickListener{
 
     // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc., 8=Kaffee
     // Wichtig: 0-4 werden dynamisch gesetzt
     private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.10,1.10,1.50,1.00};
     private double credit;
+    private NfcAdapter mAdapter;
+    private PendingIntent mPendingIntent;
+    private IntentFilter[] mFilters;
+    private String[][] mTechLists;
+    private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guthaben);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -46,6 +66,31 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         findViewById(R.id.guthaben_guthaben_add).setOnClickListener(this);
         findViewById(R.id.guthaben_guthaben_sub).setOnClickListener(this);
+
+        //NFC
+//        mAdapter = NfcAdapter.getDefaultAdapter(this);
+//        mIntentFilter = new IntentFilter("android.nfc.action.ADAPTER_STATE_CHANGED");
+//
+//
+//        // Create a generic PendingIntent that will be deliver to this activity.
+//        // The NFC stack
+//        // will fill in the intent with the details of the discovered tag before
+//        // delivering to
+//        // this activity.
+//        mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
+//                getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+//
+//
+//        // Setup an intent filter
+//        IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+//        mFilters = new IntentFilter[] { tech, };
+//        mTechLists = new String[][] { new String[] { IsoDep.class.getName(),
+//                NfcA.class.getName() } };
+
+
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getIntent().getAction())) {
+            onNewIntent(getIntent());
+        }
     }
 
     @Override
@@ -284,6 +329,33 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         cent1.setValue(valuecent/10);
         cent2.setValue(valuecent %10);
 
+    }
+
+    //NFC Code -- im Orginal von Jakob Wenzel
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if (NfcAdapter.ACTION_ADAPTER_STATE_CHANGED.equals(action)) {
+                //
+            }
+        }
+    };
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+            try {
+                ValueData val = Readers.getInstance().readTag(tag);
+                float value = val.value;
+            } catch (DesfireException e) {
+                //do error stuff here
+            }
+        }
     }
 
 }
