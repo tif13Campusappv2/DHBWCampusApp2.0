@@ -36,6 +36,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dhbwloerrach.dhbwcampusapp20.codebutler.farebot.card.desfire.DesfireException;
 import com.dhbwloerrach.dhbwcampusapp20.cardreader.Readers;
@@ -47,11 +48,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
     // Wichtig: 0-4 werden dynamisch gesetzt
     private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.10,1.10,1.50,1.00};
     private double credit;
-    private NfcAdapter mAdapter;
-    private PendingIntent mPendingIntent;
-    private IntentFilter[] mFilters;
-    private String[][] mTechLists;
-    private IntentFilter mIntentFilter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +84,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
 //        mTechLists = new String[][] { new String[] { IsoDep.class.getName(),
 //                NfcA.class.getName() } };
 
-
+        //Prüfen ob die Aktivity durch ein NFC-Event gestartet wurde
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getIntent().getAction())) {
             onNewIntent(getIntent());
         }
@@ -331,27 +328,22 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
 
     }
 
-    //NFC Code -- im Orginal von Jakob Wenzel
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (NfcAdapter.ACTION_ADAPTER_STATE_CHANGED.equals(action)) {
-                //
-            }
-        }
-    };
 
     @Override
     public void onNewIntent(Intent intent) {
+        //falls NFC Event
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+            //Holen des "Tags" auf dem Ausweiß
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
             try {
+                //Mithilfe der Funktionen und Klassen von
                 ValueData val = Readers.getInstance().readTag(tag);
-                float value = val.value;
+                //falls val null ist sollte ein Toast angezeigt werden.
+                if(val == null)
+                    Toast.makeText(this, "Mep :( Probiers nochmal!", Toast.LENGTH_SHORT).show();
+                float value = Math.round(val.value/10);
+                ContentManager.UpdateUserCredit(value/100);
             } catch (DesfireException e) {
                 //do error stuff here
             }
