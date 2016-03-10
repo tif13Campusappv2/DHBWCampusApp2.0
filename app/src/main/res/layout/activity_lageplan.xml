@@ -37,25 +37,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/lageplan"
-        android:orientation="vertical"
-        android:layout_marginTop="60dp"
-        >
-
-
-        <ImageView
-            android:id="@+id/hangstrasse_lageplan_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:background="#FFF"
-            android:layout_margin="5dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/plan_hangstrasse"
-            android:contentDescription="Lageplan Campus Hangstraße" />
-    </LinearLayout>
+    <include layout="@layout/content_lageplan" />
 
 </android.support.design.widget.CoordinatorLayout>

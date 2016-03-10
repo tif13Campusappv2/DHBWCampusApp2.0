@@ -15,7 +15,6 @@
 *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
     -->
 <resources>
-
     //##################################
     //# Allgemein
     //##################################
@@ -257,6 +256,13 @@
     <string name="mensa_all_20_sht">We</string>
     <string name="mensa_all_20">Weichtiere</string>
 
+    //##################################
+    //# Lageplan
+    //##################################
+
+    <string name="lageplan_description">Lageplan Campus Hangstraße</string>
+    <string name="lageplan_button1">Navigation</string>
+
 
     //##################################
     //# Message reporting
@@ -274,4 +280,5 @@
 
     // Debugging
     <string name="unkown_action">Unknown click action for this element</string>
+
 </resources>
