@@ -1,3 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*      Beschreibung:	Enthält das Layout für den Guthabendialog (Portrait)
+*      Autoren: 		Daniel Spieker
+*      Projekt:		    Campus App 2.0
+*
+*      ╔══════════════════════════════╗
+*      ║ History                      ║
+*      ╠════════════╦═════════════════╣
+*      ║   Datum    ║    Änderung     ║
+*      ╠════════════╬═════════════════╣
+*      ║ 2015-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ╚════════════╩═════════════════╝
+*      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+    -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +25,7 @@
         android:layout_gravity="center"
         android:padding="10dp"
         android:textSize="16sp"
-        android:text="Betrag auswählen"/>
+        android:text="@string/guthaben_dialog_des"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,20 +44,29 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:textSize="20sp"
-            android:text=","/>
+            android:text="@string/guthaben_dialog_price_sep"/>
+
 
         <NumberPicker
-            android:id="@+id/cent_picker"
-            android:layout_width="wrap_content"
+            android:id="@+id/cent1_picker"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center" />
+
+        <NumberPicker
+            android:id="@+id/cent2_picker"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dp"
             android:textSize="20sp"
-            android:text="€"/>
+            android:text="@string/guthaben_dialog_price_unit"/>
 
     </LinearLayout>
     <LinearLayout
@@ -53,7 +79,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-
             android:id="@+id/guthaben_dialog_btn1"
             />
 

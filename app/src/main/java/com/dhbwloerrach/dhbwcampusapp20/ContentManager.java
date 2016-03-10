@@ -10,11 +10,11 @@
  *      ║ History                      ║
  *      ╠════════════╦═════════════════╣
  *      ║   Datum    ║    Änderung     ║
- *      ╠════════════╬═════════════════╣
- *      ║ 2015-xx-xx ║
+ *      ╠════════════╬═════════════════╩═══════════════════════════╗
+ *      ║ 2016-03-07 ║ Feedback für Aktualisierung hinzugefügt     ║
  *      ║ 20xx-xx-xx ║
  *      ║ 20xx-xx-xx ║
- *      ╚════════════╩═════════════════╝
+ *      ╚════════════╩═════════════════════════════════════════════╝
  *      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
  */
 package com.dhbwloerrach.dhbwcampusapp20;
@@ -66,15 +66,20 @@ public class ContentManager {
 	// Updatet alle Informationen, die online abgerufen werden
     public static void OnlineUpdate()
     {
+        OnlineUpdate(false);
+    }
+
+    // Updatet alle Informationen, die online abgerufen werden
+    public static void OnlineUpdate(boolean silent)
+    {
         if(manager._IsOnline(manager.context)) {
+            if(!silent)
+                MessageReporting.ShowMessage(MessageReporting.Messages.REFRESH);
             manager._UpdateMensaData(manager.context);
             manager._UpdateNewsData(manager.context);
         }
         else
-        {
             MessageReporting.ShowMessage(MessageReporting.Messages.OFFLINE);
-        }
-
     }
 
 	// Updatet die Rolle des Benutzers
@@ -186,6 +191,7 @@ public class ContentManager {
                         if (context instanceof Updated.Refreshable) {
                             Updated update = new Updated();
                             update.InsertMensaPlan(mensaPlan);
+                            update.InsertCredit(credit);
                             update.InsertRole(role);
                             ((Updated.Refreshable) context).Refresh(update);
                         }

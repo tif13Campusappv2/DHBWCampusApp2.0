@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+*      Beschreibung:	Enthält in der App verwendete Farben
+*      Autoren: 		Philipp Mosch
+*      Projekt:		    Campus App 2.0
+*
+*      ╔══════════════════════════════╗
+*      ║ History                      ║
+*      ╠════════════╦═════════════════╣
+*      ║   Datum    ║    Änderung     ║
+*      ╠════════════╬═════════════════╣
+*      ║ 2015-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ╚════════════╩═════════════════╝
+*      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+    -->
 <resources>
     <!-- Iris and Palm good image -->
     <color name="colorPrimary">@color/dhbwRed</color>

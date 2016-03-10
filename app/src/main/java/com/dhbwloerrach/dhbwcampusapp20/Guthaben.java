@@ -16,7 +16,16 @@
  */
 package com.dhbwloerrach.dhbwcampusapp20;
 
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.IsoDep;
+import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,16 +36,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.dhbwloerrach.dhbwcampusapp20.codebutler.farebot.card.desfire.DesfireException;
+import com.dhbwloerrach.dhbwcampusapp20.cardreader.Readers;
+import com.dhbwloerrach.dhbwcampusapp20.cardreader.ValueData;
 
 public class Guthaben extends AppCompatActivity implements Updated.Refreshable, View.OnClickListener{
 
     // 0= Mensa Menü 1,1= Mensa Menü 2, 2= Mensa Menü 3, 3= Mensa Salat, 4= SW Kopie, 5= Farbkopie, 6= Wasser, 7= Cola etc., 8=Kaffee
     // Wichtig: 0-4 werden dynamisch gesetzt
-    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.08,1.10,1.50,1.00};
+    private double prices[]={2.90,3.20,3.60,0.70, 0.04,0.10,1.10,1.50,1.00};
     private double credit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guthaben);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -46,6 +63,31 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         findViewById(R.id.guthaben_guthaben_add).setOnClickListener(this);
         findViewById(R.id.guthaben_guthaben_sub).setOnClickListener(this);
+
+        //NFC
+//        mAdapter = NfcAdapter.getDefaultAdapter(this);
+//        mIntentFilter = new IntentFilter("android.nfc.action.ADAPTER_STATE_CHANGED");
+//
+//
+//        // Create a generic PendingIntent that will be deliver to this activity.
+//        // The NFC stack
+//        // will fill in the intent with the details of the discovered tag before
+//        // delivering to
+//        // this activity.
+//        mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
+//                getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+//
+//
+//        // Setup an intent filter
+//        IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+//        mFilters = new IntentFilter[] { tech, };
+//        mTechLists = new String[][] { new String[] { IsoDep.class.getName(),
+//                NfcA.class.getName() } };
+
+        //Prüfen ob die Aktivity durch ein NFC-Event gestartet wurde
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getIntent().getAction())) {
+            onNewIntent(getIntent());
+        }
     }
 
     @Override
@@ -163,11 +205,12 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             View theView = inflater.inflate(R.layout.guthaben_dialog, null);
             final double guthaben= ((double)Math.round(credit*100))/100;
             final NumberPicker unit_euro = (NumberPicker) theView.findViewById(R.id.euro_picker);
-            final NumberPicker cent = (NumberPicker) theView.findViewById(R.id.cent_picker);
+            final NumberPicker cent1 = (NumberPicker) theView.findViewById(R.id.cent1_picker);
+            final NumberPicker cent2 = (NumberPicker) theView.findViewById(R.id.cent2_picker);
             builder.setView(theView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    double guthabenChange= ((double) unit_euro.getValue()) + ((double)cent.getValue())/100;
+                    double guthabenChange= ((double) unit_euro.getValue()) + ((double)(cent1.getValue()*10+cent2.getValue()))/100;
                     // Prüft ob beim Abbuchen genug Geld vorhanden ist
                     if(!add && guthaben<guthabenChange)
                         MessageReporting.ShowMessage(MessageReporting.Messages.MONEY);
@@ -191,35 +234,35 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,10.00);
+                        SetDialogPrice(unit_euro,cent1,cent2,10.00);
                     }
                 });
                 btn2.setText(FormatPrice(15.00));
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro, cent, 15.00);
+                        SetDialogPrice(unit_euro, cent1,cent2, 15.00);
                     }
                 });
                 btn3.setText(FormatPrice(20.00));
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,20.00);
+                        SetDialogPrice(unit_euro,cent1,cent2,20.00);
                     }
                 });
                 btn4.setText(FormatPrice(50.00));
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,50.00);
+                        SetDialogPrice(unit_euro,cent1,cent2,50.00);
                     }
                 });
                 btn5.setText(FormatPrice(0.30));
                 btn5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,0.30);
+                        SetDialogPrice(unit_euro,cent1,cent2,0.30);
                     }
                 });
             }
@@ -229,35 +272,35 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[0]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[0]);
                     }
                 });
                 btn2.setText(FormatPrice(prices[1]));
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro, cent, prices[1]);
+                        SetDialogPrice(unit_euro, cent1,cent2, prices[1]);
                     }
                 });
                 btn3.setText(FormatPrice(prices[2]));
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[2]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[2]);
                     }
                 });
                 btn4.setText(FormatPrice(prices[6]));
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[6]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[6]);
                     }
                 });
                 btn5.setText(FormatPrice(prices[7]));
                 btn5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDialogPrice(unit_euro,cent,prices[7]);
+                        SetDialogPrice(unit_euro,cent1,cent2,prices[7]);
                     }
                 });
             }
@@ -265,20 +308,46 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             // Setzt die Werte, die über die Slider eingestellt werden können
             unit_euro.setMinValue(0);
             unit_euro.setMaxValue(100);
-            cent.setMinValue(0);
-            cent.setMaxValue(99);
-            cent.setValue(0);
+            cent1.setMinValue(0);
+            cent1.setMaxValue(9);
+        cent1.setValue(0);
+            cent2.setMinValue(0);
+            cent2.setMaxValue(9);
+            cent2.setValue(0);
             builder.show();
     }
 
 	// Setzt den übergebenen Geldwert im Dialogfenster 
-    private void SetDialogPrice(NumberPicker euro,NumberPicker cent, double value)
+    private void SetDialogPrice(NumberPicker euro,NumberPicker cent1,NumberPicker cent2, double value)
     {
         int valueeuro=(int) value;
         int valuecent=(int) ((value*100)%100);
         euro.setValue(valueeuro);
-        cent.setValue(valuecent);
+        cent1.setValue(valuecent/10);
+        cent2.setValue(valuecent %10);
 
+    }
+
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        //falls NFC Event
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+            //Holen des "Tags" auf dem Ausweiß
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+            try {
+                //Mithilfe der Funktionen und Klassen von
+                ValueData val = Readers.getInstance().readTag(tag);
+                //falls val null ist sollte ein Toast angezeigt werden.
+                if(val == null)
+                    Toast.makeText(this, "Mep :( Probiers nochmal!", Toast.LENGTH_SHORT).show();
+                float value = Math.round(val.value/10);
+                ContentManager.UpdateUserCredit(value/100);
+            } catch (DesfireException e) {
+                //do error stuff here
+            }
+        }
     }
 
 }

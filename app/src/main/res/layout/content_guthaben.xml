@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+*      Beschreibung:	Enthält das Layout für die Guthabenseite (Portrait)
+*      Autoren: 		Daniel Spieker
+*      Projekt:		    Campus App 2.0
+*
+*      ╔══════════════════════════════╗
+*      ║ History                      ║
+*      ╠════════════╦═════════════════╣
+*      ║   Datum    ║    Änderung     ║
+*      ╠════════════╬═════════════════╣
+*      ║ 2015-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ║ 20xx-xx-xx ║
+*      ╚════════════╩═════════════════╝
+*      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
+    -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,7 +51,7 @@
             android:layout_height="24dp"
             android:id="@+id/guthaben_guthaben_sub"
             android:layout_weight="2"
-            android:background="@drawable/leer"
+            android:background="@drawable/guthaben_button_background"
             android:layout_gravity="center_vertical"
             android:src="@drawable/minus"
             />
@@ -51,7 +67,7 @@
 
         <ImageButton
             android:layout_width="24dp"
-            android:background="@drawable/leer"
+            android:background="@drawable/guthaben_button_background"
             android:layout_height="24dp"
             android:id="@+id/guthaben_guthaben_add"
             android:layout_weight="2"

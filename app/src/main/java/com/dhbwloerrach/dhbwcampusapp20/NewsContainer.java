@@ -18,8 +18,10 @@ package com.dhbwloerrach.dhbwcampusapp20;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class NewsContainer {
     private NewsItem Items[];
@@ -53,7 +55,13 @@ public class NewsContainer {
     // Ruft das Newselement an der übergebenen Position ab
     public NewsItem GetNewsItem(int position)
     {
-        return position>=0 && position< Items.length ? Items[position]:null;
+        if(position>=0 && position< Items.length)
+            return  Items[position];
+        else
+        {
+            return new NewsItem(Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin")).getTimeInMillis(),"Dummy news","www.dhbw-loerrach.de","Dummy news","Dummy news");
+
+        }
     }
 
     // Ruft eine Liste aller Newselemente ab
@@ -89,14 +97,15 @@ public class NewsContainer {
         NewsItem[] tmp2=new NewsItem[Items.length];
         for(int i=0;i<Items.length;i++)
         {
-            tmp1[i]=Items[i].GetTimeStamp();
+            // +i is done to make timestamp unique for elements that are set to the same time
+            tmp1[i]=Items[i].GetTimeStamp()+i;
             tmp2[i]=Items[i];
         }
         Arrays.sort(tmp1);
-        for(NewsItem nItem:tmp2)
+        for(int i=0;i<tmp2.length;i++)
             for(int j=0;j<tmp1.length;j++)
-                if(tmp1[j]==nItem.GetTimeStamp())
-                    Items[Items.length-1-j]=nItem;
+                if(tmp1[j]==tmp2[i].GetTimeStamp()+i)
+                    Items[Items.length-1-j]=tmp2[i];
     }
 
     // Stellt eine Klasse für die Verwaltung eines Newselements bereit
