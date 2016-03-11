@@ -25,6 +25,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -97,12 +98,24 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.guthaben, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
             finish();
             Goto(Pages.StartScreen);
             return false;
+        }
+        else if (item.getItemId() == R.id.guthaben_actionbar_nfc)
+        {
+            CreateNFCDialog();
+            return true;
         }
         return false;
     }
@@ -329,4 +342,16 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         }
     }
 
+    public void CreateNFCDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View theView = inflater.inflate(R.layout.guthaben_nfcinfo_dialog, null);
+        builder.setView(theView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+    }
 }

@@ -120,6 +120,9 @@
     <string name="guthaben_dialog_price_sep">,</string>
     <string name="guthaben_dialog_price_unit">€</string>
 
+    // NFC Info
+    <string name="guthaben_nfcinfo_info">Aktiviere NFC an deinem Handy, um das Guthaben deines Studentenausweises auszulesen.\r\nHalte dazu den Studentenausweis an die Rückseite deines Handys</string>
+
     // Dummy
     <string name="guthaben_list_amount_dummy">12x</string>
     <string name="guthaben_list_desc_dummy">Mensa Menü 1 (à 2,90€)</string>
@@ -150,7 +153,7 @@
     <string name="mensa_menue_ken">Kennzeichnungen: </string>
     <string name="mensa_menue_all">Allergene: </string>
     <string name="mensa_menue_price_dummy">3,60€</string>
-    <string name="mensa_menue_name_dummy">Riesenbürger</string>
+    <string name="mensa_menue_name_dummy">Riesenburger</string>
     <string name="mensa_menue_additonals_des">Zusatzinformationen zum Essen</string>
 
     // Kennzeichnungen
