@@ -264,7 +264,9 @@
     //##################################
 
     <string name="lageplan_description">Lageplan Campus Hangstraße</string>
-    <string name="lageplan_button1">Navigation</string>
+    <string name="lageplan_button">Los</string>
+    <string name="lageplan_textview1">Navigationsziel / Raumnummer:</string>
+    <string name="lageplan_textview2">(1 Buchstabe + 3 Zahlen)</string>
 
 
     //##################################

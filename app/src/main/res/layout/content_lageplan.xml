@@ -29,12 +29,12 @@
     tools:showIn="@layout/activity_lageplan"
     android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView3"
+    <ImageView
+            android:id="@+id/imageViewLageplan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:background="#FFF"
+            android:background="#f4f4f4"
             android:layout_margin="5dp"
             android:scaleType="centerCrop"
             android:src="@drawable/plan_hangstrasse"
@@ -42,12 +42,46 @@
             android:contentDescription="@string/lageplan_description"
             android:contextClickable="false" />
 
-        <Button
-            android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/lageplanTextview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lageplan_textview1"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:singleLine="false"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/lageplanTextview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lageplan_textview2"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="2dp"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="83dp"
             android:layout_height="wrap_content"
-            android:text="@string/lageplan_button1"
-            android:id="@+id/button2"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp" />
+            android:id="@+id/lageplanTextfield"
+            android:layout_gravity="center_horizontal"
+            android:inputType="text"
+            android:editable="true"
+            android:textColor="#000000" />
+
+        <Button
+                android:id="@+id/navButtonLageplan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lageplan_button" />
+    </LinearLayout>
 
 </LinearLayout>
