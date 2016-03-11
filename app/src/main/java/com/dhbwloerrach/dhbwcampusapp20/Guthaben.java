@@ -60,6 +60,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
 
         //Prüfen ob die Aktivity durch ein NFC-Event gestartet wurde
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getIntent().getAction())) {
+            ContentManager.NewContext(this);
             onNewIntent(getIntent());
         }
     }
@@ -101,7 +102,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         if (item.getItemId() == android.R.id.home) {
             finish();
             Goto(Pages.StartScreen);
-            return true;
+            return false;
         }
         return false;
     }
@@ -111,6 +112,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
     {
         if(page== Pages.StartScreen)
         {
+            startActivity(new Intent(Guthaben.this,StartScreen.class));
             this.overridePendingTransition(R.anim.scale_in, R.anim.right_out);
         }
     }
@@ -314,8 +316,11 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
                 //Mithilfe der Funktionen und Klassen von
                 ValueData val = Readers.getInstance().readTag(tag);
                 //falls val null ist sollte ein Toast angezeigt werden.
-                if(val == null)
-                    Toast.makeText(this, "Mep :( Probiers nochmal!", Toast.LENGTH_SHORT).show();
+                if(val == null) {
+                    Toast.makeText(this, "Mep :( Probiers nochmal!", Toast.LENGTH_LONG).show();
+                    ContentManager.UpdateUserCredit(0);
+                    return;
+                }
                 float value = Math.round(val.value/10);
                 ContentManager.UpdateUserCredit(value/100);
             } catch (DesfireException e) {
