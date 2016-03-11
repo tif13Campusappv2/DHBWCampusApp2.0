@@ -16,16 +16,10 @@
  */
 package com.dhbwloerrach.dhbwcampusapp20;
 
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.IsoDep;
-import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -64,26 +58,6 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
         findViewById(R.id.guthaben_guthaben_add).setOnClickListener(this);
         findViewById(R.id.guthaben_guthaben_sub).setOnClickListener(this);
 
-        //NFC
-//        mAdapter = NfcAdapter.getDefaultAdapter(this);
-//        mIntentFilter = new IntentFilter("android.nfc.action.ADAPTER_STATE_CHANGED");
-//
-//
-//        // Create a generic PendingIntent that will be deliver to this activity.
-//        // The NFC stack
-//        // will fill in the intent with the details of the discovered tag before
-//        // delivering to
-//        // this activity.
-//        mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
-//                getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-//
-//
-//        // Setup an intent filter
-//        IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-//        mFilters = new IntentFilter[] { tech, };
-//        mTechLists = new String[][] { new String[] { IsoDep.class.getName(),
-//                NfcA.class.getName() } };
-
         //Prüfen ob die Aktivity durch ein NFC-Event gestartet wurde
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getIntent().getAction())) {
             onNewIntent(getIntent());
@@ -107,7 +81,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         Goto(Pages.StartScreen);
     }
 
