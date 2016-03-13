@@ -119,14 +119,14 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
     //OnClickListener zu Button
     public void onClick(View v) {
         lageplanTextview.setTextColor(Color.parseColor("#000000")); //Textfarbe in Textview1 zurücksetzen auf schwarz
-        raum = lageplanTextfeld.getText().toString().toUpperCase(); //get Feldwert
+        raum = lageplanTextfeld.getText().toString().toUpperCase(); //get Feldwert, konvertiere zu Großbuchstabe für spätere Textausgabe
 
         //Validierung der Eingabe mittels Regulärem Ausdruck:
         if (!raum.matches(regex)) {
             InvalidInput();}
         else{
             //Wenn Raumnummer valide analysiere weiter
-            one = String.valueOf(raum.charAt(0)).toUpperCase(); //erste Stelle der Eingabe als String, konvertiere zu Großbuchstabe für spätere Textausgabe
+            one = String.valueOf(raum.charAt(0)); //erste Stelle der Eingabe als String
             two = String.valueOf(raum.charAt(1)); //zweite Stelle der Eingabe als String
 
             //Zielgebäude und Zielstockwerk ermitteln:
