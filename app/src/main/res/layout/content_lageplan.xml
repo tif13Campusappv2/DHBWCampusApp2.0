@@ -3,31 +3,27 @@
 *      Beschreibung:	Enthält das Layout des Lageplans
 *      Autoren: 		Marius Korioth
 *      Projekt:		    Campus App 2.0
-*
-*      ╔══════════════════════════════╗
-*      ║ History                      ║
-*      ╠════════════╦═════════════════╣
-*      ║   Datum    ║    Änderung     ║
-*      ╠════════════╬═════════════════╣
-*      ║ 2015-xx-xx ║
-*      ║ 20xx-xx-xx ║
-*      ║ 20xx-xx-xx ║
-*      ╚════════════╩═════════════════╝
-*      Wichtig:           Tabelle sollte mit monospace Schriftart dargestellt werden
     -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none" >
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
-    android:paddingTop="0dp"
+    android:paddingTop="50dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.dhbwloerrach.dhbwcampusapp20.Lageplan"
     tools:showIn="@layout/activity_lageplan"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <ImageView
             android:id="@+id/imageViewLageplan"
@@ -42,6 +38,7 @@
             android:contentDescription="@string/lageplan_description"
             android:contextClickable="false" />
 
+    <!-- Textfeld 1 - Inhalt wird variabel angepasst bei Button-Click-->
     <TextView
         android:id="@+id/lageplanTextview1"
         android:layout_width="match_parent"
@@ -50,8 +47,19 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:singleLine="false"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
+    <!-- Textfeld 3 - wird nur zeitweise benötigt  (Textausgabe im Navigationsmodus-->
+    <TextView
+        android:id="@+id/lageplanTextview3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lageplan_dummy"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:textColor="#000000" />
+
+    <!-- Textfeld 2 - Information über gültige Raumnummern, wird bei ButtonClick verändert -->
     <TextView
         android:id="@+id/lageplanTextview2"
         android:layout_width="match_parent"
@@ -59,29 +67,43 @@
         android:text="@string/lageplan_textview2"
         android:gravity="center_horizontal"
         android:layout_marginTop="2dp"
-        android:textSize="15dp" />
+        android:textSize="15sp"
+        android:layout_gravity="center_horizontal|right" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal" >
 
+        <!--
+        *Textfeld zur Eingabe von Raumnummern
+        *Eingabezeichen beschränkt auf Zeichen die in validen Raumnummern vorkommen.
+        *Eingabelänge beschränkt auf Länge von validen Raumnummern (4-stellig).
+        *inputType gewählt um automatische Vorschläge und invalide Zeichenkombinationen zu unterdrücken.
+        *weitere Filterung der Eingabe per Lageplan.java
+        -->
         <EditText
+            android:id="@+id/lageplanTextfeld"
             android:layout_width="83dp"
             android:layout_height="wrap_content"
-            android:id="@+id/lageplanTextfield"
             android:layout_gravity="center_horizontal"
-            android:inputType="text"
-            android:editable="true"
-            android:textColor="#000000" />
+            android:inputType="textNoSuggestions"
+            android:maxLength="4"
+            android:digits="aAcCdDeEsS0123456789"
+            android:textColor="#000000"
+            android:gravity="center_horizontal" />
 
+
+        <!-- Absendebutton für eigegebene Raumnummern. OnClickhandler hinterlegt in Lageplan.java-->
         <Button
                 android:id="@+id/navButtonLageplan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lageplan_button" />
+
     </LinearLayout>
 
 </LinearLayout>
+</ScrollView>
