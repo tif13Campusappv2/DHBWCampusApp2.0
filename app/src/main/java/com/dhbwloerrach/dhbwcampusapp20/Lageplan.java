@@ -131,7 +131,7 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
                 //Wenn Raum in einem der S-Gebaude liegt:
                 case "S":
                     three = String.valueOf(raum.charAt(2)); //dritte Stelle der Eingabe als String
-                    switch (two) {
+                    switch (three) {
                         //S-Gebaude identifizieren/Einzelunterscheidung und String für Textausgabe setzen
                         case "1":
                             gebauede = "S1"; //String für Textausgabe
@@ -151,8 +151,8 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
                             break;
                         case "0": case "5": case "6": case "7": case "8": case "9": InvalidInput(); break; //Invalide Eingabe
                     }
-                    switch(three) { //Identifiziere Stockwerk
-                        case "0": case "1": stockwerk = three; Navigate(); break; //String für Textausgabe
+                    switch(two) { //Identifiziere Stockwerk
+                        case "0": case "1": stockwerk = two; Navigate(); break; //String für Textausgabe
                         case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": InvalidInput(); break;} //ungültige Eingabe
                     break;
                 //Wenn Raum in Gebäude A
