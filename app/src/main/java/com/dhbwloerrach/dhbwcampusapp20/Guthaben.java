@@ -61,6 +61,8 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
 
         //Prüfen ob die Aktivity durch ein NFC-Event gestartet wurde
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getIntent().getAction())) {
+            //sicherstellen, dass der ContentManager ordentlich initialisiert ist
+            //(Wenn Activity vorher noch nicht gestartet wurde)
             ContentManager.NewContext(this);
             onNewIntent(getIntent());
         }
@@ -320,13 +322,13 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
 
     @Override
     public void onNewIntent(Intent intent) {
-        //falls NFC Event
+        //falls der Intent von einem NFC Event stammt:
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             //Holen des "Tags" auf dem Ausweiß
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
             try {
-                //Mithilfe der Funktionen und Klassen von
+                //Mithilfe der Funktionen und Klassen von https://github.com/jakobwenzel/MensaGuthaben
                 ValueData val = Readers.getInstance().readTag(tag);
                 //falls val null ist sollte ein Toast angezeigt werden.
                 if(val == null) {
@@ -341,7 +343,7 @@ public class Guthaben extends AppCompatActivity implements Updated.Refreshable, 
             }
         }
     }
-
+    //Erstellen eines Info-Dialogs der den Nutzer auffordert das NFC einzuschalten
     public void CreateNFCDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
