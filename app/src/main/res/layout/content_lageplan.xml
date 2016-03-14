@@ -88,7 +88,7 @@
             android:layout_gravity="center_horizontal"
             android:inputType="textNoSuggestions"
             android:maxLength="4"
-            android:digits="aAcCdDeEsS0123456789"
+            android:digits="aAcCdDeEhHsStTuU0123456789"
             android:textColor="#000000"
             android:gravity="center_horizontal" />
 

@@ -41,6 +41,7 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
     Button lageplanButton;
     EditText lageplanTextfeld;
     String regex;
+    String regex2;
     String raum;
     String one;
     String two;
@@ -60,7 +61,8 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
         lageplanButton = (Button) findViewById(R.id.navButtonLageplan); //get Button
         lageplanButton.setOnClickListener(this); // Definition Listener zu Button
         lageplanTextfeld = (EditText) findViewById(R.id.lageplanTextfeld); //get Textfield
-        regex ="(?i)[ACDES][0-4]\\d\\d"; //regulärer Ausdruck zur Validierung der Eingabe (Ein Buchstabe, nachfolgend 3 Ziffern)
+        regex ="(?i)[ACDEHST][0-4]\\d\\d"; //regulärer Ausdruck zur Validierung der Eingabe (Ein Buchstabe, nachfolgend 3 Ziffern), Einschränkung auf Stockwerke 0 bis 4
+        regex2 = "(?i)CU\\d\\d"; //regulärer Ausdruck für Räuem im Untergeschoss des C-Gebäude (Raumname besteht aus "CU" und 2 Ziffern
         lageplanTextview = (TextView) findViewById(R.id.lageplanTextview1); //get Textview1
         lageplanTextview2 = (TextView) findViewById(R.id.lageplanTextview2); //get Textview2
         lageplanTextview3 = (TextView) findViewById(R.id.lageplanTextview3); // get Textview3
@@ -118,8 +120,8 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
         lageplanTextview.setTextColor(Color.parseColor("#000000")); //Textfarbe in Textview1 zurücksetzen auf schwarz
         raum = lageplanTextfeld.getText().toString().toUpperCase(); //get Feldwert, konvertiere zu Großbuchstabe für spätere Textausgabe
 
-        //Validierung der Eingabe mittels Regulärem Ausdruck:
-        if (!raum.matches(regex)) {
+        //Validierung der Eingabe mittels Regulärer Ausdrücke:
+        if (!raum.matches(regex) || !raum.matches(regex2)) {
             InvalidInput();}
         else{
             //Wenn Raumnummer valide analysiere weiter
@@ -153,40 +155,58 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
                     }
                     switch(two) { //Identifiziere Stockwerk
                         case "0": case "1": stockwerk = two; Navigate(); break; //String für Textausgabe
-                        case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": InvalidInput(); break;} //ungültige Eingabe
-                    break;
+                        case "2": case "3": case "4": InvalidInput(); break;} //ungültige Eingabe
+                break;
                 //Wenn Raum in Gebäude A
                 case "A":
                     gebauede = one; //String für Textausgabe setzen
                     lageplanImage.setImageResource(R.drawable.plan_hangstrasse_a); //Ändere Lageplan/Bild
                     switch(two) { //Identifiziere Stockwerk
                         case "1": case "2": case "3": stockwerk = two;  Navigate(); break; //String für Textausgabe
-                        case "0": case "4": case "5": case "6": case "7": case "8": case "9": InvalidInput(); break;} //ungültige Eingabe
-                    break;
+                        case "0": case "4": InvalidInput(); break;} //ungültige Eingabe
+                break;
                 //Wenn Raum in Gebäude C
                 case "C":
                     gebauede = one; //String für Textausgabe setzen
                     lageplanImage.setImageResource(R.drawable.plan_hangstrasse_c); //Ändere Lageplan/Bild
                     switch(two) { //Identifiziere Stockwerk
-                        case "1": stockwerk = two; Navigate(); break;  //String für Textausgabe
-                        case "0": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": InvalidInput(); break;} //ungültige Eingabe
-                    break;
+                        case "1": case "0": stockwerk = two; Navigate(); break;  //String für Textausgabe
+                        case "U": stockwerk = "-1"; Navigate(); break; //String für Textausgabe Untergeschoss
+                        case "2": case "3": case "4": InvalidInput(); break;} //ungültige Eingabe
+                break;
                 //Wenn Raum in Gebäude D
                 case "D":
                     gebauede = one; //String für Textausgabe setzen
                     lageplanImage.setImageResource(R.drawable.plan_hangstrasse_d); //Ändere Lageplan/Bild
                     switch(two) { //Identifiziere Stockwerk
                         case "1": case "2": case "3": stockwerk = two; Navigate(); break; //String für Textausgabe
-                        case "0": case "4": case "5": case "6": case "7": case "8": case "9": InvalidInput(); break;} //ungültige Eingabe
-                    break;
+                        case "0": case "4": InvalidInput(); break;} //ungültige Eingabe
+                break;
                 //Wenn Raum in Gebäude E:
                 case "E":
                     gebauede = one; //String für Textausgabe setzen
                     lageplanImage.setImageResource(R.drawable.plan_hangstrasse_e); //Ändere Lageplan/Bild
                     switch(two) { //Identifiziere Stockwerk
                         case "0": stockwerk = two; Navigate(); break; //String für Textausgabe
-                        case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": InvalidInput(); break;} //ungültige Eingabe
-                    break;
+                        case "1": case "2": case "3": case "4": InvalidInput(); break;} //ungültige Eingabe
+                break;
+                //Wenn Raum in Gebäude H (Hauptgebäude):
+                case "H":
+                    gebauede = "Hauptgebäude (H)"; //String für Textausgabe setzen
+                    lageplanImage.setImageResource(R.drawable.plan_hangstrasse_h); //Ändere Lageplan/Bild
+                    switch(two) { //Identifiziere Stockwerk
+                        case "0": stockwerk = two; Navigate(); break; //String für Textausgabe
+                        case "1": case "2": case "3": case "4": InvalidInput(); break;} //ungültige Eingabe
+                break;
+                //Wenn Raum in Gebäude T (Bibliotheksgebäude):
+                case "T":
+                    gebauede = "Bibliotheksbau (T)"; //String für Textausgabe setzen
+                    lageplanImage.setImageResource(R.drawable.plan_hangstrasse_h); //Ändere Lageplan/Bild
+                    switch(two) { //Identifiziere Stockwerk
+                        case "0": case "1": stockwerk = two; Navigate(); break; //String für Textausgabe
+                        case "2": case "3": case "4": InvalidInput(); break;} //ungültige Eingabe
+                break;
+
             }
         }
     }
