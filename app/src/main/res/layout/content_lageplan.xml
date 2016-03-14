@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="none"
-    android:paddingTop="50dp">
+    android:layout_marginTop="60dp">
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:text="@string/lageplan_textview1"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:singleLine="false"
         android:textSize="20sp" />
 
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:text="@string/lageplan_textview2"
         android:gravity="center_horizontal"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:textSize="15sp"
         android:layout_gravity="center_horizontal|right" />
 
@@ -71,6 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center_horizontal" >
 
         <!--
@@ -85,7 +86,7 @@
             android:layout_width="83dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:inputType="textNoSuggestions"
+            android:inputType="textNoSuggestions|textCapCharacters"
             android:maxLength="4"
             android:digits="aAcCdDeEhHsStTuU0123456789"
             android:textColor="#000000"

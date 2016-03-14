@@ -51,7 +51,8 @@
             android:name=".Lageplan"
             android:label="@string/title_activity_lageplan"
             android:parentActivityName=".StartScreen"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhbwloerrach.dhbwcampusapp20.StartScreen" />
