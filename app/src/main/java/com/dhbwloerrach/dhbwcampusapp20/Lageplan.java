@@ -41,7 +41,6 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
     Button lageplanButton;
     EditText lageplanTextfeld;
     String regex;
-    String regex2;
     String raum;
     String one;
     String two;
@@ -61,12 +60,15 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
         lageplanButton = (Button) findViewById(R.id.navButtonLageplan); //get Button
         lageplanButton.setOnClickListener(this); // Definition Listener zu Button
         lageplanTextfeld = (EditText) findViewById(R.id.lageplanTextfeld); //get Textfield
-        regex ="(?i)[ACDEHST][0-4]\\d\\d"; //regulärer Ausdruck zur Validierung der Eingabe (Ein Buchstabe, nachfolgend 3 Ziffern), Einschränkung auf Stockwerke 0 bis 4
-        regex2 = "(?i)CU\\d\\d"; //regulärer Ausdruck für Räuem im Untergeschoss des C-Gebäude (Raumname besteht aus "CU" und 2 Ziffern
         lageplanTextview = (TextView) findViewById(R.id.lageplanTextview1); //get Textview1
         lageplanTextview2 = (TextView) findViewById(R.id.lageplanTextview2); //get Textview2
         lageplanTextview3 = (TextView) findViewById(R.id.lageplanTextview3); // get Textview3
         lageplanImage = (ImageView) findViewById(R.id.imageViewLageplan); //get ImageView
+
+        //regulärer Ausdruck zur Validierung der Raumnummern (Generell: ein Buchstabe, nachfolgend 3 Ziffern)
+        // Einschränkung auf Stockwerke 0 bis 4
+        // Weiterhin Räume im Untergeschoss von Gebäude C (Raumname besteht aus "CU" und 2 Ziffern)
+        regex = "(?i)[ACDEHST][0-4]\\d\\d|(?i)[C][U]\\d\\d";
 
         //Textfeld 3 ausblenden
         lageplanTextview3.setVisibility(View.GONE);
@@ -108,9 +110,9 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
     //Methode die bei valider Eingabe/Raumnummer aufgerufen wird um Textausgabe einzublenden
     public void Navigate() {
 
-        lageplanTextview.setText("Gebäude "+gebauede+" - Stockwerk "+stockwerk); //Textausgabe
+        lageplanTextview.setText("Gebäude: "+gebauede+" - Stockwerk: "+stockwerk); //Textausgabe
         lageplanTextview2.setText(R.string.lageplan_textview2_alt); //setze Hinweis auf Markierung im Lageplan
-        lageplanTextview3.setText("Raum "+raum); //Textausgabe
+        lageplanTextview3.setText("Raum: "+raum); //Textausgabe
         lageplanTextview3. setVisibility(View.VISIBLE); //Textfeld3 wieder einblenden
     }
 
@@ -121,7 +123,7 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
         raum = lageplanTextfeld.getText().toString().toUpperCase(); //get Feldwert, konvertiere zu Großbuchstabe für spätere Textausgabe
 
         //Validierung der Eingabe mittels Regulärer Ausdrücke:
-        if (!raum.matches(regex) || !raum.matches(regex2)) {
+        if (!raum.matches(regex)) {
             InvalidInput();}
         else{
             //Wenn Raumnummer valide analysiere weiter
@@ -171,7 +173,7 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
                     lageplanImage.setImageResource(R.drawable.plan_hangstrasse_c); //Ändere Lageplan/Bild
                     switch(two) { //Identifiziere Stockwerk
                         case "1": case "0": stockwerk = two; Navigate(); break;  //String für Textausgabe
-                        case "U": stockwerk = "-1"; Navigate(); break; //String für Textausgabe Untergeschoss
+                        case "U": stockwerk = "-1 / Keller"; Navigate(); break; //String für Textausgabe Untergeschoss
                         case "2": case "3": case "4": InvalidInput(); break;} //ungültige Eingabe
                 break;
                 //Wenn Raum in Gebäude D
@@ -201,7 +203,7 @@ public class Lageplan extends AppCompatActivity implements View.OnClickListener{
                 //Wenn Raum in Gebäude T (Bibliotheksgebäude):
                 case "T":
                     gebauede = "Bibliotheksbau (T)"; //String für Textausgabe setzen
-                    lageplanImage.setImageResource(R.drawable.plan_hangstrasse_h); //Ändere Lageplan/Bild
+                    lageplanImage.setImageResource(R.drawable.plan_hangstrasse_t); //Ändere Lageplan/Bild
                     switch(two) { //Identifiziere Stockwerk
                         case "0": case "1": stockwerk = two; Navigate(); break; //String für Textausgabe
                         case "2": case "3": case "4": InvalidInput(); break;} //ungültige Eingabe
